@@ -6,8 +6,7 @@ from datetime import datetime
 
 
 def save_to_db(r, currency, part):
-    tweets_file = codecs.open("D:/Diploma_data_backup/twitter-data/twitter-data/" +
-                              currency + "." + part + ".json", encoding="cp1250", errors="ignore")
+    tweets_file = codecs.open("D:/Diploma_data_backup/twitter-data/twitter-data/" + currency + "." + part + ".json", encoding="cp1250", errors="ignore")
     tweets = json.loads(tweets_file.read())
     tweets_file.close()
 
@@ -48,21 +47,24 @@ def save_to_db(r, currency, part):
                 for key, value in twitter_entities.items():
                     tweet_data[key] = value
                 for key, value in object_.items():
+                    if key == "summary":
+                        key = "body"
                     tweet_data[key] = value
 
                 r.hmset(tweet_id, tweet_data)
 
                 print("saved message: ", tweet_id, ", filename: ", currency + "." + part + ".json", sep="")
             else:
-                print(d)
                 print("skipped message: ", tweets[i]["message"]["object"]["id"], ", filename: ", currency + "." + part + ".json", sep="")
 
 
 r = redis.StrictRedis(host="localhost", port=6379, db=1)
 
-save_to_db(r, "1CR", "000")
-save_to_db(r, "AC", "000")
-save_to_db(r, "BTC", "301")
+for file in os.listdir("D:/Diploma_data_backup/twitter-data/twitter-data/"):
+    file_split = file.split(".")
+    currency = file_split[0]
+    part = file_split[1]
+    save_to_db(r, currency, part)
 
 # message
 # favouritesCount,
