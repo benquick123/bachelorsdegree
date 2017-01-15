@@ -25,15 +25,15 @@ def save_to_db(db, users, page_name):
             date_values = date[i].split(" ")[0]
             if datetime(2015, 11, 1) <= datetime.strptime(date_values, "%Y-%m-%d") < datetime(2016, 11, 1):
                 if user[i] not in users:
-                    values = {"user_name": user[i], "reputation": reputation[i], "credibility": ""}
+                    values = {"user_name": user[i], "reputation": reputation[i], "credibility": -1}
                     insert = db.users.insert_one(values)
                     users[user[i]] = insert.inserted_id
                     print("adding new user_id:", insert.inserted_id)
 
                 user_id = users[user[i]]
 
-                mess_id = message_id[i].replace("?", "")
-                values = {"date": date[i], "text": message_text[i], "user_id": user_id, "_id": mess_id, "responses": dict(), "sentiment": "", "subjectivity": "", "context": "", "coin_mentions": ""}
+                mess_id = message_id[i].replace("?", "").split("=")[-1]
+                values = {"date": date[i], "text": message_text[i], "user_id": user_id, "_id": mess_id, "responses": [], "sentiment": -1, "subjectivity": -1, "context": [], "coin_mentions": []}
                 try:
                     db.messages.insert_one(values)
                     print("saved page ",  page_name, ", message ", mess_id, sep="")
@@ -51,7 +51,7 @@ for user in db.users.find():
     users[user["user_name"]] = user["_id"]
 
 #pages missing: 39357
-for page_num in range(68894, 79333):
+for page_num in range(68201, 79333):
     if page_num != 39357:
         page_name = "page" + str(page_num) + ".html"
         user_id_counter = save_to_db(db, users, page_name)

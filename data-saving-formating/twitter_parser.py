@@ -11,55 +11,60 @@ def save_to_db(db, users, currency, part):
     tweets_file.close()
 
     tweets = tweets["tweets"]
-    if tweets != None:
+    if tweets != None and len(tweets) > 0:
+        print(currency, part)
         for i in range(len(tweets)):
-            d = tweets[i]["message"]["postedTime"].split("T")[0]
+            tweet = tweets[i]
+            d = tweet["message"]["postedTime"].split("T")[0]
             if datetime(2015, 11, 1) <= datetime.strptime(d, "%Y-%m-%d") < datetime(2016, 11, 1):
-                actor = tweets[i]["message"]["actor"]
-                user_id = "user_" + actor.pop("id", None).replace(":", "=", 1)
-                if user_id not in users:
-                    actor.pop("summary", None)
-                    actor.pop("image", None)
-                    actor.pop("utfOffset", None)
-                    actor.pop("languages", None)
-                    actor.pop("prefferedUsername", None)
-                    actor.pop("link", None)
-                    actor.pop("twitterTimeZone", None)
-                    actor.pop("links", None)
-                    actor["_id"] = user_id
+                actor = tweet["message"]["actor"]
+                actor_id = actor["id"].split(":")[-1]
+                if actor_id not in users:
+                    try:
+                        actor_type = actor["person"]
+                    except KeyError:
+                        actor_type = ""
 
-                    db.users.insert_one(actor)
-                    users.add(user_id)
+                    actor_data = {
+                        "_id": actor_id,
+                        "verified": actor["verified"],
+                        "friends_count": actor["friendsCount"],
+                        "favorites_count": actor["favoritesCount"],
+                        "person": actor_type,
+                        "followers_count": actor["followersCount"],
+                        "credibility": -1
+                    }
 
-                twitter_entities = tweets[i]["message"]["twitter_entities"]
+                    db.users.insert_one(actor_data)
+                    users.add(actor_data["_id"])
 
-                object_ = tweets[i]["message"]["object"]
-                object_.pop("link", None)
+                try:
+                    _sentiment_evidence = tweet["cde"]["content"]["sentiment"]["evidence"]
+                    _sentiment = tweet["cde"]["contnet"]["sentiment"]["polarity"]
+                except KeyError:
+                    _sentiment_evidence = []
+                    _sentiment = ""
 
-                favourites_count = tweets[i]["message"]["favoritesCount"]
+                tweet_data = {
+                    "_sentiment_evidence": _sentiment_evidence,
+                    "_sentiment": _sentiment,
+                    "sentiment": -1,
+                    "subjectivity": -1,
+                    "_id": tweet["message"]["id"].split(":")[-1],
+                    "posted_time": tweet["message"]["postedTime"],
+                    "text": tweet["message"]["body"],
+                    "favorites_count": tweet["message"]["favoritesCount"],
+                    "author": tweet["message"]["actor"]["id"].split(":")[-1],
+                    "retweet_count": tweet["message"]["retweetCount"],
+                    "crypto_currency": currency
+                }
 
-                retweet_count = tweets[i]["message"]["retweetCount"]
-
-                tweet_id = currency + ":" + object_.pop("id", None).replace("search.twitter.com,", "")
-
-                tweet_data = dict()
-                tweet_data["user_id"] = user_id
-                tweet_data["favourites_count"] = favourites_count
-                tweet_data["retweetCount"] = retweet_count
-                tweet_data["_id"] = tweet_id
-
-                for key, value in twitter_entities.items():
-                    tweet_data[key] = value
-                for key, value in object_.items():
-                    if key == "summary":
-                        key = "body"
-                    tweet_data[key] = value
                 try:
                     db.messages.insert_one(tweet_data)
                 except pymongo.errors.DuplicateKeyError:
                     print("skipped duplicate message")
 
-                print("saved message: ", tweet_id, ", filename: ", currency + "." + part + ".json", sep="")
+                print("saved message: ", tweets[i]["message"]["object"]["id"], ", filename: ", currency + "." + part + ".json", sep="")
             else:
                 print("skipped message: ", tweets[i]["message"]["object"]["id"], ", filename: ", currency + "." + part + ".json", sep="")
 
