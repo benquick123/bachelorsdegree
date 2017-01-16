@@ -32,7 +32,7 @@ def save_to_db(db, users, page_name):
 
                 user_id = users[user[i]]
 
-                mess_id = message_id[i].replace("?", "").split("=")[-1]
+                mess_id = int(message_id[i].replace("?", "").split("=")[-1])
                 values = {"date": date[i], "text": message_text[i], "user_id": user_id, "_id": mess_id, "responses": [], "sentiment": -1, "subjectivity": -1, "context": [], "coin_mentions": []}
                 try:
                     db.messages.insert_one(values)

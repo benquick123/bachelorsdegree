@@ -1,9 +1,7 @@
-import time
 import datetime
+import time
 
 import poloniex
-import observer
-from autobahn.asyncio.wamp import ApplicationRunner
 
 
 def setupPoloniex():
