@@ -19,7 +19,7 @@ for entry in db.messages.find().sort("_id", 1):
 
     first_word = entry["text"].split(",")[0]
     if first_word in users:
-        if users_last_message[users[first_word]] is not None:
+        if users_last_message[users[first_word]] is not None and entry["_id"] != users_last_message[users[first_word]]:
             if abs(users_last_message[users[first_word]] - entry["_id"]) < 1000:
                 db.messages.update_one({"_id": users_last_message[users[first_word]]}, {"$push": {"responses": entry["_id"]}})
                 print("UPDATE:", "message", users_last_message[users[first_word]], "updated with response", entry["_id"])
