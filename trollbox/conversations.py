@@ -71,6 +71,6 @@ for entry in db.messages.find():
                 to_remove_tmp.add(entry_to_remove)
         to_remove -= to_remove_tmp
 
-        print(" and after", len(to_remove), "UPDATED:", str(entry["_id"]))
+        print(" and after", len(to_remove), "UPDATED at ID:", str(entry["_id"]))
 
 build_conversation_database(all_messages, db)

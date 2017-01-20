@@ -60,7 +60,7 @@ if "C2" in currencies:
     currencies["C2"] = "Coin2"
 
 for key, value in currencies.items():
-	print(key, value)
+    print(key, value)
 print("currencies left:", len(currencies))
 
 i = 0

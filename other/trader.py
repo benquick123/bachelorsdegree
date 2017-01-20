@@ -37,8 +37,8 @@ def saveChartData(polo, allCurrInfo):
 
 
 
-polo = setupPoloniex()
-allCurrInfo = getCurrInfo(polo)
+#polo = setupPoloniex()
+#allCurrInfo = getCurrInfo(polo)
 
 #saveChartData(polo, allCurrInfo)
 
