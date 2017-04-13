@@ -1,4 +1,5 @@
 from datetime import datetime
+from other.Article import Article
 
 import pymongo
 import pytz
@@ -7,9 +8,13 @@ import other.textrank as textrank
 from other.rake import Rake
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.cluster import MeanShift
+from sklearn.svm import LinearSVC
+from sklearn.model_selection import cross_val_score
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import pickle
 
 from operator import itemgetter
+import time
 
 
 def delete_duplicates(a):
@@ -36,7 +41,7 @@ def delete_duplicates(a):
 def load_articles(db_news, currencies, date_from, date_to, p=False):
     articles = []
 
-    for article in db_news.articles.find({"$and": [{"date": {"$gte": date_from}}, {"date": {"$lte": date_to}}, {"$or": [{"relevant": True}, {"relevant_predict": True}]}]}, {"_id": 1, "title": 1, "date": 1, "source": 1, "authors": 1, "text": 1, "stemmed_title": 1, "stemmed_text": 1, "keywords_textrank": 1}):
+    for article in db_news.articles.find({"$and": [{"date": {"$gte": date_from}}, {"date": {"$lte": date_to}}, {"$or": [{"relevant": True}, {"relevant_predict": True}]}]}, {"_id": 1, "title": 1, "date": 1, "source": 1, "authors": 1, "text": 1, "stemmed_title": 1, "stemmed_text": 1, "keywords_textrank": 1, "sentiment_text": 1, "sentiment_title": 1}):
         currency = article["_id"].split(":")[0]
         if (currency in currencies or len(currencies) == 0) and len(article["title"]) > 0 and len(article["text"]) > 0:
             article["currencies"] = [currency]
@@ -115,9 +120,89 @@ def calc_distances(articles):
         pickle.dump(clusters, open("mean_shift_clusters.p", "wb"))
         pickle.dump(mean_shift, open("mean_shift.p", "wb"))
 
-    print(X.shape)
-    print(len(mean_shift.cluster_centers_))
+    # print(X.shape)
+    print("n clusters:", len(mean_shift.cluster_centers_))
     return X, clusters, articles
+
+
+def create_articles(client, articles, clusters, threshold=0.0):
+    _articles = []
+    for i, article in enumerate(articles):
+        time_start = int(time.mktime(article["date"].timetuple()) + 3600)
+        time_end = time_start + 6*3600
+
+        _article = Article(article["_id"], date=time_start, title=article["title"], text=article["text"], authors=article["authors"], source=article["source"])
+        _article.stemmed_text = article["stemmed_text"]
+        _article.stemmed_title = article["stemmed_title"]
+        _article.cluster = clusters[i]
+
+        currencies = set(article["currencies"])
+        currencies_to_del = set()
+
+        for currency in currencies:
+            pmin = 99999999
+            pmax = -99999999
+            tmin = 0
+            tmax = 0
+
+            first_price = 0
+
+            for price in client["crypto_prices"][currency.lower()].find({"$and": [{"_id": {"$gte": time_start}}, {"_id": {"$lte": time_end}}]}):
+                if first_price == 0:
+                    first_price = price["weightedAverage"]
+                else:
+                    if price["weightedAverage"] < pmin:
+                        pmin = price["weightedAverage"]
+                        tmin = price["_id"] - time_start
+                    if price["weightedAverage"] > pmax:
+                        pmax = price["weightedAverage"]
+                        tmax = price["_id"] - time_start
+
+            if first_price > 0:
+                pmin = (pmin - first_price) / first_price
+                pmax = (pmax - first_price) / first_price
+
+                if abs(pmin) >= threshold or abs(pmax) >= threshold:
+                    _article.pmin.append(pmin)
+                    _article.pmax.append(pmax)
+                    _article.tmin.append(tmin)
+                    _article.tmax.append(tmax)
+
+                    if abs(pmin) >= abs(pmax):
+                        _article.classification.append(0)
+                    else:
+                        _article.classification.append(1)
+                else:
+                    currencies_to_del.add(currency)
+            else:
+                currencies_to_del.add(currency)
+
+        if len(currencies) != len(currencies_to_del):
+            if "sentiment_text" in article.keys():
+                _article.sentiment_title = article["sentiment_title"]
+                _article.sentiment_text = article["sentiment_text"]
+            else:
+                _article = sentiment_analyzer(_article, db=client["news"])
+
+            currencies -= currencies_to_del
+            _article.currencies = currencies
+            _article.map_currencies()
+            _articles.append(_article)
+
+    return _articles
+
+
+def sentiment_analyzer(article, db=None):
+    analyzer = SentimentIntensityAnalyzer()
+    scores_text = analyzer.polarity_scores(article.text)
+    scores_title = analyzer.polarity_scores(article.title)
+
+    if db is not None:
+        print("calculating and saving sentiment")
+        db.articles.update({"_id": article.id}, {"$set": {"sentiment_text": scores_text, "sentiment_title": scores_title}})
+    article.sentiment_text = scores_text
+    article.sentiment_title = scores_title
+    return article
 
 
 def __main__():
@@ -134,7 +219,24 @@ def __main__():
     # get_keywords(articles)
 
     X, clusters, articles = calc_distances(articles)
-    print(clusters.tolist())
+
+    # price change threshold: [0:1]
+    articles = create_articles(client, articles, clusters, threshold=0.1)
+    print("n articles:", len(articles))
+
+    # currency, text_pos, text_neu, text_neg, text_comb, title_pos, title_neu, title_neg, title_comb, classification
+    x = []
+    for article in articles:
+        article_matrix = article.get_article_matrix()
+        for line in article_matrix:
+            x.append(line)
+
+    x = np.array(x)
+    X = x[:, :-1]
+    Y = x[:, -1]
+    model = LinearSVC()
+    scores = cross_val_score(model, X, Y, cv=50)
+    print("Accuracy: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
 
 __main__()
 
