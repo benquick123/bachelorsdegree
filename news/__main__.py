@@ -1,20 +1,20 @@
+import pickle
+import time
 from datetime import datetime
-from other.Article import Article
+from operator import itemgetter
 
+import numpy as np
 import pymongo
 import pytz
-import numpy as np
-import other.textrank as textrank
-from other.rake import Rake
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.cluster import MeanShift
-from sklearn.svm import LinearSVC
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import cross_val_score
+from sklearn.svm import LinearSVC
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import pickle
 
-from operator import itemgetter
-import time
+import other.textrank as textrank
+from news.Article import Article
+from other.rake import Rake
 
 
 def delete_duplicates(a):
