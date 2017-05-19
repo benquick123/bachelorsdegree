@@ -12,9 +12,9 @@ from sklearn.model_selection import cross_val_score
 from sklearn.svm import LinearSVC
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-import other.textrank as textrank
+import other.test_clustering.textrank as textrank
 from news.Article import Article
-from other.rake import Rake
+from other.test_clustering.rake import Rake
 
 
 def delete_duplicates(a):
@@ -134,6 +134,8 @@ def create_articles(client, articles, clusters, threshold=0.0):
         _article = Article(article["_id"], date=time_start, title=article["title"], text=article["text"], authors=article["authors"], source=article["source"])
         _article.stemmed_text = article["stemmed_text"]
         _article.stemmed_title = article["stemmed_title"]
+        _article.sentiment_text = article["sentiment_text"]
+        _article.sentiment_title = article["sentiment_title"]
         _article.cluster = clusters[i]
 
         currencies = set(article["currencies"])
@@ -178,11 +180,11 @@ def create_articles(client, articles, clusters, threshold=0.0):
                 currencies_to_del.add(currency)
 
         if len(currencies) != len(currencies_to_del):
-            if "sentiment_text" in article.keys():
-                _article.sentiment_title = article["sentiment_title"]
-                _article.sentiment_text = article["sentiment_text"]
-            else:
-                _article = sentiment_analyzer(_article, db=client["news"])
+            # if "sentiment_text" in article.keys():
+            #     _article.sentiment_title = article["sentiment_title"]
+            #     _article.sentiment_text = article["sentiment_text"]
+            # else:
+            #     _article = sentiment_analyzer(_article, db=client["news"])
 
             currencies -= currencies_to_del
             _article.currencies = currencies
@@ -190,19 +192,6 @@ def create_articles(client, articles, clusters, threshold=0.0):
             _articles.append(_article)
 
     return _articles
-
-
-def sentiment_analyzer(article, db=None):
-    analyzer = SentimentIntensityAnalyzer()
-    scores_text = analyzer.polarity_scores(article.text)
-    scores_title = analyzer.polarity_scores(article.title)
-
-    if db is not None:
-        print("calculating and saving sentiment")
-        db.articles.update({"_id": article.id}, {"$set": {"sentiment_text": scores_text, "sentiment_title": scores_title}})
-    article.sentiment_text = scores_text
-    article.sentiment_title = scores_title
-    return article
 
 
 def __main__():
@@ -237,8 +226,6 @@ def __main__():
     model = LinearSVC()
     scores = cross_val_score(model, X, Y, cv=50)
     print("Accuracy: %0.4f (+/- %0.4f)" % (scores.mean(), scores.std() * 2))
-
-__main__()
 
 
 """
