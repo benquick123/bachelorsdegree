@@ -23,7 +23,7 @@ def writeFile(filename, number, response):
 def makeURL(keywords, date_start, date_end):
     url = "https://" + username + ":" + password + \
         "@" + host + ":" + port + "/api/v1/messages/"
-    words = "(#" + keywords[0].lower() + " OR #" + keywords[1].lower().replace(" ", "")  + ")"
+    words = "(#" + keywords[0].lower() + " OR #" + keywords[1].lower().replace(" ", "") + ")"
     query = quote("(posted:" + date_start + "," +
                   date_end + " AND " + words + ")")
     search = "search?q=" + query + "&size=3000"
@@ -71,7 +71,7 @@ for curr_key, curr_value in currencies.items():
         fd = str(from_date.year) + "-" + str(from_date.month).zfill(2) + "-" + str(from_date.day).zfill(2)
         from_date = from_date + relativedelta(weeks=+1)
         if from_date > to_date:
-        	from_date = to_date
+            from_date = to_date
         td = from_date + relativedelta(days=-1)
         td = str(td.year) + "-" + str(td.month).zfill(2) + "-" + str(td.day).zfill(2)
 

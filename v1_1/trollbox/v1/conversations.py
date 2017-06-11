@@ -1,9 +1,10 @@
 import pymongo
 from importlib import import_module
 from datetime import datetime
+from v1_1.trollbox.v1.response_tree import build_tree, print_tree
 
-build_tree = import_module("response_tree").build_tree
-print_tree = import_module("response_tree").print_tree
+# build_tree = import_module("response_tree").build_tree
+# print_tree = import_module("response_tree").print_tree
 
 
 def find_conversation_end(tree):
@@ -53,24 +54,28 @@ def build_conversation_database(messages, db):
         db.conversations.insert_one(data)
         print("SUCCESS:", _id, "inserted into db.conversations.")
 
-client = pymongo.MongoClient(host="127.0.0.1", port=27017)
-db = client["trollbox"]
 
-all_messages = dict()
-to_remove = set()
+def __main__():
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    db = client["trollbox"]
 
-for entry in db.messages.find():
-    all_messages[entry["_id"]] = len(entry["responses"]) > 0
-    to_remove = to_remove.union(set(entry["responses"]))
-    if entry["_id"] % 10000 == 0:
-        to_remove_tmp = set()
-        print("to_remove size before is", len(to_remove), end="")
-        for entry_to_remove in to_remove:
-            if entry_to_remove in all_messages:
-                del all_messages[entry_to_remove]
-                to_remove_tmp.add(entry_to_remove)
-        to_remove -= to_remove_tmp
+    all_messages = dict()
+    to_remove = set()
 
-        print(" and after", len(to_remove), "UPDATED at ID:", str(entry["_id"]))
+    for entry in db.messages.find():
+        all_messages[entry["_id"]] = len(entry["responses"]) > 0
+        to_remove = to_remove.union(set(entry["responses"]))
+        if entry["_id"] % 10000 == 0:
+            to_remove_tmp = set()
+            print("to_remove size before is", len(to_remove), end="")
+            for entry_to_remove in to_remove:
+                if entry_to_remove in all_messages:
+                    del all_messages[entry_to_remove]
+                    to_remove_tmp.add(entry_to_remove)
+            to_remove -= to_remove_tmp
 
-build_conversation_database(all_messages, db)
+            print(" and after", len(to_remove), "UPDATED at ID:", str(entry["_id"]))
+
+    build_conversation_database(all_messages, db)
+
+# __main__()

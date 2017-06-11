@@ -26,7 +26,7 @@ browser.get("http://www.polonibox.com/")
 input("Waiting")
 next_page(browser)
 
-for i in range(65947, 118000):
+for i in range(2, 118000):
     save_page(browser, i)
     next_page(browser)
 
