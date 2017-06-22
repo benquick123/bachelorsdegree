@@ -38,4 +38,4 @@ def print_tree(tree, level=0, multiple=set()):
 client = pymongo.MongoClient(host="127.0.0.1", port=27017)
 db = client["trollbox"]
 
-build_tree(4157660, db)
+build_tree(6929663, db)

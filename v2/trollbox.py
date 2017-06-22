@@ -6,12 +6,13 @@ from datetime import datetime
 import time
 from scipy import sparse
 
+conversations = []
+
 
 def load_with_attr(n=None, p=False):
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
     db = client["trollbox"]
 
-    conversations = []
     i = 0
     for conversation in db.conversations.find({"coin_mentions.0": {"$exists": True}}, {"_id": 1, "conversation_end": 1, "coin_mentions": 1, "messages_len": 1, "avg_sentiment": 1, "avg_polarity": 1}, no_cursor_timeout=True).sort("conversation_end", 1):
         if n is None or i < n:
@@ -36,69 +37,68 @@ def load_without_attr(p=False, save_to_db=True):
 
     pattern = re.compile("[\W]+")
 
-    conversations = []
+    # conversations = []
     i = 0
     for conversation in db.conversations.find({"coin_mentions.0": {"$exists": True}}, {"_id": 1, "conversation_end": 1, "coin_mentions": 1}, no_cursor_timeout=True).sort("conversation_end", 1):
         if p:
             print("processing conversation", i, "(" + str(conversation["_id"]) + ")")
             i += 1
 
-        if i >= 1038652:
-            conversation_tree = build_tree(conversation["_id"], db)
+        conversation_tree = build_tree(conversation["_id"], db)
 
-            messages = []
-            avg_sentiment = []
-            avg_polarity = []
-            for message in get_messages(conversation_tree):
-                message_text = message["text"].split(" ")
-                word = remove_username(message_text[0])
+        messages = []
+        avg_sentiment = []
+        avg_polarity = []
+        for message in get_messages(conversation_tree):
+            message_text = message["text"].split(" ")
+            word = remove_username(message_text[0])
+            if word is None:
+                del message_text[0]
+
+            text = []
+            for word in message_text:
+                word = word.lower()
+                word = common.remove_special_chars(word, pattern)
                 if word is None:
-                    del message_text[0]
+                    continue
 
-                text = []
-                for word in message_text:
-                    word = word.lower()
-                    word = common.remove_special_chars(word, pattern)
-                    if word is None:
-                        continue
+                # if not common.is_stop_word(word) or word == "not":
+                text.append(word)
 
-                    if not common.is_stop_word(word) or word == "not":
-                        text.append(word)
+            pos_tag_text = common.get_pos_tags(text)
+            text = common.lemmatize(text, pos_tag_text)
+            sentiment, polarity = common.calc_sentiment_polarity(text)
 
-                pos_tag_text = common.get_pos_tags(text)
-                sentiment, polarity = common.calc_sentiment_polarity(text, pos_tag_text)
-                text = common.stem(text)
+            message["clean_text"] = text
+            message["pos_tag_text"] = pos_tag_text
+            message["sentiment"] = sentiment
+            message["polarity"] = polarity
 
-                message["clean_text"] = text
-                message["pos_tag_text"] = pos_tag_text
-                message["sentiment"] = sentiment
-                message["polarity"] = polarity
+            # TODO: weight polarity and sentiment by user reputation
+            avg_sentiment.append(sentiment if np.isfinite(sentiment) else 0)
+            avg_polarity.append(polarity if np.isfinite(polarity) else 0)
 
-                # TODO: weight polarity and sentiment by user reputation
-                avg_sentiment.append(sentiment)
-                avg_polarity.append(polarity)
+            if save_to_db:
+                db.messages.update_one({"_id": message["_id"]}, {"$set": {"clean_text": text, "sentiment": sentiment, "polarity": polarity, "pos_tag_text": pos_tag_text}})
 
-                if save_to_db:
-                    db.messages.update_one({"_id": message["_id"]}, {"$set": {"clean_text": text, "sentiment": sentiment, "polarity": polarity, "pos_tag_text": pos_tag_text}})
+            if len(text) > 1:
+                messages.append(message)
 
-                if len(text) > 1:
-                    messages.append(message)
+        if len(messages) > 0:
+            avg_sentiment = np.mean(avg_sentiment) if len(avg_sentiment) > 0 else 0
+            avg_polarity = np.mean(avg_polarity) if len(avg_polarity) > 0 else 0
 
-            if len(messages) > 0:
-                avg_sentiment = np.mean(avg_sentiment)
-                avg_polarity = np.mean(avg_polarity)
+            conversation["messages"] = messages
+            conversation["messages_len"] = len(messages)
+            conversation["avg_sentiment"] = avg_sentiment
+            conversation["avg_polarity"] = avg_polarity
 
-                conversation["messages"] = messages
-                conversation["messages_len"] = len(messages)
-                conversation["avg_sentiment"] = avg_sentiment
-                conversation["avg_polarity"] = avg_polarity
+            if save_to_db:
+                db.conversations.update_one({"_id": conversation["_id"]}, {"$set": {"messages_len": len(messages), "avg_polarity": avg_polarity, "avg_sentiment": avg_sentiment}})
 
-                if save_to_db:
-                    db.conversations.update_one({"_id": conversation["_id"]}, {"$set": {"messages_len": len(messages), "avg_polarity": avg_polarity, "avg_sentiment": avg_sentiment}})
+            # conversations.append(conversation)
 
-                conversations.append(conversation)
-
-    return conversations
+    return None     # conversations
 
 
 def build_tree(_id, db):
@@ -143,40 +143,33 @@ def create_matrix(conversations, window, margin, p=False):
     X = None
     Y = []
 
-    tfidf, vocabulary = common.calc_tf_idf(conversations, "clean_text", is_conversation=True)
-    financial_weights = common.create_financial_vocabulary(vocabulary)
+    tfidf, vocabulary = common.calc_tf_idf(conversations, min_df=0.000005, max_df=1.0, dict_key="clean_text", is_conversation=True)
+    financial_weights = common.create_financial_vocabulary(vocabulary) + 1
+    sentiment_weights = common.calc_sentiment_for_vocabulary(vocabulary)
+    sentiment_weights = np.where(sentiment_weights >= 0, sentiment_weights + 1, sentiment_weights - 1)
+    weights = sparse.csr_matrix(financial_weights * sentiment_weights)
 
-    for conversation, conversation_tfidf in zip(conversations, tfidf):
+    date_start = datetime(2015, 11, 2, 0, 0, 0)
+
+    for i, (conversation, conversation_tfidf) in enumerate(zip(conversations, tfidf)):
         for currency in conversation["coin_mentions"]:
             if p:
-                print("processing conversation", str(conversation["_id"]), "(" + currency + ")", )
-            _X, _Y = create_matrix_line(client, conversation, conversation_tfidf, financial_weights, currency, window, margin)
-            if _Y is not None and _X is not None:
-                if X is None:
-                    X = sparse.csr_matrix(_X)
-                else:
-                    X = sparse.vstack([X, _X])
-                Y.append(_Y)
+                print("processing conversation", str(conversation["_id"]), "(" + currency + ")", i)
+
+            conversation["tfidf"] = conversation_tfidf
+            if conversation["conversation_end"] >= date_start:
+                _X, _Y = create_matrix_line(client, i, conversation, weights, currency, window, margin)
+                if _Y is not None and _X is not None:
+                    if X is None:
+                        X = sparse.csr_matrix(_X)
+                    else:
+                        X = sparse.vstack([X, _X])
+                    Y.append(_Y)
 
     return X, Y
 
 
-def create_matrix_line(client, conversation_data, tfidf, financial_weights, currency, window, margin):
-    avg_reputation = []
-    for message in conversation_data["messages"]:
-        avg_reputation.append(get_user_reputation(client, message))
-
-    averaged_results = common.get_averaged_results(client, conversation_data["conversation_end"], 24*3600, currency)
-    _X = [conversation_data["avg_sentiment"], conversation_data["avg_polarity"], np.mean(avg_reputation), conversation_data["messages_len"]] + averaged_results
-
-    if np.any(np.isnan(_X)) or np.any(np.isinf(_X)):
-        return None, None
-
-    tfidf = tfidf.todense()
-    tfidf = np.where(tfidf != 0, tfidf + financial_weights, 0).tolist()[0]
-    _X += tfidf
-
-    # date_from = int(time.mktime(datetime.strptime(conversation_data["conversation_end"], "%Y-%m:#d %H:%M:%S UTC").timetuple)) + 3600
+def create_matrix_line(client, i, conversation_data, weights, currency, window, margin):
     date_from = int(time.mktime(conversation_data["conversation_end"].timetuple()) + 3600)
     date_to = date_from + window
     percent_change = common.get_price_change(client, currency, date_from, date_to)
@@ -184,9 +177,27 @@ def create_matrix_line(client, conversation_data, tfidf, financial_weights, curr
         _Y = 0
         if percent_change > margin:
             _Y = 1
-        elif percent_change < -margin:
-            _Y = -1
+        elif percent_change <= -margin:
+            _Y = 1
     else:
         return None, None
+
+    _price_change = common.get_price_change(client, currency, date_from-24*3600, date_from)
+
+    avg_reputation = []
+    for message in conversation_data["messages"]:
+        avg_reputation.append(get_user_reputation(client, message))
+
+    db_averages = common.get_averages_from_db(client, conversation_data["conversation_end"], 24*3600, currency, conversations=False)
+    data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], 24*3600, currency, i, 0.004, type="conversation")
+
+    _X = [1 / (n+1), conversation_data["avg_sentiment"], conversation_data["avg_polarity"], np.mean(avg_reputation), conversation_data["messages_len"], _price_change] + data_averages + db_averages     # avg_reputation and messages_len are not in [-1, 1]
+
+    if not np.all(np.isfinite(_X)):
+        return None, None
+
+    tfidf = conversation_data["tfidf"] * (1 / (n+1)) + average_tfidf * (n / (n+1))
+    tfidf = tfidf.multiply(weights)
+    _X += tfidf.todense().tolist()[0]
 
     return sparse.csr_matrix(_X), _Y
