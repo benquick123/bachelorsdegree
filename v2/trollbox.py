@@ -166,37 +166,40 @@ def create_matrix(conversations, window, margin, p=False):
                         X = sparse.vstack([X, _X])
                     Y.append(_Y)
 
+    # X: text_weight, average_sentiment, average_polarity, avg_reputation, conversation_length, past_price_change, past_distribution, past_polarity, past_sentiment,
+    # past_article_distribution, past_article_polarity, past_article_sentiment, past_tweet_distribution, past_tweet_polarity, past_tweet_sentiment, weighted_tfidf
     return X, Y
 
 
 def create_matrix_line(client, i, conversation_data, weights, currency, window, margin):
     date_from = int(time.mktime(conversation_data["conversation_end"].timetuple()) + 3600)
     date_to = date_from + window
-    percent_change = common.get_price_change(client, currency, date_from, date_to)
+    percent_change = common.get_min_max_price_change(client, currency, date_from, date_to)
     if percent_change is not None:
         _Y = 0
         if percent_change > margin:
             _Y = 1
         elif percent_change <= -margin:
-            _Y = 1
+            _Y = -1
     else:
         return None, None
 
-    _price_change = common.get_price_change(client, currency, date_from-24*3600, date_from)
+    _price_change = common.get_price_change(client, currency, date_from-600, date_from)
 
     avg_reputation = []
     for message in conversation_data["messages"]:
         avg_reputation.append(get_user_reputation(client, message))
 
-    db_averages = common.get_averages_from_db(client, conversation_data["conversation_end"], 24*3600, currency, conversations=False)
-    data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], 24*3600, currency, i, 0.004, type="conversation")
+    db_averages = common.get_averages_from_db(client, conversation_data["conversation_end"], 600, currency, conversations=False)
+    data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], 600, currency, i, 0, type="conversation")
 
     _X = [1 / (n+1), conversation_data["avg_sentiment"], conversation_data["avg_polarity"], np.mean(avg_reputation), conversation_data["messages_len"], _price_change] + data_averages + db_averages     # avg_reputation and messages_len are not in [-1, 1]
 
     if not np.all(np.isfinite(_X)):
         return None, None
 
-    tfidf = conversation_data["tfidf"] * (1 / (n+1)) + average_tfidf * (n / (n+1))
+    # tfidf = conversation_data["tfidf"]
+    tfidf = conversation_data["tfidf"] * (2 / (n+1)) + (average_tfidf * (n / (n+1))).multiply(conversation_data["tfidf"].power(0))
     tfidf = tfidf.multiply(weights)
     _X += tfidf.todense().tolist()[0]
 

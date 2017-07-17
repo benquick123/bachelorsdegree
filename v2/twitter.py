@@ -139,7 +139,8 @@ def create_matrix(tweets, window, margin, p=False):
                 else:
                     X = sparse.vstack([X, _X])
                 Y.append(_Y)
-
+    # X: text weight, sentiment, polarity, past_price_change, followers_count, friends_count, verified, past_tweet_distribution, past_tweet_polarity, past_tweet_sentiment, past_article_distribution,
+    # past_article_polarity, past_article_sentiment, past_conversation_distribution, past_conversation_polarity, past_conversation_sentiment, topics[50], weighted_tfidf
     return X, Y
 
 
@@ -156,19 +157,19 @@ def create_matrix_line(client, i, tweet_data, weights, window, margin):
     else:
         return None, None
 
-    _price_change = common.get_price_change(client, tweet_data["crypto_currency"].lower(), date_from-(24*3600), date_from)
+    _price_change = common.get_price_change(client, tweet_data["crypto_currency"].lower(), date_from-900, date_from)
 
-    db_averages = common.get_averages_from_db(client, tweet_data["posted_time"], 24*3600, tweet_data["crypto_currency"], tweets=False)
-    data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(tweets, tweet_data["posted_time"], 24*3600, tweet_data["crypto_currency"], i, 0.004, type="tweet")
+    db_averages = common.get_averages_from_db(client, tweet_data["posted_time"], 900, tweet_data["crypto_currency"], tweets=False)
+    data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(tweets, tweet_data["posted_time"], 900, tweet_data["crypto_currency"], i, 0.004, type="tweet")
 
-    topics = (n / (n+1)) * average_topics + (1 / (n+1)) * tweet_data["topics"]
+    topics = (n / (n+1)) * average_topics + (2 / (n+1)) * tweet_data["topics"]
 
     user_info = get_user_info(client, tweet_data)
     _X = [1 / (n+1), tweet_data["sentiment"], tweet_data["polarity"], _price_change] + user_info + data_averages + db_averages + list(topics)              # user_info is out of [-1, 1] (int))
     if not np.all(np.isfinite(_X)):
         return None, None
 
-    tfidf = tweet_data["tfidf"] * (1 / (n + 1)) + average_tfidf * (n / (n + 1))
+    tfidf = tweet_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(tweet_data["tfidf"].power(0))
     tfidf = tfidf.multiply(weights)
     _X += tfidf.todense().tolist()[0]
 

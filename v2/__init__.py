@@ -3,16 +3,53 @@ import v2.trollbox as trollbox
 import v2.news as news
 import v2.common as common
 from sklearn.svm import LinearSVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import cross_val_score
+from sklearn.feature_selection import SelectFromModel
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.preprocessing import StandardScaler
 from collections import Counter
 from scipy import sparse
 import pickle
+import numpy as np
 
 
 def initial_load():
     news.load_without_attr(p=True)
     trollbox.load_without_attr(p=True)
     twitter.load_without_attr(p=True)
+
+
+def train(n, feature_selector, model, data_X, data_Y, p=True):
+    data_Y = np.array(data_Y)
+    scores, precision, recall = [], [], []
+    indexes = np.array(np.linspace(0, data_X.shape[0] - 1, n + 1), dtype="int")
+    for i in range(n):
+        mask = np.array([True] * data_X.shape[0])
+        mask[indexes[i]:indexes[i + 1]] = False
+        if p:
+            print(data_X.shape)
+        sfm = SelectFromModel(feature_selector)
+        sfm.fit(data_X[mask, :], data_Y[mask])
+        reduced_data_X = sfm.transform(data_X)
+        if p:
+            print(reduced_data_X.shape)
+            print("classes:", dict(Counter(data_Y)))
+            print("training model")
+
+        # conversation_scores = cross_val_score(conversations_model, conversations_X, conversations_Y, cv=10)
+        model.fit(reduced_data_X[mask, :], data_Y[mask])
+        pred_Y = model.predict(reduced_data_X[~mask, :])
+        scores.append(accuracy_score(data_Y[~mask], pred_Y))
+        precision.append(precision_score(data_Y[~mask], pred_Y, average="weighted"))
+        recall.append(recall_score(data_Y[~mask], pred_Y, average="weighted"))
+
+    # print("accuracy: %0.3f (+/- %0.3f)" % (conversation_scores.mean(), conversation_scores.std()))
+    print("accuracy: %0.3f (+/- %0.3f)" % (np.mean(scores), np.std(scores)))
+    print("precision: %0.3f, recall: %0.3f" % (np.mean(precision), np.mean(recall)))
+    return scores, precision, recall, model
 
 
 def train_articles(window, margin, n=None, p=False, data=False, matrix=False, save=True):
@@ -58,11 +95,14 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
         articles_Y = pickle.load(f)
         f.close()
 
-    print("classes:", dict(Counter(articles_Y)))
-    print("training model")
-    articles_model = LinearSVC()
-    article_scores = cross_val_score(articles_model, articles_X, articles_Y, cv=20)
-    print("accuracy: %0.3f (+/- %0.3f)" % (article_scores.mean(), article_scores.std()))
+    # _articles_X = sparse.csr_matrix(StandardScaler(copy=False).fit_transform(articles_X[:, :16].todense()))
+    # articles_X[:, :16] = _articles_X
+    # articles_X = StandardScaler(copy=False, with_mean=False).fit_transform(articles_X)
+
+    feature_selector = LinearSVC()
+    model = LinearSVC()
+    n = 10
+    train(n, feature_selector, model, articles_X, articles_Y)
 
 
 def train_conversations(window, margin, n=None, p=False, data=False, matrix=False, save=True):
@@ -104,7 +144,6 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
         print("creating matrix")
         conversations_X, conversations_Y = trollbox.create_matrix(conversations, window, margin, p)
         print("deleting conversations")
-        del conversations
         if save:
             print("saving matrix pickle")
             i = 0
@@ -140,11 +179,16 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
         conversations_Y = pickle.load(f)
         f.close()
 
-    print("classes:", dict(Counter(conversations_Y)))
-    print("training model")
-    conversations_model = LinearSVC()
-    conversation_scores = cross_val_score(conversations_model, conversations_X, conversations_Y, cv=50)
-    print("accuracy: %0.3f (+/- %0.3f)" % (conversation_scores.mean(), conversation_scores.std()))
+    del conversations
+
+    # _conversations_X = sparse.csr_matrix(StandardScaler(copy=False).fit_transform(conversations_X[:, :15].todense()))
+    # conversations_X[:, :15] = _conversations_X
+    # conversations_X = StandardScaler(copy=False, with_mean=False).fit_transform(conversations_X)
+
+    feature_selector = LinearSVC()
+    model = LinearSVC()
+    n = 10
+    train(n, feature_selector, model, conversations_X, conversations_Y)
 
 
 def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save=True):
@@ -222,30 +266,30 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
         tweets_Y = pickle.load(f)
         f.close()
 
-    print("classes:", dict(Counter(tweets_Y)))
-    print("training model")
-    tweets_model = LinearSVC()
-    tweet_scores = cross_val_score(tweets_model, tweets_X, tweets_Y, cv=50)
-    print("accuracy: %0.3f (+/- %0.3f)" % (tweet_scores.mean(), tweet_scores.std()))
+    feature_selector = LinearSVC()
+    model = LinearSVC()
+    n = 10
+    train(n, feature_selector, model, tweets_X, tweets_Y)
 
 
 def __init__():
     # initial_load()
 
-    # window = 3600 * 24
-    # margin = 0.0
+    # window = 1800
+    # margin = 0.005
     # train_articles(window, margin, p=True, data=True)
+    # exit()
 
-    # window = 3600
-    # margin = 0.0
+    # window = 900
+    # margin = 0.004
     # n_tweets = 100000
     # train_tweets(window, margin, n=n_tweets, p=True, data=True)
     # exit()
 
-    window = 3600
-    margin = 0.025
-    n_conversations = 50000
-    train_conversations(window, margin, n=n_conversations, p=True, data=True)
+    window = 900
+    margin = 0.01
+    n_conversations = 200000
+    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True)
     exit()
 
 __init__()

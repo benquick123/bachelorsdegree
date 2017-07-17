@@ -11,6 +11,15 @@ import csv
 from scipy import sparse
 
 financial_dict = dict()
+currencies = dict()
+
+
+def create_currencies_dict():
+    file = open("other/currencies.csv")
+    read = csv.reader(file, delimiter=";")
+
+    for line in read:
+        currencies[line[0].lower()] = line[1].lower()
 
 
 def create_financial_dict():
@@ -44,6 +53,7 @@ def create_financial_dict():
 
     if to_delete is not None:
         del financial_dict[key]
+
 
 def create_financial_vocabulary(vocabulary):
     m = []
@@ -242,12 +252,33 @@ def generate_topics(texts, dict_key, n_topics, is_conversation=False):
 
 def get_price_change(client, currency, date_from, date_to):
     db = client["crypto_prices"]
+    date_from = date_from - (date_from % 300) + 300
+    date_to = date_to - (date_to % 300) + 300
     try:
-        start_price = db[currency.lower()].find_one({"_id": date_from - (date_from % 300) + 300}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
-        end_price = db[currency.lower()].find_one({"_id": date_to - (date_to % 300) + 300}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
+        start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
+        end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "close": 1})["close"]
         percent_change = (end_price - start_price) / start_price
         return percent_change
     except TypeError:
+        return np.nan
+
+
+def get_min_max_price_change(client, currency, date_from, date_to):
+    db = client["crypto_prices"]
+    date_from = date_from - (date_from % 300) + 300
+    date_to = date_to - (date_to % 300) + 300
+    try:
+        start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
+        min_price = list(db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "close": 1}).sort("close", 1).limit(1))[0]["close"]
+        max_price = list(db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "close": 1}).sort("close", -1).limit(1))[0]["close"]
+
+        min_percent_change = (min_price - start_price) / start_price
+        max_percent_change = (max_price - start_price) / start_price
+        if abs(min_percent_change) > abs(max_percent_change):
+            return min_percent_change
+        else:
+            return max_percent_change
+    except TypeError or IndexError:
         return np.nan
 
 
@@ -308,12 +339,12 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type):
         tfidf = tfidf.mean(axis=0)
         tfidf = sparse.csr_matrix(np.where(tfidf > threshold, tfidf, 0)[0])
 
-    sentiment = np.average(sentiment, weights=weights) if len(sentiment) > 0 else 0
-    polarity = np.average(polarity, weights=weights) if len(polarity) > 0 else 0
+    sentiment = np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0
+    polarity = np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0
     distribution = np.average(weights) if len(weights) > 0 else 0
 
     if "topics" in data[0]:
-        if len(topics) == 0:
+        if len(topics) == 0 or sum(weights) == 0:
             topics = np.zeros(data[k]["topics"].shape[0])
         else:
             topics = np.average(topics, axis=0, weights=weights)
@@ -341,8 +372,8 @@ def get_averages_from_db(client, date_to, window, currency, articles=True, tweet
         distribution = np.average(weights) if len(weights) > 0 else 0
 
         averages.append(distribution)
-        averages.append(np.average(polarity, weights=weights) if len(polarity) > 0 else 0)
-        averages.append(np.average(sentiment, weights=weights) if len(sentiment) > 0 else 0)
+        averages.append(np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0)
+        averages.append(np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0)
     if tweets:
         sentiment = []
         polarity = []
@@ -357,8 +388,8 @@ def get_averages_from_db(client, date_to, window, currency, articles=True, tweet
         distribution = np.average(weights) if len(weights) > 0 else 0
 
         averages.append(distribution)
-        averages.append(np.average(polarity, weights=weights) if len(polarity) > 0 else 0)
-        averages.append(np.average(sentiment, weights=weights) if len(sentiment) > 0 else 0)
+        averages.append(np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0)
+        averages.append(np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0)
     if conversations:
         sentiment = []
         polarity = []
@@ -373,9 +404,10 @@ def get_averages_from_db(client, date_to, window, currency, articles=True, tweet
         distribution = np.average(weights) if len(weights) > 0 else 0
 
         averages.append(distribution)
-        averages.append(np.average(polarity, weights=weights) if len(polarity) > 0 else 0)
-        averages.append(np.average(sentiment, weights=weights) if len(sentiment) > 0 else 0)
+        averages.append(np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0)
+        averages.append(np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0)
 
     return averages
 
 create_financial_dict()
+create_currencies_dict()
