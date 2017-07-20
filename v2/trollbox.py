@@ -142,8 +142,9 @@ def create_matrix(conversations, window, margin, p=False):
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
     X = None
     Y = []
+    IDs = []
 
-    tfidf, vocabulary = common.calc_tf_idf(conversations, min_df=0.000005, max_df=1.0, dict_key="clean_text", is_conversation=True)
+    tfidf, vocabulary = common.calc_tf_idf(conversations, min_df=0.0, max_df=1.0, dict_key="clean_text", is_conversation=True)
     financial_weights = common.create_financial_vocabulary(vocabulary) + 1
     sentiment_weights = common.calc_sentiment_for_vocabulary(vocabulary)
     sentiment_weights = np.where(sentiment_weights >= 0, sentiment_weights + 1, sentiment_weights - 1)
@@ -158,49 +159,106 @@ def create_matrix(conversations, window, margin, p=False):
 
             conversation["tfidf"] = conversation_tfidf
             if conversation["conversation_end"] >= date_start:
-                _X, _Y = create_matrix_line(client, i, conversation, weights, currency, window, margin)
-                if _Y is not None and _X is not None:
+                _Y = create_Y(client, conversation, currency, window, margin)
+                if _Y is None:
+                    continue
+
+                _X = create_X(client, i, conversation, weights, currency)
+                if _X is not None:
                     if X is None:
                         X = sparse.csr_matrix(_X)
                     else:
                         X = sparse.vstack([X, _X])
                     Y.append(_Y)
+                    IDs.append(str(conversation["_id"]) + ":" + currency)
 
-    # X: text_weight, average_sentiment, average_polarity, avg_reputation, conversation_length, past_price_change, past_distribution, past_polarity, past_sentiment,
-    # past_article_distribution, past_article_polarity, past_article_sentiment, past_tweet_distribution, past_tweet_polarity, past_tweet_sentiment, weighted_tfidf
-    return X, Y
+    # general attr
+    labels = ["w", "avg_sentiment", "avg_polarity", "avg_reputation", "messages_len"]
+    # data averages
+    labels += ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"] + ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"] + ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"]
+    # db averages
+    labels += ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"]
+    labels += ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"]
+    labels += ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"]
+    # technical data
+    labels += ["price_15min", "volume_15min", "price_all_15min", "volume_all_15min", "price_1h", "volume_1h", "price_all_1h", "volume_all_1h", "price_6h", "volume_6h", "price_all_6h", "volume_all_6h"]
+    # tfidf
+    labels += vocabulary
+
+    return X, Y, IDs, labels
 
 
-def create_matrix_line(client, i, conversation_data, weights, currency, window, margin):
+def create_X(client, i, conversation_data, weights, currency):
+    date_from = int(time.mktime(conversation_data["conversation_end"].timetuple()) + 3600)
+
+    technical_data = []
+    db_averages = []
+    data_averages = []
+    average_tfidf, n = sparse.csr_matrix([]), 0
+
+    time_windows = [900, 3600, 6*3600]  # 15 min, 60 min, 6h
+    the_window = 900
+    for time_window in time_windows:
+        technical_data.append(common.get_price_change(client, currency, date_from - time_window, date_from))
+        technical_data.append(1 / (common.get_volume_average(client, currency, date_from - time_window, date_from) + 1))
+        technical_data.append(common.get_price_change(client, "all", date_from - time_window, date_from))
+        technical_data.append(1 / (common.get_volume_average(client, "all", date_from - time_window, date_from) + 1))
+        db_averages += common.get_averages_from_db(client, conversation_data["conversation_end"], time_window, currency, conversations=False)
+        if time_window != the_window:
+            data_averages += common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=True)
+        else:
+            _data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=False)
+            data_averages += _data_averages
+
+    avg_reputation = []
+    for message in conversation_data["messages"]:
+        avg_reputation.append(get_user_reputation(client, message))
+
+    _X = [1 / (n + 1), conversation_data["avg_sentiment"], conversation_data["avg_polarity"], 1 / (np.mean(avg_reputation) + 1), 1 / conversation_data["messages_len"]] + data_averages + db_averages + technical_data
+
+    if not np.all(np.isfinite(_X)):
+        return None
+
+    tfidf = conversation_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(conversation_data["tfidf"].power(0))
+    tfidf = tfidf.multiply(weights)
+
+    _X += tfidf.todense().tolist()[0]
+
+    return sparse.csr_matrix(_X)
+
+
+def create_Y(client, conversation_data, currency, window, margin):
     date_from = int(time.mktime(conversation_data["conversation_end"].timetuple()) + 3600)
     date_to = date_from + window
     percent_change = common.get_min_max_price_change(client, currency, date_from, date_to)
-    if percent_change is not None:
+
+    if not np.isnan(percent_change):
         _Y = 0
         if percent_change > margin:
             _Y = 1
         elif percent_change <= -margin:
             _Y = -1
     else:
-        return None, None
+        return None
 
-    _price_change = common.get_price_change(client, currency, date_from-600, date_from)
+    return _Y
 
-    avg_reputation = []
-    for message in conversation_data["messages"]:
-        avg_reputation.append(get_user_reputation(client, message))
 
-    db_averages = common.get_averages_from_db(client, conversation_data["conversation_end"], 600, currency, conversations=False)
-    data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], 600, currency, i, 0, type="conversation")
+def get_Y(IDs, window, margin):
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    ids = set(IDs)
+    Y = []
 
-    _X = [1 / (n+1), conversation_data["avg_sentiment"], conversation_data["avg_polarity"], np.mean(avg_reputation), conversation_data["messages_len"], _price_change] + data_averages + db_averages     # avg_reputation and messages_len are not in [-1, 1]
+    for conversation in conversations:
+        for currency in conversation["coin_mentions"]:
+            if str(conversation["_id"]) + ":" + currency in ids:
+                _Y = create_Y(client, conversation, currency, window, margin)
+                if _Y is None:
+                    Y.append(_Y)
+                else:
+                    print("recompute IDs!")
+                    return None
 
-    if not np.all(np.isfinite(_X)):
-        return None, None
+    return Y
 
-    # tfidf = conversation_data["tfidf"]
-    tfidf = conversation_data["tfidf"] * (2 / (n+1)) + (average_tfidf * (n / (n+1))).multiply(conversation_data["tfidf"].power(0))
-    tfidf = tfidf.multiply(weights)
-    _X += tfidf.todense().tolist()[0]
 
-    return sparse.csr_matrix(_X), _Y

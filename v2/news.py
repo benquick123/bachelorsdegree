@@ -147,6 +147,7 @@ def create_matrix(articles, window, margin, p=False):
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
     X = None
     Y = []
+    IDs = []
 
     tfidf, vocabulary = common.calc_tf_idf(articles, min_df=0.0, max_df=1.0, dict_key="reduced_text")
     financial_weights = common.create_financial_vocabulary(vocabulary) + 1
@@ -165,20 +166,74 @@ def create_matrix(articles, window, margin, p=False):
 
         article["tfidf"] = article_tfidf
         if article["date"] >= date_start:
-            _X, _Y = create_matrix_line(client, i, article, weights, window, margin)
-            if _Y is not None and _X is not None:
+            _Y = create_Y(client, article, window, margin)
+            if _Y is None:
+                continue
+
+            _X = create_X(client, i, article, weights)
+            if _X is not None:
                 if X is None:
                     X = sparse.csr_matrix(_X)
                 else:
                     X = sparse.vstack([X, _X])
                 Y.append(_Y)
+                IDs.append(article["_id"])
 
-    # X: text_weight, title_sentiment, text_sentiment, title_polarity, text_polarity, currency_in_title, past_price_change, past_article_distribution, past_article_polarity, past_article_sentiment,
-    # past_tweet_distribution, past_tweet_polarity, past_tweet_sentiment, past_conversation_distribution, past_conversation_polarity, past_conversation_sentiment, topics[100], weighted_tfidf
-    return X, Y
+    # general attr
+    labels = ["w", "title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
+    # data_averages
+    labels += ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"]
+    # db_averages
+    labels += ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"] + ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"]
+    labels += ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"] + ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"]
+    labels += ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"] + ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"]
+    # technical data
+    labels += ["price_15min", "volume_15min", "price_all_15min", "volume_all_15min", "price_1h", "volume_1h", "price_all_1h", "volume_all_1h", "price_6h", "volume_6h", "price_all_6h", "volume_all_6h"]
+    # topics
+    labels += ["topic_" + str(i) for i in range(len(articles[0]["topics"]))]
+    # tfidf
+    labels += vocabulary
+
+    return X, Y, IDs, labels
 
 
-def create_matrix_line(client, i, article_data, weights, window, margin):
+def create_X(client, i, article_data, weights):
+    date_from = int(time.mktime(article_data["date"].timetuple()) + 3600)
+
+    technical_data = []
+    db_averages = []
+    data_averages = []
+    average_tfidf, n, average_topics = sparse.csr_matrix([]), 0, np.array([])
+
+    time_windows = [900, 1800, 2*3600, 6*3600]                                          # 15 min, 60 min, 6h
+    the_window = 1800
+    for time_window in time_windows:
+        technical_data.append(common.get_price_change(client, article_data["currency"], date_from - time_window, date_from))
+        technical_data.append(1 / (common.get_volume_average(client, article_data["currency"], date_from - time_window, date_from) + 1))
+        technical_data.append(common.get_price_change(client, "all", date_from - time_window, date_from))
+        technical_data.append(1 / (common.get_volume_average(client, "all", date_from - time_window, date_from) + 1))
+        db_averages += common.get_averages_from_db(client, article_data["date"], time_window, article_data["currency"], articles=False)
+        if time_window != the_window:
+            data_averages += common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, 0, type="article", data_averages_only=True)
+        else:
+            _data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, 0, type="article", data_averages_only=False)
+            data_averages += _data_averages
+
+    _X = [1 / (n + 1), article_data["title_sentiment"], article_data["reduced_text_sentiment"], article_data["title_polarity"], article_data["reduced_text_polarity"], article_data["currency_in_title"]] + data_averages + db_averages + technical_data
+
+    if not np.all(np.isfinite(_X)):
+        return None
+
+    topics = article_data["topics"] * (2 / (n + 1)) + average_topics * (n / (n + 1))
+    tfidf = article_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(article_data["tfidf"].power(0))
+    tfidf = tfidf.multiply(weights)
+
+    _X += list(topics) + tfidf.todense().tolist()[0]
+
+    return sparse.csr_matrix(_X)
+
+
+def create_Y(client, article_data, window, margin):
     date_from = int(time.mktime(article_data["date"].timetuple()) + 3600)
     date_to = date_from + window
     percent_change = common.get_min_max_price_change(client, article_data["currency"].lower(), date_from, date_to)
@@ -190,24 +245,40 @@ def create_matrix_line(client, i, article_data, weights, window, margin):
         elif percent_change <= -margin:
             _Y = -1
     else:
-        return None, None
+        return None
 
-    _price_change = common.get_price_change(client, article_data["currency"].lower(), date_from-1800, date_from)
+    return _Y
 
-    db_averages = common.get_averages_from_db(client, article_data["date"], 1800, article_data["currency"], articles=False)
-    data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(articles, article_data["date"], 1800, article_data["currency"], i, 0, type="article")
 
-    topics = (n / (n+1)) * average_topics + (2 / (n+1)) * article_data["topics"]
-    # topics = article_data["topics"]
+def get_Y(IDs, window, margin):
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    ids = set(IDs)
+    Y = []
 
-    _X = [1 / (n+1), article_data["title_sentiment"], article_data["reduced_text_sentiment"], article_data["title_polarity"], article_data["reduced_text_polarity"], article_data["currency_in_title"], _price_change] + data_averages + db_averages + list(topics)
+    for article in articles:
+        if article["_id"] in ids:
+            _Y = create_Y(client, article, window, margin)
+            if _Y is not None:
+                Y.append(_Y)
+            else:
+                print("recompute IDs!")
+                return None
 
-    if not np.all(np.isfinite(_X)):
-        return None, None
+    return Y
 
-    # tfidf = article_data["tfidf"]
-    tfidf = article_data["tfidf"] * (2 / (n+1)) + (average_tfidf * (n / (n + 1))).multiply(article_data["tfidf"].power(0))
-    tfidf = tfidf.multiply(weights)
-    _X += tfidf.todense().tolist()[0]
 
-    return sparse.csr_matrix(_X), _Y
+def get_percent_currencies(IDs, window):
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    ids = set(IDs)
+    p = []
+    currencies = []
+
+    for article in articles:
+        if article["_id"] in ids:
+            date_from = int(time.mktime(article["date"].timetuple()) + 3600)
+            date_to = date_from + window
+            _p = common.get_min_max_price_change(client, article["currency"], date_from, date_to)
+            p.append(_p)
+            currencies.append(article["currency"].lower())
+
+    return p, currencies

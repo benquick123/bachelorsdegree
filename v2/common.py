@@ -250,13 +250,44 @@ def generate_topics(texts, dict_key, n_topics, is_conversation=False):
     return topics
 
 
+def get_total_volume(client, currency, date_from, date_to):
+    db = client["crypto_prices"]
+    date_from = date_from - (date_from % 300) + 300
+    date_to = date_to - (date_to % 300) + 300
+    volume = 0
+    for price_info in db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "volume": 1}):
+        volume += price_info["volume"]
+
+    return volume
+
+
+def get_volume_average(client, currency, date_from, date_to):
+    db = client["crypto_prices"]
+    date_from = date_from - (date_from % 300) + 300
+    date_to = date_to - (date_to % 300) + 300
+    window = date_to - date_from
+    weights = []
+    volumes = []
+
+    for price_info in db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 1, "volume": 1}):
+        volumes.append(price_info["volume"])
+        weights.append((price_info["_id"] - date_from) / window)
+
+    return np.average(volumes, weights=weights) if len(volumes) > 0 else 0
+
+
 def get_price_change(client, currency, date_from, date_to):
     db = client["crypto_prices"]
     date_from = date_from - (date_from % 300) + 300
     date_to = date_to - (date_to % 300) + 300
     try:
-        start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
-        end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "close": 1})["close"]
+        if currency != "all":
+            start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
+            end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "close": 1})["close"]
+        else:
+            start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
+            end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
+
         percent_change = (end_price - start_price) / start_price
         return percent_change
     except TypeError:
@@ -282,7 +313,7 @@ def get_min_max_price_change(client, currency, date_from, date_to):
         return np.nan
 
 
-def get_averages_from_data(data, date_to, window, currency, k, threshold, type):
+def get_averages_from_data(data, date_to, window, currency, k, threshold, type, data_averages_only=False):
     currency_key = ""
     date_key = ""
     sentiment_key = ""
@@ -290,8 +321,8 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type):
     if type == "article":
         currency_key = "currency"
         date_key = "date"
-        sentiment_key = "text_sentiment"
-        polarity_key = "text_polarity"
+        sentiment_key = "reduced_text_sentiment"
+        polarity_key = "reduced_text_polarity"
     elif type == "tweet":
         currency_key = "crypto_currency"
         date_key = "posted_time"
@@ -315,13 +346,14 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type):
     for i in range(k-1, -1, -1):
         if data[i][date_key] >= date_from:
             if (type != "conversation" and data[i][currency_key].lower() == currency.lower()) or (currency.lower() in set(data[i][currency_key])):
-                if "topics" in data[i]:
-                    topics.append(data[i]["topics"])
+                if not data_averages_only:
+                    if "topics" in data[i]:
+                        topics.append(data[i]["topics"])
 
-                if tfidf is None:
-                    tfidf = sparse.csr_matrix(data[i]["tfidf"])
-                else:
-                    tfidf = sparse.vstack([tfidf, data[i]["tfidf"]])
+                    if tfidf is None:
+                        tfidf = sparse.csr_matrix(data[i]["tfidf"])
+                    else:
+                        tfidf = sparse.vstack([tfidf, data[i]["tfidf"]])
 
                 sentiment.append(data[i][sentiment_key] if np.isfinite(data[i][sentiment_key]) else 0)
                 polarity.append(data[i][polarity_key] if np.isfinite(data[i][polarity_key]) else 0)
@@ -330,18 +362,22 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type):
         else:
             break
 
-    if tfidf is None or tfidf.shape[0] == 0:
-        tfidf = sparse.csr_matrix((1, data[k]["tfidf"].shape[1]))
-    else:
-        _weights = sparse.lil_matrix((len(weights), len(weights)))
-        _weights.setdiag(weights)
-        tfidf = _weights * tfidf
-        tfidf = tfidf.mean(axis=0)
-        tfidf = sparse.csr_matrix(np.where(tfidf > threshold, tfidf, 0)[0])
+    if not data_averages_only:
+        if tfidf is None or tfidf.shape[0] == 0:
+            tfidf = sparse.csr_matrix((1, data[k]["tfidf"].shape[1]))
+        else:
+            _weights = sparse.lil_matrix((len(weights), len(weights)))
+            _weights.setdiag(weights)
+            tfidf = _weights * tfidf
+            tfidf = tfidf.mean(axis=0)
+            tfidf = sparse.csr_matrix(np.where(tfidf > threshold, tfidf, 0)[0])
 
     sentiment = np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0
     polarity = np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0
     distribution = np.average(weights) if len(weights) > 0 else 0
+
+    if data_averages_only:
+        return [distribution, polarity, sentiment]
 
     if "topics" in data[0]:
         if len(topics) == 0 or sum(weights) == 0:

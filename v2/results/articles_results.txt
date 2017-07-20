@@ -1,0 +1,256 @@
+--------------------------------------NO VOLUMES-----------------------------------------------
+samples: 3976, features: 26464
+majority class: 0.408
+accuracy: 0.399 (+/- 0.039)
+precision: 0.377, recall: 0.381
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 3600, threshold: 0.004
+comment: no volumes
+
+samples: 3976, features: 26691
+majority class: 0.344
+accuracy: 0.409 (+/- 0.039)
+precision: 0.395, recall: 0.405
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 3600, threshold: 0.006
+comment: no volumes
+
+## BEST WITH 3 CLASSES ##
+samples: 3976, features: 26761
+majority class: 0.344
+accuracy: 0.418 (+/- 0.036)
+precision: 0.399, recall: 0.405
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: no volumes
+
+samples: 3976, features: 26527
+majority class: 0.419
+accuracy: 0.441 (+/- 0.066)
+precision: 0.390, recall: 0.393
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1200, threshold: 0.004
+comment: no volumes
+
+samples: 3976, features: 26277
+majority class: 0.532
+accuracy: 0.512 (+/- 0.020)
+precision: 0.508, recall: 0.508
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 21600, threshold: 0.0
+comment: no volumes
+
+samples: 3976, features: 26474
+majority class: 0.524
+accuracy: 0.501 (+/- 0.028)
+precision: 0.496, recall: 0.496
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.0
+comment: no volumes
+
+---------------------------------------FULL DATA (1 / VOLUME)-------------------------------------------
+samples: 3976, features: 26786
+majority class: 0.344
+accuracy: 0.417 (+/- 0.040)
+precision: 0.397, recall: 0.402
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 26786
+majority class: 0.344
+accuracy: 0.412 (+/- 0.044)
+precision: 0.394, recall: 0.402
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',   max_depth=None, max_features='auto', max_leaf_nodes=None,   min_impurity_split=1e-07, min_samples_leaf=1,   min_samples_split=2, min_weight_fraction_leaf=0.0,   n_estimators=10, n_jobs=1, oob_score=False, random_state=None,   verbose=0, warm_start=False)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 26786
+majority class: 0.344
+accuracy: 0.403 (+/- 0.052)
+precision: 0.381, recall: 0.388
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: MLPClassifier(activation='relu', alpha=0.0001, batch_size='auto', beta_1=0.9,   beta_2=0.999, early_stopping=False, epsilon=1e-08,   hidden_layer_sizes=(100,), learning_rate='constant',   learning_rate_init=0.001, max_iter=200, momentum=0.9,   nesterovs_momentum=True, power_t=0.5, random_state=None,   shuffle=True, solver='adam', tol=0.0001, validation_fraction=0.1,   verbose=False, warm_start=False)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 26786
+majority class: 0.344
+accuracy: 0.387 (+/- 0.070)
+precision: 0.372, recall: 0.378
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',  metric_params=None, n_jobs=1, n_neighbors=5, p=2,  weights='uniform')
+window: 1800, threshold: 0.004
+comment: 
+
+---------------------------------------FEATURE SELECTION THRESHOLD CHANGING------------------------------------
+----------------------------------------LINEARSVC, THRESHOLD=0.0, STEP=0.2-------------------------------------
+samples: 3976, features: 77071
+majority class: 0.344
+accuracy: 0.411 (+/- 0.040)
+precision: 0.391, recall: 0.397
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 62236
+majority class: 0.344
+accuracy: 0.412 (+/- 0.041)
+precision: 0.392, recall: 0.397
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 53677
+majority class: 0.344
+accuracy: 0.412 (+/- 0.039)
+precision: 0.393, recall: 0.399
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 43920
+majority class: 0.344
+accuracy: 0.417 (+/- 0.039)
+precision: 0.398, recall: 0.403
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 34447
+majority class: 0.344
+accuracy: 0.417 (+/- 0.040)
+precision: 0.397, recall: 0.403
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 26786
+majority class: 0.344
+accuracy: 0.417 (+/- 0.040)
+precision: 0.397, recall: 0.402
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 20712
+majority class: 0.344
+accuracy: 0.416 (+/- 0.038)
+precision: 0.395, recall: 0.400
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+## THE BEST ##
+samples: 3976, features: 16383
+majority class: 0.344
+accuracy: 0.418 (+/- 0.033)
+precision: 0.398, recall: 0.404
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: threshold = 1.4*mean
+
+samples: 3976, features: 13297
+majority class: 0.344
+accuracy: 0.418 (+/- 0.039)
+precision: 0.398, recall: 0.404
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 10997
+majority class: 0.344
+accuracy: 0.416 (+/- 0.035)
+precision: 0.397, recall: 0.403
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 9125
+majority class: 0.344
+accuracy: 0.415 (+/- 0.038)
+precision: 0.396, recall: 0.403
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 7710
+majority class: 0.344
+accuracy: 0.414 (+/- 0.032)
+precision: 0.395, recall: 0.401
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 6552
+majority class: 0.344
+accuracy: 0.412 (+/- 0.034)
+precision: 0.393, recall: 0.399
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 5642
+majority class: 0.344
+accuracy: 0.416 (+/- 0.039)
+precision: 0.394, recall: 0.401
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 3976, features: 4901
+majority class: 0.344
+accuracy: 0.414 (+/- 0.038)
+precision: 0.393, recall: 0.400
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
