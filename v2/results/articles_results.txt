@@ -254,3 +254,57 @@ model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, interc
 window: 1800, threshold: 0.004
 comment: 
 
+-------------------------------------------NEW DATASET-----------------------------------------------------
+----------------------------------VOLUME / VOLUME_ALL, SEPERATED TOPICS------------------------------------
+samples: 3976, features: 16138
+majority class: 0.344
+accuracy: 0.426 (+/- 0.030)
+precision: 0.403, recall: 0.412
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: best gift ever
+
+----------------------------------------ADDITIONAL TEST SET SPLIT-----------------------------------------
+samples: 429, features: 16305
+majority class: 0.354
+accuracy: 0.440
+precision: 0.437, recall: 0.441
+cv: 10, accuracy: 0.426 (+/- 0.036)
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
+samples: 390, features: 16181
+majority class: 0.335
+accuracy: 0.451
+precision: 0.441, recall: 0.452
+cv: 10, accuracy: 0.418 (+/- 0.036)
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: random seed = 1
+
+--------------------------------------------NEW HOPEFULLY FINAL DATASET-----------------------------------------
+samples: 3547, features: 16796
+majority class: 0.347
+accuracy: 0.426 (+/- 0.035)
+precision: 0.402, recall: 0.410
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment:
+
+samples: 3547, features: 16796
+majority class: 0.347
+accuracy: 0.355 (+/- 0.068)
+precision: 0.362, recall: 0.366
+cv: 10
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LogisticIT(alpha=1.0, max_iter=1000, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+

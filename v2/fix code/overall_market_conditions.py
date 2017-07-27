@@ -8,28 +8,28 @@ collections = set(db.collection_names())
 if "all" in collections:
     collections.remove("all")
 
-prices = dict()
+prev_prices = dict()
 for currency in collections:
-    prices[currency] = [0, np.nan]
+    prev_prices[currency] = np.nan
 
 start = 1446246000
 end = 1477954800
 
 while start <= end:
     volumes = []
+    prices = []
     for currency in collections:
         price_info = db[currency].find_one({"_id": start})
         if price_info is not None:
-            if prices[currency][0] == 0:
-                prices[currency][0] = 1
+            if np.isnan(prev_prices[currency]):
+                prices.append(1)
             else:
-                prices[currency][0] *= (price_info["weightedAverage"] / prices[currency][1])
-            prices[currency][1] = price_info["weightedAverage"]
+                prices.append(price_info["weightedAverage"] / prev_prices[currency])
             volumes.append(price_info["volume"])
+            prev_prices[currency] = price_info["weightedAverage"] if price_info["weightedAverage"] != 0 else np.nan
         else:
-            prices[currency][0] = 0
+            prev_prices[currency] = np.nan
 
-    print("volume:", sum(volumes))
-    print("price:", sum([item[0] for item in prices.values()]))
-    db["all"].insert_one({"_id": start, "volume": sum(volumes), "weightedAverage": sum([item[0] for item in prices.values()])})
+    print(start)
+    db["all"].insert_one({"_id": start, "volume": sum(volumes), "weightedAverage": np.mean(prices)})
     start += 300

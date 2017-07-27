@@ -155,9 +155,10 @@ def create_matrix(tweets, window, margin, p=False):
     labels += ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"]
     labels += ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"]
     # technical data
-    labels += ["price_15min", "volume_15min", "price_all_15min", "volume_all_15min", "price_1h", "volume_1h", "price_all_1h", "volume_all_1h", "price_6h", "volume_6h", "price_all_6h", "volume_all_6h"]
+    labels += ["price_15min", "volume_15min", "price_all_15min", "price_1h", "volume_1h", "price_all_1h", "price_6h", "volume_6h", "price_all_6h"]
     # topics
     labels += ["topic_" + str(i) for i in range(len(tweets[0]["topics"]))]
+    labels += ["average_topic_" + str(i) for i in range(len(tweets[0]["topics"]))]
     # tfidf
     labels += vocabulary
 
@@ -176,12 +177,12 @@ def create_X(client, i, tweet_data, weights):
     the_window = 900
     for time_window in time_windows:
         technical_data.append(common.get_price_change(client, tweet_data["crypto_currency"], date_from - time_window, date_from))
-        technical_data.append(common.get_total_volume(client, tweet_data["crypto_currency"], date_from - time_window, date_from))
-        technical_data.append(common.get_price_change(client, "all", date_from - time_window, date_from))
-        technical_data.append(common.get_total_volume(client, "all", date_from - time_window, date_from))
+        technical_data.append(common.get_total_volume(client, tweet_data["crypto_currency"], date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
+        technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
+
         db_averages += common.get_averages_from_db(client, tweet_data["posted_time"], time_window, tweet_data["crypto_currency"], tweets=False)
         if time_window != the_window:
-            data_averages += common.get_averages_from_data(tweets, tweet_data["posted_time"], time_window, tweet_data["crypt_currency"], i, 0, type="tweet", data_averages_only=True)
+            data_averages += common.get_averages_from_data(tweets, tweet_data["posted_time"], time_window, tweet_data["crypto_currency"], i, threshold=0.0, type="tweet", data_averages_only=True)
         else:
             data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(tweets, tweet_data["posted_time"], time_window, tweet_data["crypto_currency"], i, 0, type="tweet", data_averages_only=False)
 
@@ -190,13 +191,13 @@ def create_X(client, i, tweet_data, weights):
     # user_info is out of [-1, 1] (int))
 
     if not np.all(np.isfinite(_X)):
-        return None, None
+        return None
 
-    topics = (n / (n + 1)) * average_topics + (2 / (n + 1)) * tweet_data["topics"]
+    # topics = (n / (n + 1)) * average_topics + (2 / (n + 1)) * tweet_data["topics"]
     tfidf = tweet_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(tweet_data["tfidf"].power(0))
     tfidf = tfidf.multiply(weights)
 
-    _X += list(topics) + tfidf.todense().tolist()[0]
+    _X += list(tweet_data["topics"]) + list(average_topics) + tfidf.todense().tolist()[0]
 
     return sparse.csr_matrix(_X)
 
@@ -217,3 +218,40 @@ def create_Y(client, tweet_data, window, margin):
 
     return _Y
 
+
+def get_Y(IDs, window, margin):
+    ids = set(IDs)
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    Y = []
+
+    for tweet in tweets:
+        if tweet["_id"] in ids:
+            _Y = create_Y(client, tweet, window, margin)
+            if _Y is not None:
+                Y.append(_Y)
+            else:
+                print("recompute IDs!")
+                return None
+
+    return Y
+
+
+def get_relative_Y_changes(IDs, window):
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    ids = set(IDs)
+    p = []
+    currencies = []
+
+    for tweet in tweets:
+        if tweet["_id"] in ids:
+            date_from = int(time.mktime(tweet["posted_time"].timetuple()) + 3600)
+            date_to = date_from + window
+            _p = common.get_min_max_price_change(client, tweet["currency"], date_from, date_to)
+            if not np.isnan(_p):
+                p.append(_p)
+                currencies.append(tweet["currency"])
+            else:
+                print("recompute IDs")
+                return None, None
+
+    return p, currencies

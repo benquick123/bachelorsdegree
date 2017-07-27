@@ -74,7 +74,6 @@ def load_without_attr(p=False, save_to_db=True):
             message["sentiment"] = sentiment
             message["polarity"] = polarity
 
-            # TODO: weight polarity and sentiment by user reputation
             avg_sentiment.append(sentiment if np.isfinite(sentiment) else 0)
             avg_polarity.append(polarity if np.isfinite(polarity) else 0)
 
@@ -181,7 +180,7 @@ def create_matrix(conversations, window, margin, p=False):
     labels += ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"]
     labels += ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"]
     # technical data
-    labels += ["price_15min", "volume_15min", "price_all_15min", "volume_all_15min", "price_1h", "volume_1h", "price_all_1h", "volume_all_1h", "price_6h", "volume_6h", "price_all_6h", "volume_all_6h"]
+    labels += ["price_15min", "volume_15min", "price_all_15min", "price_1h", "volume_1h", "price_all_1h", "price_6h", "volume_6h", "volume_all_6h"]
     # tfidf
     labels += vocabulary
 
@@ -200,12 +199,12 @@ def create_X(client, i, conversation_data, weights, currency):
     the_window = 900
     for time_window in time_windows:
         technical_data.append(common.get_price_change(client, currency, date_from - time_window, date_from))
-        technical_data.append(1 / (common.get_volume_average(client, currency, date_from - time_window, date_from) + 1))
-        technical_data.append(common.get_price_change(client, "all", date_from - time_window, date_from))
-        technical_data.append(1 / (common.get_volume_average(client, "all", date_from - time_window, date_from) + 1))
+        technical_data.append(common.get_total_volume(client, currency, date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
+        technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
+
         db_averages += common.get_averages_from_db(client, conversation_data["conversation_end"], time_window, currency, conversations=False)
         if time_window != the_window:
-            data_averages += common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=True)
+            data_averages += common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, threshold=0.0, type="conversation", data_averages_only=True)
         else:
             _data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=False)
             data_averages += _data_averages
@@ -253,7 +252,7 @@ def get_Y(IDs, window, margin):
         for currency in conversation["coin_mentions"]:
             if str(conversation["_id"]) + ":" + currency in ids:
                 _Y = create_Y(client, conversation, currency, window, margin)
-                if _Y is None:
+                if _Y is not None:
                     Y.append(_Y)
                 else:
                     print("recompute IDs!")
@@ -262,3 +261,23 @@ def get_Y(IDs, window, margin):
     return Y
 
 
+def get_relative_Y_changes(IDs, window):
+    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
+    ids = set(IDs)
+    p = []
+    currencies = []
+
+    for conversation in conversations:
+        for currency in conversation["coin_mentions"]:
+            if str(conversation["_id"]) + ":" + currency in ids:
+                date_from = int(time.mktime(conversation["conversation_end"].timetuple()) + 3600)
+                date_to = date_from + window
+                _p = common.get_min_max_price_change(client, currency, date_from, date_to)
+                if not np.isnan(_p):
+                    p.append(_p)
+                    currencies.append(currency.lower())
+                else:
+                    print("recompute IDs")
+                    return None, None
+
+    return p, currencies

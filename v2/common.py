@@ -261,19 +261,15 @@ def get_total_volume(client, currency, date_from, date_to):
     return volume
 
 
-def get_volume_average(client, currency, date_from, date_to):
+def get_all_price_changes(client, date_from, date_to):
     db = client["crypto_prices"]
     date_from = date_from - (date_from % 300) + 300
     date_to = date_to - (date_to % 300) + 300
-    window = date_to - date_from
-    weights = []
-    volumes = []
+    price = 1
+    for price_info in db["all"].find({"$and": [{"_id": {"$gt": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "weightedAverage": 1}):
+        price *= price_info["weightedAverage"]
 
-    for price_info in db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 1, "volume": 1}):
-        volumes.append(price_info["volume"])
-        weights.append((price_info["_id"] - date_from) / window)
-
-    return np.average(volumes, weights=weights) if len(volumes) > 0 else 0
+    return price - 1
 
 
 def get_price_change(client, currency, date_from, date_to):
@@ -281,12 +277,8 @@ def get_price_change(client, currency, date_from, date_to):
     date_from = date_from - (date_from % 300) + 300
     date_to = date_to - (date_to % 300) + 300
     try:
-        if currency != "all":
-            start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
-            end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "close": 1})["close"]
-        else:
-            start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
-            end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
+        start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
+        end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
 
         percent_change = (end_price - start_price) / start_price
         return percent_change
@@ -371,6 +363,8 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type, 
             tfidf = _weights * tfidf
             tfidf = tfidf.mean(axis=0)
             tfidf = sparse.csr_matrix(np.where(tfidf > threshold, tfidf, 0)[0])
+            print(tfidf)
+            input()
 
     sentiment = np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0
     polarity = np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0

@@ -1,0 +1,6 @@
+articles
+full - score: 0.427487865043 (+/- 0.039490440595), precision: 0.43703105913, recall: 0.427487865043, margin: 0.004, window: 1800
+topics only - score: 0.423259329991 (+/- 0.0407842834755), precision: 0.432318981564, recall: 0.423259329991, margin: 0.004, window: 1800
+none: 0.424105991884 (+/- 0.0394987522826), precision: 0.433364338952, recall: 0.424105991884, margin: 0.004, window: 1800
+average topics only - score: 0.428896315748 (+/- 0.042543143076), precision: 0.438710913956, recall: 0.428896315748, margin: 0.004, window: 1800
+
