@@ -113,7 +113,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
                 _other = []
                 date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
                 for back_window in back_windows:
-                    averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1])
+                    averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1], data_averages_only=True)
                     _other += averages
                     averages = common.get_averages_from_db(client, text[date_key], back_window, text[currency_key], articles=articles, tweets=tweets, conversations=conversations)
                     _other += averages
@@ -137,7 +137,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
                     _other = []
                     date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
                     for back_window in back_windows:
-                        averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1])
+                        averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1], data_averages_only=True)
                         _other += averages
                         averages = common.get_averages_from_db(client, text[date_key], back_window, currency, articles=articles, tweets=tweets, conversations=conversations)
                         _other += averages
@@ -160,7 +160,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     dates = get_dates_f(set(ids), raw_data, type)
 
-    _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, dates, save=False, p=False, learn=True, test=False)
+    _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
     result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
 
