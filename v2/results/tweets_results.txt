@@ -1,0 +1,10 @@
+samples: 9719, features: 5939
+majority class: 0.462
+accuracy: 0.542
+precision: 0.525, recall: 0.542
+area under roc: [ 0.59522193  0.64223156  0.5788807 ]cv: 10, accuracy: 0.484 (+/- 0.119)
+feature selection: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+model: LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True, intercept_scaling=1, loss='squared_hinge', max_iter=1000, multi_class='ovr', penalty='l2', random_state=None, tol=0.0001, verbose=0)
+window: 1800, threshold: 0.004
+comment: 
+
