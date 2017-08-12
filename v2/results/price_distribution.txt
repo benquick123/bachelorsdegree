@@ -53,3 +53,37 @@ articles, window: 16800, thirds margin: 0.0102679698625
 articles, window: 6000, thirds margin: 0.00650124931331
 articles, window: 1800, thirds margin: [ 0.01151381  0.01151381  0.01151381 ...,  0.01151381  0.01151381
   0.01151381]
+articles, window: 1800, thirds margin: 0.00350604951128
+articles, window: 1800, thirds margin: 0.00350604951128
+articles, window: 7200, thirds margin: 0.00701776788832
+articles, window: 7200, thirds margin: 0.00701776788832
+articles, window: 7200, thirds margin: 0.00701776788832
+articles, window: 7200, thirds margin: 0.00701776788832
+articles, window: 7200, thirds margin: 0.0102257276126
+articles, window: 7200, thirds margin: 0.0102257276126
+articles, window: 7200, thirds margin: 0.0102257276126
+articles, window: 7200, thirds margin: 0.0102257276126
+articles, window: 7200, thirds margin: 0.00701776788832
+articles, window: 1800, thirds margin: 0.00350604951128
+articles, window: 1800, thirds margin: 0.00350604951128
+articles, window: 1800, thirds margin: 0.00533668058034
+articles, window: 1800, thirds margin: 0.00191012058394
+articles, window: 1800, thirds margin: 0.00347793950513
+articles, window: 21600, thirds margin: 0.0131390310296
+articles, window: 43200, thirds margin: 0.0172873101043
+tweets, window: 1800, thirds margin: 2.93521219441e-05
+tweets, window: 3600, thirds margin: 0.0204072230792
+tweets, window: 3600, thirds margin: 1.06572072122e-06
+conversations, window: 900, thirds margin: 0.00545932394359
+tweets, window: 1800, thirds margin: 2.93521219441e-05
+tweets, window: 3600, thirds margin: 1.59258561472e-05
+tweets, window: 1800, thirds margin: 0.000814708501094
+tweets, window: 10800, thirds margin: 0.0178206242684
+tweets, window: 10800, thirds margin: 0.0178206242684
+tweets, window: 3600, thirds margin: 0.0328480684202
+tweets, window: 3600, thirds margin: -0.0152696650097
+tweets, window: 3600, thirds margin: -0.0152696650097
+tweets, window: 10800, thirds margin: 0.0178206242684
+articles, window: 1800, thirds margin: 0.00370865672927
+articles, window: 1800, thirds margin: 0.00370865672927
+articles, window: 1800, thirds margin: 0.00370865672927

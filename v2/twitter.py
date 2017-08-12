@@ -1,5 +1,5 @@
 import pymongo
-import v2.common as common
+import common as common
 import re
 import string
 import time
@@ -20,7 +20,7 @@ def load_with_attr(n=None, p=False):
             if p:
                 print("processing tweet", i, "(" + str(tweet["_id"]) + ")")
 
-            if len(tweet["clean_text"]) > 1:
+            if len(tweet["clean_text"]) > 1 and tweet["crypto_currency"].lower() != "btc":
                 tweets.append(tweet)
             i += 1
         else:
@@ -177,7 +177,11 @@ def create_X(client, i, tweet_data, weights):
     the_window = 900
     for time_window in time_windows:
         technical_data.append(common.get_price_change(client, tweet_data["crypto_currency"], date_from - time_window, date_from))
-        technical_data.append(common.get_total_volume(client, tweet_data["crypto_currency"], date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
+
+        total_volume1 = common.get_total_volume(client, tweet_data["crypto_currency"], date_from - time_window, date_from)
+        total_volume2 = common.get_total_volume(client, "all", date_from - time_window, date_from)
+        technical_data.append(total_volume1 / (total_volume2 if total_volume2 != 0 else 1))
+
         technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
 
         db_averages += common.get_averages_from_db(client, tweet_data["posted_time"], time_window, tweet_data["crypto_currency"], tweets=False)
@@ -194,7 +198,7 @@ def create_X(client, i, tweet_data, weights):
         return None
 
     # topics = (n / (n + 1)) * average_topics + (2 / (n + 1)) * tweet_data["topics"]
-    tfidf = tweet_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(tweet_data["tfidf"].power(0))
+    tfidf = tweet_data["tfidf"] * (1 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(tweet_data["tfidf"].power(0))
     tfidf = tfidf.multiply(weights)
 
     _X += list(tweet_data["topics"]) + list(average_topics) + tfidf.todense().tolist()[0]
@@ -246,10 +250,10 @@ def get_relative_Y_changes(IDs, window):
         if tweet["_id"] in ids:
             date_from = int(time.mktime(tweet["posted_time"].timetuple()) + 3600)
             date_to = date_from + window
-            _p = common.get_min_max_price_change(client, tweet["currency"], date_from, date_to)
+            _p = common.get_min_max_price_change(client, tweet["crypto_currency"], date_from, date_to)
             if not np.isnan(_p):
                 p.append(_p)
-                currencies.append(tweet["currency"])
+                currencies.append(tweet["crypto_currency"])
             else:
                 print("recompute IDs")
                 return None, None

@@ -1,5 +1,5 @@
 import pymongo
-import v2.common as common
+import common as common
 import re
 import numpy as np
 from datetime import datetime
@@ -218,7 +218,7 @@ def create_X(client, i, conversation_data, weights, currency):
     if not np.all(np.isfinite(_X)):
         return None
 
-    tfidf = conversation_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(conversation_data["tfidf"].power(0))
+    tfidf = conversation_data["tfidf"] * (1 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(conversation_data["tfidf"].power(0))
     tfidf = tfidf.multiply(weights)
 
     _X += tfidf.todense().tolist()[0]
