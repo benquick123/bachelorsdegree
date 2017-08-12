@@ -1,5 +1,5 @@
 import pymongo
-import v2.common as common
+import common as common
 import re
 import time
 from scipy import sparse
@@ -216,7 +216,7 @@ def create_X(client, i, article_data, weights):
 
         db_averages += common.get_averages_from_db(client, article_data["date"], time_window, article_data["currency"], articles=False)
         if time_window != the_window:
-            data_averages += common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, 0, type="article", data_averages_only=True)
+            data_averages += common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, threshold=0.0, type="article", data_averages_only=True)
         else:
             _data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, threshold=0.0, type="article", data_averages_only=False)
             data_averages += _data_averages
@@ -227,7 +227,7 @@ def create_X(client, i, article_data, weights):
         return None
 
     # topics = article_data["topics"]     # * (2 / (n + 1)) + average_topics * (n / (n + 1))
-    tfidf = article_data["tfidf"] * (2 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(article_data["tfidf"].power(0))
+    tfidf = article_data["tfidf"] * (1 / (n + 1)) + (average_tfidf * (n / (n + 1))).multiply(article_data["tfidf"].power(0))
     tfidf = tfidf.multiply(weights)
 
     _X += list(article_data["topics"]) + list(average_topics) + tfidf.todense().tolist()[0]

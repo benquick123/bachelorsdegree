@@ -157,3 +157,62 @@ conversations
 48 - r^2: 0.0198693087578, back_window: 6300, window: 6900, margin: 0.005
 49 - r^2: 0.0165476959894, back_window: 24300, window: 3300, margin: 0.005
 
+<<<<<<< HEAD
+=======
+articles
+2 - r^2: 0.0251131015358, back_window: 22800, window: 12900, margin: 0.004
+2 - r^2: 0.0171750191739, back_window: 60300, window: 13200, margin: 0.004
+2 - r^2: 0.0369987003235, back_window: 3000, window: 900, margin: 0.004
+2 - r^2: 0.0256585676289, back_window: 10800, window: 4800, margin: 0.004
+2 - r^2: 0.0413485248841, back_window: 1200, window: 900, margin: 0.004
+2 - r^2: 0.0208970516511, back_window: 14400, window: 18900, margin: 0.004
+2 - r^2: 0.0157971768231, back_window: 62700, window: 15600, margin: 0.004
+2 - r^2: 0.0152754541437, back_window: 86400, window: 21000, margin: 0.004
+2 - r^2: 0.0150909358475, back_window: 50100, window: 11100, margin: 0.004
+2 - r^2: 0.0176779274671, back_window: 66300, window: 19800, margin: 0.004
+2 - r^2: 0.0151551129605, back_window: 56100, window: 15300, margin: 0.004
+2 - r^2: 0.0327796867053, back_window: 23700, window: 6600, margin: 0.004
+2 - r^2: 0.0159305505655, back_window: 81000, window: 20700, margin: 0.004
+2 - r^2: 0.0435223509557, back_window: 10200, window: 13500, margin: 0.004
+2 - r^2: 0.0172468403028, back_window: 20700, window: 18000, margin: 0.004
+2 - r^2: 0.0158373753916, back_window: 38400, window: 15000, margin: 0.004
+2 - r^2: 0.0185696604419, back_window: 41100, window: 8700, margin: 0.004
+2 - r^2: 0.0229471567331, back_window: 15300, window: 13800, margin: 0.004
+2 - r^2: 0.0219521050573, back_window: 6900, window: 2100, margin: 0.004
+2 - r^2: 0.0452466687176, back_window: 10200, window: 6900, margin: 0.004
+2 - r^2: 0.0184479433644, back_window: 39600, window: 8100, margin: 0.004
+2 - r^2: 0.0147809122709, back_window: 4200, window: 2700, margin: 0.004
+2 - r^2: 0.020861272332, back_window: 20400, window: 9000, margin: 0.004
+2 - r^2: 0.0535782543461, back_window: 1800, window: 900, margin: 0.004
+2 - r^2: 0.0184343713001, back_window: 21900, window: 6600, margin: 0.004
+2 - r^2: 0.0222054987166, back_window: 4800, window: 7800, margin: 0.004
+2 - r^2: 0.0155511943358, back_window: 10800, window: 3000, margin: 0.004
+2 - r^2: 0.0256494875516, back_window: 10200, window: 4800, margin: 0.004
+2 - r^2: 0.0195371921868, back_window: 16500, window: 9600, margin: 0.004
+2 - r^2: 0.0161293182818, back_window: 72300, window: 17700, margin: 0.004
+2 - r^2: 0.0160681461829, back_window: 33900, window: 7200, margin: 0.004
+2 - r^2: 0.0291296137751, back_window: 12600, window: 9900, margin: 0.004
+2 - r^2: 0.0165576927558, back_window: 79200, window: 17100, margin: 0.004
+2 - r^2: 0.0178829355794, back_window: 30600, window: 10800, margin: 0.004
+2 - r^2: 0.0262395648581, back_window: 14700, window: 6300, margin: 0.004
+2 - r^2: 0.0154833172675, back_window: 52800, window: 14700, margin: 0.004
+2 - r^2: 0.0199394390257, back_window: 2100, window: 1800, margin: 0.004
+2 - r^2: 0.01855829991, back_window: 43200, window: 12900, margin: 0.004
+2 - r^2: 0.0206076156471, back_window: 20100, window: 15300, margin: 0.004
+2 - r^2: 0.0162357099759, back_window: 54000, window: 21000, margin: 0.004
+2 - r^2: 0.0213173549887, back_window: 27000, window: 5700, margin: 0.004
+2 - r^2: 0.0341365427272, back_window: 12900, window: 5400, margin: 0.004
+2 - r^2: 0.0136260239642, back_window: 4800, window: 3000, margin: 0.004
+2 - r^2: 0.0164778510979, back_window: 35400, window: 18000, margin: 0.004
+2 - r^2: 0.0232911703515, back_window: 18300, window: 3900, margin: 0.004
+2 - r^2: 0.0155658191807, back_window: 56100, window: 15900, margin: 0.004
+2 - r^2: 0.0234494259883, back_window: 20400, window: 5700, margin: 0.004
+2 - r^2: 0.0159716340756, back_window: 33600, window: 14700, margin: 0.004
+2 - r^2: 0.0254254365073, back_window: 13500, window: 11400, margin: 0.004
+0 - r^2: 0.0192580153602, back_window: 21900, window: 10800, margin: 0.004
+1 - r^2: 0.0208732362311, back_window: 17400, window: 9600, margin: 0.004
+2 - r^2: 0.0157980867371, back_window: 3900, window: 1200, margin: 0.004
+3 - r^2: 0.0175404071139, back_window: 43500, window: 13500, margin: 0.004
+4 - r^2: 0.0328250932257, back_window: 10500, window: 5100, margin: 0.004
+
+>>>>>>> d10c4a142d706e11a8525e5303be17ae11a4220d

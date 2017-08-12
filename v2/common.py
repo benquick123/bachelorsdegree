@@ -15,7 +15,7 @@ currencies = dict()
 
 
 def create_currencies_dict():
-    file = open("other/currencies.csv")
+    file = open("/home/ubuntu/diploma/Proletarian 1.0/v2/other/currencies.csv")
     read = csv.reader(file, delimiter=";")
 
     for line in read:
@@ -26,7 +26,7 @@ def create_financial_dict():
     min_ratio = float("inf")
     max_ratio = float("-inf")
 
-    file = open("texts/financial_words.csv")
+    file = open("/home/ubuntu/diploma/Proletarian 1.0/v2/texts/financial_words.csv")
     read = csv.reader(file, delimiter=";")
     # stemmer = PorterStemmer()
     lemmatizer = WordNetLemmatizer()
@@ -342,10 +342,12 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type, 
                     if "topics" in data[i]:
                         topics.append(data[i]["topics"])
 
-                    if tfidf is None:
+                    if tfidf is None and "tfidf" in data[i]:
                         tfidf = sparse.csr_matrix(data[i]["tfidf"])
-                    else:
+                    elif "tfidf" in data[i]:
                         tfidf = sparse.vstack([tfidf, data[i]["tfidf"]])
+                    else:
+                        print("TF-IDF not in data[" + str(i) + "]")
 
                 sentiment.append(data[i][sentiment_key] if np.isfinite(data[i][sentiment_key]) else 0)
                 polarity.append(data[i][polarity_key] if np.isfinite(data[i][polarity_key]) else 0)
@@ -356,15 +358,13 @@ def get_averages_from_data(data, date_to, window, currency, k, threshold, type, 
 
     if not data_averages_only:
         if tfidf is None or tfidf.shape[0] == 0:
-            tfidf = sparse.csr_matrix((1, data[k]["tfidf"].shape[1]))
+            tfidf = sparse.csr_matrix((1, data[k]["tfidf"].shape[1] if "tfidf" in data[k] else 5))
         else:
             _weights = sparse.lil_matrix((len(weights), len(weights)))
             _weights.setdiag(weights)
             tfidf = _weights * tfidf
             tfidf = tfidf.mean(axis=0)
             tfidf = sparse.csr_matrix(np.where(tfidf > threshold, tfidf, 0)[0])
-            print(tfidf)
-            input()
 
     sentiment = np.average(sentiment, weights=weights) if len(sentiment) > 0 and sum(weights) > 0 else 0
     polarity = np.average(polarity, weights=weights) if len(polarity) > 0 and sum(weights) > 0 else 0

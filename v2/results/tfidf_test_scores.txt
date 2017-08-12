@@ -4,4 +4,54 @@ non weighted - score: 0.433703350044 (+/- 0.0437293220149), precision: 0.4409192
 only financial weights - score: 0.427781491207 (+/- 0.0445446442114), precision: 0.434896151561, recall: 0.427781491207, margin: 0.004, window: 1800
 only sentiment weights - score: 0.431448237447 (+/- 0.0434092474838), precision: 0.438981742237, recall: 0.431448237447, margin: 0.004, window: 1800
 sentiment & financial weights - score: 0.433704145779 (+/- 0.0463298296994), precision: 0.442100453808, recall: 0.433704145779, margin: 0.004, window: 1800
+average_tfidf weighted - score: 0.441310575316 (+/- 0.0500846325036), precision: 0.448467185987, recall: 0.441310575316, margin: 0.004, window: 1800, back_window: 1800, curr_tfidf_weight: 1
+average_tfidf weighted - score: 0.424672555105 (+/- 0.0361871555011), precision: 0.433113815725, recall: 0.424672555105, margin: 0.004, window: 1800, back_window: 1800, curr_tfidf_weight: 2
+average_tfidf weighted - score: 0.44581443463 (+/- 0.0639229598941), precision: 0.451512652892, recall: 0.44581443463, margin: 0.004, window: 1800, back_window: 1800, curr_tfidf_weight: 0.5
+average_tfidf weighted - score: 0.439614068592 (+/- 0.0675455172958), precision: 0.445744798397, recall: 0.439614068592, margin: 0.004, window: 1800, back_window: 1800, curr_tfidf_weight: 0
+average_tfidf weighted - score: 0.446097716241 (+/- 0.067682797538), precision: 0.453829047743, recall: 0.446097716241, margin: 0.004, window: 1800, back_window: 3600, curr_tfidf_weight: 0.5
+average_tfidf weighted - score: 0.438484920824 (+/- 0.0676900750916), precision: 0.443993133995, recall: 0.438484920824, margin: 0.004, window: 1800, back_window: 3600, curr_tfidf_weight: 0
+average_tfidf weighted - score: 0.447511737089 (+/- 0.0690620510997), precision: 0.455826433783, recall: 0.447511737089, margin: 0.004, window: 1800, back_window: 7200, curr_tfidf_weight: 0.5
+average_tfidf weighted - score: 0.442716638816 (+/- 0.0694222600391), precision: 0.44979909209, recall: 0.442716638816, margin: 0.004, window: 1800, back_window: 21600, curr_tfidf_weight: 1
+average_tfidf weighted - score: 0.441594652662 (+/- 0.0526239766134), precision: 0.450793122361, recall: 0.441594652662, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 2
+average_tfidf weighted - score: 0.454005729291 (+/- 0.06384523945), precision: 0.462930848042, recall: 0.454005729291, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf weighted - score: 0.448359990451 (+/- 0.0688114521263), precision: 0.456913634677, recall: 0.448359990451, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 0.5
+average_tfidf weighted - score: 0.43848412509 (+/- 0.0666618975055), precision: 0.443315746315, recall: 0.43848412509, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 0
+
+articles --obsolete--
+without tfidf - score: 0.420184610488 (+/- 0.0668614444202), precision: 0.45378734386, recall: 0.420184610488, margin: 0.004, window: 1800
+non weighted - score: 0.435677568234 (+/- 0.0458997520797), precision: 0.441880271333, recall: 0.435677568234, margin: 0.004, window: 1800
+only financial weights - score: 0.431727540384 (+/- 0.0468529834704), precision: 0.437433712846, recall: 0.431727540384, margin: 0.004, window: 1800
+only sentiment weights - score: 0.433137582557 (+/- 0.0432779203783), precision: 0.441258026708, recall: 0.433137582557, margin: 0.004, window: 1800
+only positive sentiment weights - score: 0.433137582557 (+/- 0.0432779203783), precision: 0.441258026708, recall: 0.433137582557, margin: 0.004, window: 1800
+sentiment & financial weights - score: 0.432859871091 (+/- 0.0440361978905), precision: 0.440707013388, recall: 0.432859871091, margin: 0.004, window: 1800
+positive sentiment & financial weights - score: 0.432859871091 (+/- 0.0440361978905), precision: 0.440707013388, recall: 0.432859871091, margin: 0.004, window: 1800
+average_tfidf weighted - score: 0.451184849208 (+/- 0.0641485090331), precision: 0.460447371975, recall: 0.451184849208, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and sentiment weighted - score: 0.452312405506 (+/- 0.0595078707439), precision: 0.462335606205, recall: 0.452312405506, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and positive sentiment weighted - score: 0.452312405506 (+/- 0.0595078707439), precision: 0.462335606205, recall: 0.452312405506, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and financial weighted - score: 0.452873398584 (+/- 0.0632442225576), precision: 0.460998429096, recall: 0.452873398584, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf, sentiment and financial weighted - score: 0.451187236413 (+/- 0.0608218139869), precision: 0.460958465616, recall: 0.451187236413, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf, positive sentiment and financial weighted - score: 0.451187236413 (+/- 0.0608218139869), precision: 0.460958465616, recall: 0.451187236413, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+
+conversations
+without tfidf - score: 0.448275809663 (+/- 0.0246186272775), precision: 0.473812813666, recall: 0.448275809663, margin: 0.005, window: 900
+non weighted - score: 0.449522328371 (+/- 0.0358855648604), precision: 0.472193427668, recall: 0.449522328371, margin: 0.005, window: 900
+only financial weights - score: 0.449322372806 (+/- 0.0358350689305), precision: 0.471953013562, recall: 0.449322372806, margin: 0.005, window: 900
+only sentiment weights - score: 0.448455898689 (+/- 0.0350732408848), precision: 0.471504257318, recall: 0.448455898689, margin: 0.005, window: 900
+sentiment & financial weights - score: 0.44872250611 (+/- 0.0350684273736), precision: 0.471790132128, recall: 0.44872250611, margin: 0.005, window: 900
+average_tfidf weighted - score: 0.487025105532 (+/- 0.0515317893577), precision: 0.511054736279, recall: 0.487025105532, margin: 0.005, window: 900, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and sentiment weighted - score: 0.486558542546 (+/- 0.0511347117283), precision: 0.510743495328, recall: 0.486558542546, margin: 0.005, window: 900, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and financial weighted - score: 0.486425238836 (+/- 0.0514383841824), precision: 0.510403206399, recall: 0.486425238836, margin: 0.005, window: 900, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf, sentiment and financial weighted - score: 0.486114196845 (+/- 0.0508665214238), precision: 0.510191966699, recall: 0.486114196845, margin: 0.005, window: 900, back_window: 10800, curr_tfidf_weight: 1
+
+
+articles
+without tfidf - score: 0.420184610488 (+/- 0.0668614444202), precision: 0.45378734386, recall: 0.420184610488, margin: 0.004, window: 1800
+non weighted - score: 0.433703350044 (+/- 0.0437293220149), precision: 0.440919293932, recall: 0.433703350044, margin: 0.004, window: 1800
+only financial weights - score: 0.427781491207 (+/- 0.0445446442114), precision: 0.434896151561, recall: 0.427781491207, margin: 0.004, window: 1800
+only sentiment weights - score: 0.431448237447 (+/- 0.0434092474838), precision: 0.438981742237, recall: 0.431448237447, margin: 0.004, window: 1800
+sentiment & financial weights - score: 0.433704145779 (+/- 0.0463298296994), precision: 0.442100453808, recall: 0.433704145779, margin: 0.004, window: 1800
+average_tfidf weighted - score: 0.454005729291 (+/- 0.06384523945), precision: 0.462930848042, recall: 0.454005729291, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and sentiment weighted - score: 0.446953926952 (+/- 0.058532248089), precision: 0.456200943777, recall: 0.446953926952, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf and financial weighted - score: 0.450337391581 (+/- 0.0635821162808), precision: 0.458681514659, recall: 0.450337391581, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
+average_tfidf, sentiment and financial weighted - score: 0.448932919551 (+/- 0.0607054257956), precision: 0.45873317169, recall: 0.448932919551, margin: 0.004, window: 1800, back_window: 10800, curr_tfidf_weight: 1
 
