@@ -56,13 +56,6 @@ def price_distribution(plot=True, **kwargs):
         price_changes[i] = abs(price)
     price_changes.sort()
     params = stats.lognorm.fit(price_changes, 2)
-    # exit()
-
-    # res = Poisson(price_changes, np.ones_like(price_changes)).fit()
-    # print(res.summary())
-    # mean = res.predict()
-    # print(mean)
-    # dist = stats.poisson(mean[0])
 
     if plot:
         weights = np.ones_like(price_changes) / len(price_changes)
@@ -88,7 +81,7 @@ def price_distribution(plot=True, **kwargs):
     return threshold1
 
 
-def parallelized_matrix_creation(i, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_relative_f, get_Y_f, date_key, currency_key, is_conversation, articles, conversations, tweets, n_features, kwargs):
+def parallelized_matrix_creation(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type):
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     margin = price_distribution(plot=False, **kwargs)
     margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
@@ -103,6 +96,7 @@ def parallelized_matrix_creation(i, window_range, margin_range, back_window_shor
     _other_data = None
 
     back_windows = [back_window_short, back_window_medium, back_window_long]
+    print(window, margin, back_windows, back_window_other)
 
     if not is_conversation:
         for i, text in enumerate(raw_data):
@@ -119,10 +113,12 @@ def parallelized_matrix_creation(i, window_range, margin_range, back_window_shor
                 _other = []
                 date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
                 for back_window in back_windows:
-                    averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1])
-                    _other += averages
-                    averages = common.get_averages_from_db(client, text[date_key], back_window, text[currency_key], articles=articles, tweets=tweets, conversations=conversations)
-                    _other += averages
+                    for data, dates, t in zip(data_per_type, dates_per_type, ["articles", "conversations", "tweets"]):
+                        _i = 0
+                        while text[date_key] <= dates[_i]:
+                            _i += 1
+                        averages = common.get_averages_from_data(data, text[date_key], back_window, text[currency_key], _i, threshold=0.0, type=t[:-1], data_averages_only=True)
+                        _other += averages
 
                     _other.append(common.get_price_change(client, text[currency_key], date_from - back_window, date_from))
                     _other.append(common.get_total_volume(client, text[currency_key], date_from - back_window, date_from) / common.get_total_volume(client, "all", date_from - back_window, date_from))
@@ -142,10 +138,12 @@ def parallelized_matrix_creation(i, window_range, margin_range, back_window_shor
                     _other = []
                     date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
                     for back_window in back_windows:
-                        averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1])
-                        _other += averages
-                        averages = common.get_averages_from_db(client, text[date_key], back_window, currency, articles=articles, tweets=tweets, conversations=conversations)
-                        _other += averages
+                        for data, dates, t in zip(data_per_type, dates_per_type, ["articles", "conversations", "tweets"]):
+                            _i = 0
+                            while text[date_key] <= dates[_i]:
+                                _i += 1
+                            averages = common.get_averages_from_data(data, text[date_key], back_window, currency, _i, threshold=0.0, type=t[:-1], data_averages_only=True)
+                            _other += averages
 
                         _other.append(common.get_price_change(client, currency, date_from - back_window, date_from))
                         _other.append(common.get_total_volume(client, currency, date_from - back_window, date_from) / common.get_total_volume(client, "all", date_from - back_window, date_from))
@@ -156,7 +154,7 @@ def parallelized_matrix_creation(i, window_range, margin_range, back_window_shor
     if data_X.shape[1] > n_features:
         data_X = data_X[:, :n_features]
 
-    data_X = sparse.hstack([data_X, _other, _tfidf])
+    data_X = sparse.hstack([data_X, _other_data, _tfidf])
     if _topic_distributions is not None:
         data_X = sparse.hstack([data_X, _topic_distributions])
     data_X = data_X.tocsr()
@@ -165,8 +163,11 @@ def parallelized_matrix_creation(i, window_range, margin_range, back_window_shor
 
     dates = get_dates_f(set(ids), raw_data, type)
 
-    train_f(feature_selector, model, data_X, data_Y, dates, save=False, p=False, learn=True, test=False)
-    return None
+    _, score, score_std, precision, recall, _, _ = train_f(feature_selector, model, data_X, data_Y, dates, save=False, p=False, learn=True, test=False)
+    result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n"
+    result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
+
+    return result_string
 
 
 def randomized_data_params_search(**kwargs):
@@ -179,8 +180,6 @@ def randomized_data_params_search(**kwargs):
     window_range = kwargs["window_range"]
     margin_range = kwargs["margin_range"]
     type = kwargs["type"]
-    ids = np.array(kwargs["IDs"])
-    raw_data = kwargs["raw_data"]
     data_X = kwargs["data_X"]
     labels = kwargs["labels"]
     train_f = kwargs["train_f"]
@@ -189,36 +188,47 @@ def randomized_data_params_search(**kwargs):
     model = kwargs["model"]
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
 
-    get_Y_relative_f = None
+    article_data = pls.load_data_pickle("articles")
+    conversation_data = pls.load_data_pickle("conversations", k=20000)
+    tweet_data = pls.load_data_pickle("tweets", k=20000)
+    article_ids = pls.load_matrix_IDs("articles")
+    conversation_ids = pls.load_matrix_IDs("conversations")
+    tweet_ids = pls.load_matrix_IDs("tweets")
+
+    article_dates = get_dates_f(article_ids, article_data, "articles")
+    conversation_dates = get_dates_f(conversation_ids, conversation_data, "conversations")
+    tweet_dates = get_dates_f(tweet_ids, tweet_data, "tweets")
+
     get_Y_f = None
     tfidf_key = ""
     date_key = ""
     currency_key = ""
     is_conversation = False
-    articles = conversations = tweets = True
+    raw_data = None
+    ids = None
 
     if type == "articles":
-        get_Y_relative_f = news.get_relative_Y_changes
         get_Y_f = news.get_Y
         tfidf_key = "reduced_text"
         date_key = "date"
         currency_key = "currency"
-        articles = False
+        raw_data = article_data
+        ids = article_ids
     elif type == "conversations":
-        get_Y_relative_f = trollbox.get_relative_Y_changes
         get_Y_f = trollbox.get_Y
         tfidf_key = "clean_text"
         date_key = "conversation_end"
         currency_key = "coin_mentions"
         is_conversation = True
-        conversations = False
+        raw_data = conversation_data
+        ids = conversation_ids
     elif type == "tweets":
-        get_Y_relative_f = twitter.get_relative_Y_changes
         get_Y_f = twitter.get_Y
         tfidf_key = "clean_text"
         date_key = "posted_time"
         currency_key = "crypto_currency"
-        tweets = False
+        raw_data = tweet_data
+        ids = tweet_ids
 
     tfidf, vocabulary = common.calc_tf_idf(raw_data, 0.0, 1.0, tfidf_key, is_conversation)
     to_remove_mask = np.zeros(data_X.shape[1], dtype="bool")
@@ -230,7 +240,12 @@ def randomized_data_params_search(**kwargs):
     n_features = data_X.shape[1]
 
     pool = ThreadPool()
-    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_relative_f), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(articles), repeat(conversations), repeat(tweets), repeat(n_features), repeat(kwargs)))
+    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates])))
     pool.close()
     pool.join()
+
+    f = open("results/data_params_search_results.txt", "a")
+    for result in results:
+        f.write(result)
+    f.close()
 
