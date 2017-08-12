@@ -113,7 +113,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
                 _other = []
                 date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
                 for back_window in back_windows:
-                    averages = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1], data_averages_only=True)
+                    averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1])
                     _other += averages
                     averages = common.get_averages_from_db(client, text[date_key], back_window, text[currency_key], articles=articles, tweets=tweets, conversations=conversations)
                     _other += averages
@@ -137,7 +137,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
                     _other = []
                     date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
                     for back_window in back_windows:
-                        averages = common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1], data_averages_only=True)
+                        averages, _, _, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1])
                         _other += averages
                         averages = common.get_averages_from_db(client, text[date_key], back_window, currency, articles=articles, tweets=tweets, conversations=conversations)
                         _other += averages
