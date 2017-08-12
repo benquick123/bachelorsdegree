@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/other_functions.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/parameter_search.py" afterPath="$PROJECT_DIR$/v2/parameter_search.py" />
     </list>
@@ -24,11 +23,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/v2/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3774">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+            <state relative-caret-position="626">
+              <caret line="163" column="159" lean-forward="false" selection-start-line="163" selection-start-column="159" selection-end-line="163" selection-end-column="159" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -562,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502536133283</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="parallelization bug fix">
+      <created>1502536855639</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1502536855640</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -632,7 +650,8 @@
     <MESSAGE value="proof-of-concept done" />
     <MESSAGE value="events, loading" />
     <MESSAGE value="parallelization v1" />
-    <option name="LAST_COMMIT_MESSAGE" value="parallelization v1" />
+    <MESSAGE value="parallelization bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="parallelization bug fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -641,7 +660,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/trollbox/v1/response_tree.py" />
     <entry file="file://$PROJECT_DIR$/downloaders/twitter-downloader.py" />
     <entry file="file://$PROJECT_DIR$/other/trader.py" />
     <entry file="file://C:/Program Files (x86)/Python/Python 3.4.4/Lib/site-packages/scipy/cluster/hierarchy.py">
@@ -752,10 +770,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="83" column="0" lean-forward="false" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+        <state relative-caret-position="626">
+          <caret line="163" column="159" lean-forward="false" selection-start-line="163" selection-start-column="159" selection-end-line="163" selection-end-column="159" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3774">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>

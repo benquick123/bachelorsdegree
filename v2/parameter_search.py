@@ -128,6 +128,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
             for currency in text[currency_key]:
                 text["tfidf"] = tfidf[i]
                 if str(text["_id"]) + ":" + currency in ids:
+                    print("iteration", i)
                     _, average_tfidf, _n, _ = common.get_averages_from_data(raw_data, text[date_key], back_window_other, currency, i, threshold=0.0, type=type[:-1])
 
                     average_tfidf = text["tfidf"] * (curr_tfidf_weight / (_n + 1)) + (average_tfidf * (_n / (_n + 1))).multiply(text["tfidf"].power(0))
@@ -159,8 +160,8 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     dates = get_dates_f(set(ids), raw_data, type)
 
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector, model, data_X, data_Y, dates, save=False, p=False, learn=True, test=False)
-    result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n"
+    _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, dates, save=False, p=False, learn=True, test=False)
+    result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
 
     return result_string
