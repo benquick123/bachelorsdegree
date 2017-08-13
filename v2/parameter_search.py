@@ -156,8 +156,16 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
         data_X = sparse.hstack([data_X, _topic_distributions])
     data_X = data_X.tocsr()
 
-    data_Y = get_Y_f(ids, window, margin)
+    to_delete = np.zeros(data_X.shape[0], dtype="bool")
+    for i in range(data_X.shape[0]):
+        if not np.isfinite(data_X[i, :]):
+            to_delete[i] = True
 
+    ids = np.array(ids)
+
+    ids = ids[~to_delete]
+    data_X = data_X[~to_delete, :]
+    data_Y = get_Y_f(ids, window, margin)
     dates = get_dates_f(set(ids), raw_data, type)
 
     _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
