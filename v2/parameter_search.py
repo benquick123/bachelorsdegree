@@ -158,7 +158,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     to_delete = np.zeros(data_X.shape[0], dtype="bool")
     for i in range(data_X.shape[0]):
-        if not np.isfinite(data_X[i, :]):
+        if not np.all(np.isfinite(data_X[i, :].todense())):
             to_delete[i] = True
 
     ids = np.array(ids)

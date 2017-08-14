@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
+    <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="bug fix v3">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/best_back_windows.py" afterPath="$PROJECT_DIR$/v2/best_back_windows.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/parameter_search.py" afterPath="$PROJECT_DIR$/v2/parameter_search.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
@@ -50,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="881">
-              <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -62,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="165" column="24" lean-forward="false" selection-start-line="165" selection-start-column="24" selection-end-line="165" selection-end-column="24" />
+            <state relative-caret-position="352">
+              <caret line="124" column="139" lean-forward="true" selection-start-line="124" selection-start-column="139" selection-end-line="124" selection-end-column="139" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#6302#8078#0" expanded="false" />
@@ -660,7 +659,14 @@
       <option name="project" value="LOCAL" />
       <updated>1502573942854</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="bug fix v3">
+      <created>1502621379760</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1502621379760</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -735,7 +741,8 @@
     <MESSAGE value="back_window v1" />
     <MESSAGE value="parallelization bug fix v2" />
     <MESSAGE value="faster?" />
-    <option name="LAST_COMMIT_MESSAGE" value="faster?" />
+    <MESSAGE value="bug fix v3" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fix v3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -878,23 +885,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
+    <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="165" column="24" lean-forward="false" selection-start-line="165" selection-start-column="24" selection-end-line="165" selection-end-column="24" />
+        <state relative-caret-position="408">
+          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#6302#8078#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
+    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="881">
-          <caret line="153" column="0" lean-forward="true" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+        <state relative-caret-position="352">
+          <caret line="124" column="139" lean-forward="true" selection-start-line="124" selection-start-column="139" selection-end-line="124" selection-end-column="139" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#6302#8078#0" expanded="false" />
           </folding>
         </state>
       </provider>
