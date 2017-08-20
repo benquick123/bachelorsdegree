@@ -172,7 +172,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
 
-    f = open("results/parameter_search/parameters_" + str(int(round(time.time() * 1000))) + ".txt", "a")
+    f = open("results/parameter_search/data_parameters_" + str(int(round(time.time() * 1000))) + ".txt", "a")
     f.write(result_string)
     f.close()
 

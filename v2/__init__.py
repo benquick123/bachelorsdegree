@@ -133,7 +133,10 @@ def train_in_parallel(i, testing_indexes, data_X, data_Y, feature_selector, mode
 def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=True, learn=True, test=True):
     dates = np.array(dates)
     data_Y = np.array(data_Y)
+    print(data_X.shape)
     data_X, data_Y, final_test_X, final_test_Y, r = create_final_test_set(data_X, data_Y)
+    print(data_X.shape)
+    exit()
     final_test_dates = dates[r]
     dates = dates[~r]
 
@@ -310,7 +313,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
 
     if len(functions) != 0:
         arguments = dict()
-        arguments["n_iter"] = 1000
+        arguments["n_iter"] = 200
         arguments["threshold_range"] = [0.0, 3.0]
         arguments["margin_range"] = [0.0, 0.03]
         arguments["window_range"] = [300, 6*3600]
