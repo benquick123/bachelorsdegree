@@ -402,16 +402,20 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
 
     if len(functions) != 0:
         arguments = dict()
-        arguments["n_iter"] = 50
+        arguments["n_iter"] = 200
         arguments["threshold_range"] = [0.0, 3.0]
-        arguments["margin_range"] = [0.0, 0.04]
+        arguments["margin_range"] = [0.0, 0.03]
         arguments["window_range"] = [300, 6 * 3600]
+        arguments["back_window_short"] = [300, 3600]
+        arguments["back_window_medium"] = [3900, 6 * 3600]
+        arguments["back_window_long"] = [6 * 3600 + 300, 12 * 3600]
         arguments["back_window_range"] = [300, 12 * 3600]
         arguments["back_window_ratio"] = [0.5, 5]
         arguments["train_f"] = train
         arguments["final_set_f"] = create_final_test_set
+        arguments["dates_f"] = get_dates_list
         arguments["feature_selector"] = feature_selector
-        arguments["feature_selectors"] = [LinearSVC(), RandomForestClassifier(), KNeighborsClassifier(), MLPClassifier()]
+        arguments["feature_selectors"] = [LinearSVC(), RandomForestClassifier()]
         arguments["model"] = model
         arguments["models"] = [LinearSVC(), RandomForestClassifier(), KNeighborsClassifier(), MLPClassifier()]
         arguments["n"] = 10
@@ -435,7 +439,7 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
         del trollbox.conversations
 
         n = 10
-        train(n, feature_selector, model, conversations_X, conversations_Y, "conversations", dates, save=save)
+        train(feature_selector, model, conversations_X, conversations_Y, "conversations", dates, save=save, learn=True, test=False)
         if save:
             comment = input("comment: ")
             f = open("results/" + "conversations" + "_results.txt", "a")
@@ -486,16 +490,20 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
     model = LinearSVC()
     if len(functions) != 0:
         arguments = dict()
-        arguments["n_iter"] = 50
+        arguments["n_iter"] = 200
         arguments["threshold_range"] = [0.0, 3.0]
-        arguments["margin_range"] = [0.0, 0.04]
+        arguments["margin_range"] = [0.0, 0.03]
         arguments["window_range"] = [300, 6 * 3600]
+        arguments["back_window_short"] = [300, 3600]
+        arguments["back_window_medium"] = [3900, 6 * 3600]
+        arguments["back_window_long"] = [6 * 3600 + 300, 12 * 3600]
         arguments["back_window_range"] = [300, 12 * 3600]
         arguments["back_window_ratio"] = [0.5, 5]
         arguments["train_f"] = train
         arguments["final_set_f"] = create_final_test_set
+        arguments["dates_f"] = get_dates_list
         arguments["feature_selector"] = feature_selector
-        arguments["feature_selectors"] = [LinearSVC(), RandomForestClassifier(), KNeighborsClassifier(), MLPClassifier()]
+        arguments["feature_selectors"] = [LinearSVC(), RandomForestClassifier()]
         arguments["model"] = model
         arguments["models"] = [LinearSVC(), RandomForestClassifier(), KNeighborsClassifier(), MLPClassifier()]
         arguments["n"] = 10
@@ -519,7 +527,7 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
         del twitter.tweets
 
         n = 10
-        train(n, feature_selector, model, tweets_X, tweets_Y, "tweets", dates, save=save, train_seperate_set=False)
+        train(feature_selector, model, tweets_X, tweets_Y, "tweets", dates, save=save, learn=True, test=False)
         if save:
             comment = input("comment: ")
             f = open("results/" + "tweets" + "_results.txt", "a")
