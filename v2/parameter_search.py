@@ -174,7 +174,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     print(result_string)
 
-    f = open("~/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + str(k) + ".txt", "a")
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + str(k) + ".txt", "a")
     f.write(result_string)
     f.close()
 
