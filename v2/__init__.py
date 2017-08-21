@@ -133,10 +133,7 @@ def train_in_parallel(i, testing_indexes, data_X, data_Y, feature_selector, mode
 def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=True, learn=True, test=True):
     dates = np.array(dates)
     data_Y = np.array(data_Y)
-    print(data_X.shape)
     data_X, data_Y, final_test_X, final_test_Y, r = create_final_test_set(data_X, data_Y)
-    print(data_X.shape)
-    exit()
     final_test_dates = dates[r]
     dates = dates[~r]
 

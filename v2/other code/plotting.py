@@ -1,6 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import re
+from v2 import news
+from v2 import trollbox
+from v2 import twitter
+from v2 import pickle_loading_saving
+import scipy.stats as stats
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import PolynomialFeatures
@@ -104,6 +109,66 @@ def plot_window_corr():
     plt.plot(scores, ratios, ".", out[0], out[1], "-")
     plt.show()"""
 
+
+def price_distribution(plot=True):
+    print("PRICE DISTRIBUTION")
+    # plot price distributions, choose threshold based on that distribution
+    # ...so that majority class is as small as possible
+    ids = np.array(kwargs["IDs"])
+    type = kwargs["type"]
+    window = kwargs["window"]
+    final_set_f = kwargs["final_set_f"]
+
+    ids = final_set_f(None, None, ids)[0]
+
+    price_changes = []
+    if type == "articles":
+        price_changes, _ = news.get_relative_Y_changes(ids, window)
+    elif type == "conversations":
+        price_changes, _ = trollbox.get_relative_Y_changes(ids, window)
+    elif type == "tweets":
+        price_changes, curr = twitter.get_relative_Y_changes(ids, window)
+        from collections import Counter
+        print(dict(Counter(curr)))
+        print(len(curr))
+
+    if price_changes is None or len(price_changes) == 0:
+        exit()
+
+    for i, price in enumerate(price_changes):
+        price_changes[i] = abs(price)
+    price_changes.sort()
+    params = stats.lognorm.fit(price_changes, 2)
+    # exit()
+
+    # res = Poisson(price_changes, np.ones_like(price_changes)).fit()
+    # print(res.summary())
+    # mean = res.predict()
+    # print(mean)
+    # dist = stats.poisson(mean[0])
+
+    if plot:
+        weights = np.ones_like(price_changes) / len(price_changes)
+
+        plt.hist(price_changes, bins=1000, label="Porazdelitev cen", normed=True)
+        plt.plot(price_changes, stats.lognorm.pdf(price_changes, *params), "-", label="Logaritemsko normalna porazdelitev")
+
+        plt.xlabel("relativna spremmeba cene")
+        plt.legend()
+        plt.show()
+
+    # this works only if price distribution is cauchy:
+    # threshold is determined so that sample data will be split in thirds.
+    # https://i.stack.imgur.com/4o1Ex.png
+    threshold1 = stats.lognorm.ppf(1/3, *params)
+
+    f = open("results/price_distribution.txt", "a")
+    f.write(type + ", window: " + str(window) + ", thirds margin: " + str(threshold1) + "\n")
+    f.close()
+
+    print(threshold1)
+
+    return threshold1
 
 # plot_majority_class_corr()
 plot_window_corr()
