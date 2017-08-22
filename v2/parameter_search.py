@@ -259,8 +259,9 @@ def randomized_data_params_search(**kwargs):
 
     data_X = data_X[:, ~to_remove_mask][:300, :]
     n_features = data_X.shape[1]
+    ids = ids[:300]
 
-    pool = ThreadPool()
+    pool = ThreadPool(1)
     results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
     pool.close()
     pool.join()
