@@ -36,9 +36,7 @@ def price_distribution(plot=True, **kwargs):
     final_set_f = kwargs["final_set_f"]
     del kwargs
 
-    print(len(ids))
     ids = final_set_f(None, None, ids)[0]
-    print(len(ids))
 
     price_changes = []
     if type == "articles":

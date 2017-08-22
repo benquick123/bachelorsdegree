@@ -290,19 +290,19 @@ def get_min_max_price_change(client, currency, date_from, date_to):
     db = client["crypto_prices"]
     date_from = date_from - (date_from % 300) + 300
     date_to = date_to - (date_to % 300) + 300
-    # try:
-    start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
-    min_price = list(db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "close": 1}).sort("close", 1).limit(1))[0]["close"]
-    max_price = list(db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "close": 1}).sort("close", -1).limit(1))[0]["close"]
+    try:
+        start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "open": 1})["open"]
+        min_price = list(db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "close": 1}).sort("close", 1).limit(1))[0]["close"]
+        max_price = list(db[currency.lower()].find({"$and": [{"_id": {"$gte": date_from}}, {"_id": {"$lte": date_to}}]}, {"_id": 0, "close": 1}).sort("close", -1).limit(1))[0]["close"]
 
-    min_percent_change = (min_price - start_price) / start_price
-    max_percent_change = (max_price - start_price) / start_price
-    if abs(min_percent_change) > abs(max_percent_change):
-        return min_percent_change
-    else:
-        return max_percent_change
-    # except TypeError or IndexError:
-    #     return np.nan
+        min_percent_change = (min_price - start_price) / start_price
+        max_percent_change = (max_price - start_price) / start_price
+        if abs(min_percent_change) > abs(max_percent_change):
+            return min_percent_change
+        else:
+            return max_percent_change
+    except TypeError or IndexError:
+        return np.nan
 
 
 def get_averages_from_data(data, date_to, window, currency, k, threshold, type, data_averages_only=False):

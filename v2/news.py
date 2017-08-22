@@ -277,7 +277,6 @@ def get_relative_Y_changes(IDs, window):
 
     for article in articles:
         if article["_id"] in ids:
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
             date_from = int(time.mktime(article["date"].timetuple()) + 3600)
             date_to = date_from + window
             _p = common.get_min_max_price_change(client, article["currency"], date_from, date_to)
@@ -286,7 +285,6 @@ def get_relative_Y_changes(IDs, window):
                 currencies.append(article["currency"].lower())
             else:
                 print("recompute IDs")
-                print(article["_id"])
                 return None, None
 
     return p, currencies
