@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/other code/plotting.py" afterPath="$PROJECT_DIR$/v2/other code/plotting.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/parameter_search.py" afterPath="$PROJECT_DIR$/v2/parameter_search.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3827">
-              <caret line="331" column="40" lean-forward="true" selection-start-line="331" selection-start-column="40" selection-end-line="331" selection-end-column="40" />
+            <state relative-caret-position="665">
+              <caret line="331" column="40" lean-forward="false" selection-start-line="331" selection-start-column="40" selection-end-line="331" selection-end-column="40" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#839#946#0" expanded="false" />
@@ -79,12 +80,11 @@
       <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2597">
-              <caret line="260" column="32" lean-forward="false" selection-start-line="260" selection-start-column="32" selection-end-line="260" selection-end-column="32" />
+            <state relative-caret-position="538">
+              <caret line="82" column="8" lean-forward="false" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="8" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#913#2723#0" expanded="false" />
-                <element signature="e#6437#8213#0" expanded="false" />
+                <element signature="e#7072#8848#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -93,9 +93,11 @@
       <file leaf-file-name="plotting.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1479">
-              <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-              <folding />
+            <state relative-caret-position="1853">
+              <caret line="109" column="17" lean-forward="false" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,9 +117,11 @@
       <file leaf-file-name="test_code.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="663">
+              <caret line="144" column="21" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="144" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>error</find>
       <find>filter_words</find>
       <find>_extrac</find>
       <find>words=None</find>
@@ -163,6 +166,7 @@
       <find>analyt</find>
       <find>time</find>
       <find>set(ids</find>
+      <find>k</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -217,10 +221,10 @@
         <option value="$PROJECT_DIR$/wrapper.py" />
         <option value="$PROJECT_DIR$/v2/best_back_windows.py" />
         <option value="$PROJECT_DIR$/v2/results/parameter_search.py" />
-        <option value="$PROJECT_DIR$/v2/other code/plotting.py" />
         <option value="$PROJECT_DIR$/v2/__init__.py" />
         <option value="$PROJECT_DIR$/v2/news.py" />
         <option value="$PROJECT_DIR$/v2/common.py" />
+        <option value="$PROJECT_DIR$/v2/other code/plotting.py" />
         <option value="$PROJECT_DIR$/v2/parameter_search.py" />
       </list>
     </option>
@@ -824,7 +828,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503401564410</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="multithreading enabled">
+      <created>1503401676381</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1503401676381</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -881,7 +892,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="done data parsing" />
     <MESSAGE value="trollbox: conversations, coin_mentions" />
     <MESSAGE value="trollbox: conversations, coin_mentions done" />
     <MESSAGE value="done: cryptocurrencies prices download" />
@@ -906,7 +916,8 @@
     <MESSAGE value="final file fix thank god" />
     <MESSAGE value="test" />
     <MESSAGE value="db error wtf" />
-    <option name="LAST_COMMIT_MESSAGE" value="db error wtf" />
+    <MESSAGE value="multithreading enabled" />
+    <option name="LAST_COMMIT_MESSAGE" value="multithreading enabled" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -995,14 +1006,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/results/parameter_search.py" />
-    <entry file="file://$PROJECT_DIR$/v2/test_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="19" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="14">
@@ -1010,14 +1013,6 @@
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1479">
-          <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1053,8 +1048,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3827">
-          <caret line="331" column="40" lean-forward="true" selection-start-line="331" selection-start-column="40" selection-end-line="331" selection-end-column="40" />
+        <state relative-caret-position="665">
+          <caret line="331" column="40" lean-forward="false" selection-start-line="331" selection-start-column="40" selection-end-line="331" selection-end-column="40" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#839#946#0" expanded="false" />
@@ -1066,14 +1061,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1853">
+          <caret line="109" column="17" lean-forward="false" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/test_code.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="144" column="21" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="144" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2597">
-          <caret line="260" column="32" lean-forward="false" selection-start-line="260" selection-start-column="32" selection-end-line="260" selection-end-column="32" />
+        <state relative-caret-position="538">
+          <caret line="82" column="8" lean-forward="false" selection-start-line="82" selection-start-column="8" selection-end-line="82" selection-end-column="8" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#913#2723#0" expanded="false" />
-            <element signature="e#6437#8213#0" expanded="false" />
+            <element signature="e#7072#8848#0" expanded="false" />
           </folding>
         </state>
       </provider>
