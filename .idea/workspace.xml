@@ -54,7 +54,7 @@
         <entry file="file://$PROJECT_DIR$/v2/news.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="575">
-              <caret line="279" column="20" lean-forward="false" selection-start-line="279" selection-start-column="20" selection-end-line="279" selection-end-column="20" />
+              <caret line="279" column="65" lean-forward="false" selection-start-line="279" selection-start-column="65" selection-end-line="279" selection-end-column="65" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -800,7 +800,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503400857256</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="test">
+      <created>1503401023399</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1503401023399</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1044,7 +1051,7 @@
     <entry file="file://$PROJECT_DIR$/v2/news.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="575">
-          <caret line="279" column="20" lean-forward="false" selection-start-line="279" selection-start-column="20" selection-end-line="279" selection-end-column="20" />
+          <caret line="279" column="65" lean-forward="false" selection-start-line="279" selection-start-column="65" selection-end-line="279" selection-end-column="65" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
