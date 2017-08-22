@@ -101,39 +101,47 @@ def price_distribution(plot=True, **kwargs):
     if price_changes is None or len(price_changes) == 0:
         exit()
 
-    for i, price in enumerate(price_changes):
-        price_changes[i] = abs(price)
+    # for i, price in enumerate(price_changes):
+    #     price_changes[i] = abs(price)
     price_changes.sort()
-    params = stats.lognorm.fit(price_changes, 2)
-    # exit()
-
-    # res = Poisson(price_changes, np.ones_like(price_changes)).fit()
-    # print(res.summary())
-    # mean = res.predict()
-    # print(mean)
-    # dist = stats.poisson(mean[0])
+    params = stats.alpha.fit(price_changes)
 
     if plot:
+        plt.ioff()
         weights = np.ones_like(price_changes) / len(price_changes)
 
-        plt.hist(price_changes, bins=1000, label="Porazdelitev cen", normed=True)
-        plt.plot(price_changes, stats.lognorm.pdf(price_changes, *params), "-", label="Logaritemsko normalna porazdelitev")
+        n, _, _ = plt.hist(price_changes, bins=250, label="Porazdelitev cen", normed=True)
 
-        plt.xlabel("relativna spremmeba cene")
+        # dist_names = ['alpha'] #, 'johnsonsu']
+
+        """for dist_name in dist_names:
+            try:
+                dist = getattr(stats, dist_name)
+                params = dist.fit(price_changes)
+                plt.plot(price_changes, dist.pdf(price_changes, *params), "-", label=dist_name)
+
+                print(dist_name, np.sum(np.power(price_changes - dist.pdf(price_changes, *params), 2) / dist.pdf(price_changes, *params)))
+            except TypeError:
+                pass"""
+
+        # plt.plot(price_changes, stats.alpha.pdf(price_changes, *params), "-", label="Porazdelitev alpha")
+
+        plt.xlabel("relativna sprememeba cene")
         plt.legend()
-        plt.show()
+        plt.xlim(-0.15, 0.15)
+        # plt.yticks(np.linspace(0, max(n), 11), np.around(np.linspace(0, max(n), 11) / sum(n), 2))
+        plt.savefig("figures/price_distribution.png")
 
-    # this works only if price distribution is cauchy:
+    # this works only if price distribution is alpha:
     # threshold is determined so that sample data will be split in thirds.
     # https://i.stack.imgur.com/4o1Ex.png
-    threshold1 = stats.lognorm.ppf(1/3, *params)
+    threshold1 = stats.alpha.ppf(1/3, *params)
 
     f = open("results/price_distribution.txt", "a")
     f.write(type + ", window: " + str(window) + ", thirds margin: " + str(threshold1) + "\n")
     f.close()
 
     print(threshold1)
-
     return threshold1
 
 

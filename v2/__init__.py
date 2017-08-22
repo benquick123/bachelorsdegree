@@ -538,9 +538,9 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
 def __init__():
     # initial_load()
 
-    functions = [parameter_search.randomized_data_params_search]
+    functions = [test_code.price_distribution]
 
-    window = 1800
+    window = 3600
     margin = 0.004
     train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()
