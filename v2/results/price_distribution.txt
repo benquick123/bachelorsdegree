@@ -1718,3 +1718,5 @@ articles, window: 3600, thirds margin: -0.0118233830438
 articles, window: 3600, thirds margin: -0.0118233830438
 articles, window: 3600, thirds margin: -0.0118233830438
 articles, window: 3600, thirds margin: -0.0118233830438
+articles, window: 3600, thirds margin: -0.0118233830438
+articles, window: 3600, thirds margin: 0.00703488829625

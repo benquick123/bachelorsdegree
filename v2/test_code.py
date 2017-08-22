@@ -101,8 +101,8 @@ def price_distribution(plot=True, **kwargs):
     if price_changes is None or len(price_changes) == 0:
         exit()
 
-    # for i, price in enumerate(price_changes):
-    #     price_changes[i] = abs(price)
+    for i, price in enumerate(price_changes):
+        price_changes[i] = abs(price)
     price_changes.sort()
     params = stats.alpha.fit(price_changes)
 
