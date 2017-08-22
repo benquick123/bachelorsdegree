@@ -119,7 +119,9 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
                     _other += averages
 
                     _other.append(common.get_price_change(client, text[currency_key], date_from - back_window, date_from))
-                    _other.append(common.get_total_volume(client, text[currency_key], date_from - back_window, date_from) / common.get_total_volume(client, "all", date_from - back_window, date_from))
+                    total_curr_volume = common.get_total_volume(client, text[currency_key], date_from - back_window, date_from)
+                    total_volume = common.get_total_volume(client, "all", date_from - back_window, date_from)
+                    _other.append((total_curr_volume / total_volume) if total_volume > 0 else 0)
                     _other.append(common.get_all_price_changes(client, date_from - back_window, date_from))
 
                 _other_data = sparse.csr_matrix(_other) if _other_data is None else sparse.vstack([_other_data, sparse.csr_matrix(_other)])
@@ -174,7 +176,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     print(result_string)
 
-    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + str(k) + ".txt", "a")
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + type + "_" + str(k) + ".txt", "a")
     f.write(result_string)
     f.close()
 
@@ -255,7 +257,7 @@ def randomized_data_params_search(**kwargs):
         if label.find(".") != -1 or label.find("polarity_") != -1 or label.find("sentiment_") != -1 or label.find("distribution_") != -1 or label.find("topic_") != -1 or label.find("price_") != -1 or label.find("volume_") != -1:
             to_remove_mask[i] = True
 
-    data_X = data_X[:, ~to_remove_mask]
+    data_X = data_X[:, ~to_remove_mask][:300, :]
     n_features = data_X.shape[1]
 
     pool = ThreadPool()

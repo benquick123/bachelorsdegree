@@ -34,7 +34,7 @@ def create_final_test_set(data_X, data_Y, IDs=None):
         r = np.zeros(data_X.shape[0], dtype="bool")
     else:
         r = np.zeros(len(IDs), dtype="bool")
-    split = int(2* r.shape[0] / 10)
+    split = int(2 * r.shape[0] / 10)
     r[-split:] = True
 
     if IDs is not None:
