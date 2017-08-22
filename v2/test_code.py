@@ -124,12 +124,12 @@ def price_distribution(plot=True, **kwargs):
             except TypeError:
                 pass"""
 
-        # plt.plot(price_changes, stats.alpha.pdf(price_changes, *params), "-", label="Porazdelitev alpha")
+        plt.plot(price_changes, stats.alpha.pdf(price_changes, *params), "-", label="Porazdelitev alpha")
 
         plt.xlabel("relativna sprememeba cene")
         plt.legend()
-        plt.xlim(-0.15, 0.15)
-        # plt.yticks(np.linspace(0, max(n), 11), np.around(np.linspace(0, max(n), 11) / sum(n), 2))
+        plt.xlim(0, 0.1)
+        plt.yticks(np.linspace(0, max(n), 11), np.around(np.linspace(0, max(n), 11) / sum(n), 2))
         plt.savefig("figures/price_distribution.png")
 
     # this works only if price distribution is alpha:
