@@ -285,6 +285,7 @@ def get_relative_Y_changes(IDs, window):
                 currencies.append(article["currency"].lower())
             else:
                 print("recompute IDs")
+                print(article["_id"])
                 return None, None
 
     return p, currencies

@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/parameter_search.py" afterPath="$PROJECT_DIR$/v2/parameter_search.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/news.py" afterPath="$PROJECT_DIR$/v2/news.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="37" column="21" lean-forward="true" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+            <state relative-caret-position="458">
+              <caret line="331" column="40" lean-forward="true" selection-start-line="331" selection-start-column="40" selection-end-line="331" selection-end-column="40" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#839#946#0" expanded="false" />
@@ -53,8 +53,8 @@
       <file leaf-file-name="news.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/news.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="776">
-              <caret line="289" column="24" lean-forward="true" selection-start-line="289" selection-start-column="24" selection-end-line="289" selection-end-column="24" />
+            <state relative-caret-position="728">
+              <caret line="287" column="37" lean-forward="false" selection-start-line="287" selection-start-column="37" selection-end-line="287" selection-end-column="37" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -74,7 +74,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="405">
@@ -217,8 +217,8 @@
         <option value="$PROJECT_DIR$/v2/results/parameter_search.py" />
         <option value="$PROJECT_DIR$/v2/other code/plotting.py" />
         <option value="$PROJECT_DIR$/v2/__init__.py" />
-        <option value="$PROJECT_DIR$/v2/news.py" />
         <option value="$PROJECT_DIR$/v2/parameter_search.py" />
+        <option value="$PROJECT_DIR$/v2/news.py" />
       </list>
     </option>
   </component>
@@ -779,7 +779,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503400213666</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="test">
+      <created>1503400565590</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1503400565590</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -836,7 +843,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="final twitter parser" />
     <MESSAGE value="news download" />
     <MESSAGE value="done data parsing" />
     <MESSAGE value="trollbox: conversations, coin_mentions" />
@@ -861,7 +867,8 @@
     <MESSAGE value="file saving fix" />
     <MESSAGE value="file saving fix v2" />
     <MESSAGE value="final file fix thank god" />
-    <option name="LAST_COMMIT_MESSAGE" value="final file fix thank god" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -996,10 +1003,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="40" column="17" lean-forward="false" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#6477#8253#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v2/news.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="776">
-          <caret line="289" column="24" lean-forward="true" selection-start-line="289" selection-start-column="24" selection-end-line="289" selection-end-column="24" />
+        <state relative-caret-position="728">
+          <caret line="287" column="37" lean-forward="false" selection-start-line="287" selection-start-column="37" selection-end-line="287" selection-end-column="37" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -1008,24 +1026,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="37" column="21" lean-forward="true" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+        <state relative-caret-position="458">
+          <caret line="331" column="40" lean-forward="true" selection-start-line="331" selection-start-column="40" selection-end-line="331" selection-end-column="40" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#839#946#0" expanded="false" />
             <element signature="e#5161#6110#1" expanded="false" />
             <element signature="e#7178#8026#1" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="40" column="17" lean-forward="false" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#6477#8253#0" expanded="false" />
           </folding>
         </state>
       </provider>
