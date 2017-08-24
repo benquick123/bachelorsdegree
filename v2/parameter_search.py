@@ -77,12 +77,13 @@ def price_distribution(plot=True, **kwargs):
 
         plt.plot(price_changes, stats.alpha.pdf(price_changes, *params), "-", label="Porazdelitev alpha")
 
+        plt.title(str(window) + ", " + str(stats.alpha.ppf(1/3, *params)))
         plt.xlabel("relativna sprememeba cene")
         plt.legend()
         plt.xlim(0, 0.1)
         plt.yticks(np.linspace(0, max(n), 11), np.around(np.linspace(0, max(n), 11) / sum(n), 2))
         plt.axvline(stats.alpha.ppf(1/3, *params), 0, 1)
-        plt.savefig("figures/price_distribution.png")
+        plt.savefig("figures/price_distribution_" + str(round(time.time()*1000)) + ".png")
 
     # this works only if price distribution is alpha:
     # threshold is determined so that sample data will be split in thirds.
@@ -93,7 +94,6 @@ def price_distribution(plot=True, **kwargs):
     f.write(type + ", window: " + str(window) + ", thirds margin: " + str(threshold1) + "\n")
     f.close()
 
-    input()
     return threshold1
 
 
@@ -113,7 +113,6 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     back_windows = [back_window_short, back_window_medium, back_window_long]
     print(window, margin, back_windows, back_window_other)
-    input()
 
     if not is_conversation:
         for i, text in enumerate(raw_data):
