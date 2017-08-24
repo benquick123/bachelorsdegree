@@ -14,11 +14,13 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
     back_window = 300 * round((back_window_range[0] + (k + 1 / n_iter) * (back_window_range[1] - back_window_range[0])) / 300)
     _price_X = _volume_X = _price_all_X = _distribution_X = _sentiment_X = _polarity_X = []
 
+    print("iteration", k)
+
     if not is_conversation:
         for i, text in enumerate(raw_data):
             if text["_id"] in ids:
                 averages = []
-                averages += common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1], data_averages_only=True)[0]
+                averages += common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1], data_averages_only=True)
                 averages += common.get_averages_from_db(client, text[date_key], back_window, text[currency_key], articles=articles, conversations=conversations, tweets=tweets)
 
                 _distribution_X.append([distribution for j, distribution in enumerate(averages) if j % 3 == 0])
@@ -34,7 +36,7 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
             for currency in text[currency_key]:
                 if str(text["_id"]) + ":" + currency in ids:
                     averages = []
-                    averages += common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1], data_averages_only=True)[0]
+                    averages += common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1], data_averages_only=True)
                     averages += common.get_averages_from_db(client, text[date_key], back_window, currency, articles=articles, conversations=conversations, tweets=tweets)
 
                     _distribution_X.append([distribution for j, distribution in enumerate(averages) if j % 3 == 0])
