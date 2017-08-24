@@ -98,7 +98,7 @@ def price_distribution(plot=True, **kwargs):
 def parallelized_matrix_creation(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type, articles, conversations, tweets):
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     margin = price_distribution(plot=False, **kwargs)
-    margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
+    # margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
     back_window_short = 300 * round((back_window_short_range[0] + np.random.rand() * (back_window_short_range[1] - back_window_short_range[0])) / 300)
     back_window_medium = 300 * round((back_window_medium_range[0] + np.random.rand() * (back_window_medium_range[1] - back_window_medium_range[0])) / 300)
     back_window_long = 300 * round((back_window_long_range[0] + np.random.rand() * (back_window_long_range[1] - back_window_long_range[0])) / 300)
@@ -186,12 +186,12 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     dates = get_dates_f(set(ids), raw_data, type)
 
     _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
-    result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
+    result_string = "i: " + str(200+k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
 
     print(result_string)
 
-    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + type + "_" + str(k) + ".txt", "a")
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + type + "_" + str(200+k) + ".txt", "a")
     f.write(result_string)
     f.close()
 
