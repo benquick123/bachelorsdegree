@@ -56,7 +56,6 @@ def price_distribution(plot=True, **kwargs):
         price_changes[i] = abs(price)
     price_changes.sort()
     params = stats.alpha.fit(price_changes)
-    print(params)
 
     if plot:
         plt.ioff()
@@ -83,7 +82,6 @@ def price_distribution(plot=True, **kwargs):
         plt.legend()
         plt.xlim(0, 0.1)
         plt.yticks(np.linspace(0, max(n), 11), np.around(np.linspace(0, max(n), 11) / sum(n), 2))
-        plt.axvline(stats.alpha.ppf(1/3, *params), 0, 1)
         plt.savefig("figures/price_distribution_" + str(round(time.time()*1000)) + ".png")
 
     # this works only if price distribution is alpha:
@@ -100,7 +98,8 @@ def price_distribution(plot=True, **kwargs):
 
 def parallelized_matrix_creation(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type, articles, conversations, tweets):
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
-    margin = price_distribution(plot=True, **kwargs)
+    kwargs["window"] = window
+    margin = price_distribution(plot=False, **kwargs)
     # margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
     back_window_short = 300 * round((back_window_short_range[0] + np.random.rand() * (back_window_short_range[1] - back_window_short_range[0])) / 300)
     back_window_medium = 300 * round((back_window_medium_range[0] + np.random.rand() * (back_window_medium_range[1] - back_window_medium_range[0])) / 300)

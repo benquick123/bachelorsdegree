@@ -74,11 +74,11 @@
       <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="58" column="16" lean-forward="false" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+            <state relative-caret-position="118">
+              <caret line="101" column="42" lean-forward="false" selection-start-line="101" selection-start-column="42" selection-end-line="101" selection-end-column="42" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <element signature="e#7260#9036#0" expanded="false" />
+                <element signature="e#7216#8992#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -935,7 +935,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503581026859</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="margin fix">
+      <created>1503581768080</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1503581768080</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1190,11 +1197,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="58" column="16" lean-forward="false" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+        <state relative-caret-position="118">
+          <caret line="101" column="42" lean-forward="false" selection-start-line="101" selection-start-column="42" selection-end-line="101" selection-end-column="42" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#7260#9036#0" expanded="false" />
+            <element signature="e#7216#8992#0" expanded="false" />
           </folding>
         </state>
       </provider>
