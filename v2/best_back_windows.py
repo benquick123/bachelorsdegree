@@ -14,7 +14,7 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
     back_window = 300 * round((back_window_range[0] + (k + 1 / n_iter) * (back_window_range[1] - back_window_range[0])) / 300)
     _price_X = _volume_X = _price_all_X = _distribution_X = _sentiment_X = _polarity_X = []
 
-    print("iteration", k)
+    print("thread", k)
 
     if not is_conversation:
         for i, text in enumerate(raw_data):

@@ -62,8 +62,8 @@
       <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="16" column="24" lean-forward="false" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+            <state relative-caret-position="221">
+              <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -865,7 +865,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503541842288</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="back window fix 2&#10;">
+      <created>1503542049767</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1503542049767</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -922,7 +929,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="first cycle - bad results" />
     <MESSAGE value="events and articles" />
     <MESSAGE value="event clasiffication" />
     <MESSAGE value="proof-of-concept&#10;~60% classification accuracy @events /w 10%+ price change&#10;~57% classification accuracy @events /w 5%+ price change&#10;news only" />
@@ -947,7 +953,8 @@
     <MESSAGE value="parameter search alpha update" />
     <MESSAGE value="alpha update: back to plotting regular distributions" />
     <MESSAGE value="back window fix 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="back window fix 1" />
+    <MESSAGE value="back window fix 2&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="back window fix 2&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1121,8 +1128,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="16" column="24" lean-forward="false" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+        <state relative-caret-position="221">
+          <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
