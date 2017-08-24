@@ -539,7 +539,7 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
 def __init__():
     # initial_load()
 
-    functions = [best_back_windows.best_back_windows]
+    functions = [parameter_search.randomized_data_params_search]
 
     window = 12*3600
     margin = 0.004
