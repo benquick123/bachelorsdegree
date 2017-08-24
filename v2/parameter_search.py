@@ -111,6 +111,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 
     back_windows = [back_window_short, back_window_medium, back_window_long]
     print(window, margin, back_windows, back_window_other)
+    input()
 
     if not is_conversation:
         for i, text in enumerate(raw_data):

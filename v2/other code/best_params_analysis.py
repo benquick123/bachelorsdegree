@@ -70,8 +70,9 @@ def find_best(all_params):
 def parse_files():
     params = []
     for filename in os.listdir("results/parameter_search"):
-        _params = read_file(filename)
-        params.append(_params)
+        if int(filename.split(".")[0].split("_")[-1]) >= 200:
+            _params = read_file(filename)
+            params.append(_params)
         # blankspace_fix(filename)
 
     # np.random.shuffle(params)
