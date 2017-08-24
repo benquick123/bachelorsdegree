@@ -81,6 +81,7 @@ def price_distribution(plot=True, **kwargs):
         plt.legend()
         plt.xlim(0, 0.1)
         plt.yticks(np.linspace(0, max(n), 11), np.around(np.linspace(0, max(n), 11) / sum(n), 2))
+        plt.axvline(stats.alpha.ppf(1/3, *params), 0, 1)
         plt.savefig("figures/price_distribution.png")
 
     # this works only if price distribution is alpha:
@@ -92,12 +93,13 @@ def price_distribution(plot=True, **kwargs):
     f.write(type + ", window: " + str(window) + ", thirds margin: " + str(threshold1) + "\n")
     f.close()
 
+    input()
     return threshold1
 
 
 def parallelized_matrix_creation(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type, articles, conversations, tweets):
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
-    margin = price_distribution(plot=False, **kwargs)
+    margin = price_distribution(plot=True, **kwargs)
     # margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
     back_window_short = 300 * round((back_window_short_range[0] + np.random.rand() * (back_window_short_range[1] - back_window_short_range[0])) / 300)
     back_window_medium = 300 * round((back_window_medium_range[0] + np.random.rand() * (back_window_medium_range[1] - back_window_medium_range[0])) / 300)
@@ -274,6 +276,7 @@ def randomized_data_params_search(**kwargs):
 
     data_X = data_X[:, ~to_remove_mask]
     n_features = data_X.shape[1]
+    n_iter = 32
 
     pool = ThreadPool()
     results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
