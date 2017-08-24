@@ -71,13 +71,13 @@ def best_back_windows(**kwargs):
     n_iter = 100
     back_window_range = kwargs["back_window_range"]
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
-    ids = kwargs["IDs"]
+    ids = np.array(kwargs["IDs"])
     raw_data = kwargs["raw_data"]
     type = kwargs["type"]
     final_set_f = kwargs["final_set_f"]
     del kwargs
 
-    ids, _, _ = set(final_set_f(None, None, ids))
+    ids = set(final_set_f(None, None, ids)[0])
 
     is_conversation = False
     date_key = ""

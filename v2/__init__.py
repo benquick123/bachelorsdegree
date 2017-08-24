@@ -21,6 +21,7 @@ import trollbox as trollbox
 import twitter as twitter
 import test_code as test_code
 import parameter_search as parameter_search
+import best_back_windows as best_back_windows
 
 
 def initial_load():
@@ -538,9 +539,9 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
 def __init__():
     # initial_load()
 
-    functions = [test_code.price_distribution]
+    functions = [best_back_windows.best_back_windows]
 
-    window = 3600
+    window = 12*3600
     margin = 0.004
     train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()
