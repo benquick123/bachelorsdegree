@@ -10,7 +10,7 @@ from multiprocessing.dummy import Pool as ThreadPool
 from itertools import repeat
 
 
-def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, date_key, currency_key, client, is_conversation, articles, conversations, tweets):
+def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, type, date_key, currency_key, client, is_conversation, articles, conversations, tweets):
     back_window = 300 * round((back_window_range[0] + (k + 1 / n_iter) * (back_window_range[1] - back_window_range[0])) / 300)
     _price_X = _volume_X = _price_all_X = _distribution_X = _sentiment_X = _polarity_X = []
 
@@ -101,7 +101,7 @@ def best_back_windows(**kwargs):
     windows = []
 
     pool = ThreadPool()
-    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(n_iter), repeat(back_window_range), repeat(raw_data), repeat(ids), repeat(date_key), repeat(currency_key), repeat(client), repeat(is_conversation), repeat(articles), repeat(conversations), repeat(tweets)))
+    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(n_iter), repeat(back_window_range), repeat(raw_data), repeat(ids), repeat(type), repeat(date_key), repeat(currency_key), repeat(client), repeat(is_conversation), repeat(articles), repeat(conversations), repeat(tweets)))
     pool.close()
     pool.join()
 
