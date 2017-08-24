@@ -56,12 +56,13 @@ def price_distribution(plot=True, **kwargs):
         price_changes[i] = abs(price)
     price_changes.sort()
     params = stats.alpha.fit(price_changes)
+    print(params)
 
     if plot:
         plt.ioff()
         weights = np.ones_like(price_changes) / len(price_changes)
 
-        n, _, _ = plt.hist(price_changes, bins=250, label="Porazdelitev cen", normed=True)
+        n, _, _ = plt.hist(price_changes, bins=500, label="Porazdelitev cen", normed=True)
 
         # dist_names = ['alpha'] #, 'johnsonsu']
 
