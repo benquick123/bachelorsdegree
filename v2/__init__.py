@@ -541,10 +541,10 @@ def __init__():
 
     functions = [parameter_search.randomized_data_params_search]
 
-    window = 6600
-    margin = 0.00968
-    train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
-    exit()
+    # window = 6600
+    # margin = 0.00968
+    # train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
+    # exit()
 
     window = 3*3600
     margin = 0.017
