@@ -100,7 +100,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     kwargs["window"] = window
     margin = price_distribution(plot=False, **kwargs)
-    margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
+    # margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
     back_window_short = 300 * round((back_window_short_range[0] + np.random.rand() * (back_window_short_range[1] - back_window_short_range[0])) / 300)
     back_window_medium = 300 * round((back_window_medium_range[0] + np.random.rand() * (back_window_medium_range[1] - back_window_medium_range[0])) / 300)
     back_window_long = 300 * round((back_window_long_range[0] + np.random.rand() * (back_window_long_range[1] - back_window_long_range[0])) / 300)
