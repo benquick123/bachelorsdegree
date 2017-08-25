@@ -207,8 +207,8 @@ def create_X(client, i, article_data, weights):
     data_averages = []
     average_tfidf, n, average_topics = sparse.csr_matrix([]), 0, np.array([])
 
-    time_windows = [900, 1800, 2*3600, 6*3600]                                          # 15 min, 60 min, 6h
-    the_window = 1800
+    time_windows = [1200, 11100, 22800, 30000]                                        # 15 min, 60 min, 6h
+    the_window = 30000
     for time_window in time_windows:
         technical_data.append(common.get_price_change(client, article_data["currency"], date_from - time_window, date_from))
         technical_data.append(common.get_total_volume(client, article_data["currency"], date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))

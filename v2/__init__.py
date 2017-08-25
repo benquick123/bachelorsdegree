@@ -541,9 +541,9 @@ def __init__():
 
     functions = [parameter_search.randomized_data_params_search]
 
-    window = 12*3600
-    margin = 0.004
-    train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
+    window = 6600
+    margin = 0.00968
+    train_articles(window, margin, p=True, data=True)
     exit()
 
     window = 3*3600

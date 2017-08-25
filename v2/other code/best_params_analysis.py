@@ -22,9 +22,7 @@ def read_file(filename):
     s = ", ".join(s.split("\n")[:-2]).split(", ")
     for _s in s:
         _s = _s.replace("[", "").replace("]", "").replace("{", "").replace("}", "").replace(":", "").split(" ")
-        # print(_s)
         if _s[0] == "1" or _s[0] == "-1" or len(_s) == 3:
-            _d = {int(_s[-2]): int(_s[-1])}
             if "classes" not in params:
                 params["classes"] = dict()
             params["classes"][int(_s[-2])] = int(_s[-1])
@@ -70,12 +68,12 @@ def find_best(all_params):
 def parse_files():
     params = []
     for filename in os.listdir("results/parameter_search"):
-        if int(filename.split(".")[0].split("_")[-1]) >= 200:
+        if filename != "trash":     # and int(filename.split(".")[0].split("_")[-1]) >= 200:
             _params = read_file(filename)
             params.append(_params)
-        # blankspace_fix(filename)
+            # blankspace_fix(filename)
 
-    # np.random.shuffle(params)
+    np.random.shuffle(params)
     converging_average(params)
 
     best = find_best(params)
