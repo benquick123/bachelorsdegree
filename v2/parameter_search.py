@@ -100,7 +100,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     kwargs["window"] = window
     margin = price_distribution(plot=False, **kwargs)
-    # margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
+    margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
     back_window_short = 300 * round((back_window_short_range[0] + np.random.rand() * (back_window_short_range[1] - back_window_short_range[0])) / 300)
     back_window_medium = 300 * round((back_window_medium_range[0] + np.random.rand() * (back_window_medium_range[1] - back_window_medium_range[0])) / 300)
     back_window_long = 300 * round((back_window_long_range[0] + np.random.rand() * (back_window_long_range[1] - back_window_long_range[0])) / 300)
@@ -187,12 +187,12 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     dates = get_dates_f(set(ids), raw_data, type)
 
     _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
-    result_string = "i: " + str(200+k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
+    result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
 
     print(result_string)
 
-    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + type + "_" + str(200+k) + ".txt", "a")
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + type + "_" + str(k) + ".txt", "a")
     f.write(result_string)
     f.close()
 
@@ -275,9 +275,8 @@ def randomized_data_params_search(**kwargs):
 
     data_X = data_X[:, ~to_remove_mask]
     n_features = data_X.shape[1]
-    n_iter = 32
 
-    pool = ThreadPool()
+    pool = ThreadPool(16)
     results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
     pool.close()
     pool.join()
