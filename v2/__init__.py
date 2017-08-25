@@ -543,7 +543,7 @@ def __init__():
 
     window = 6600
     margin = 0.00968
-    train_articles(window, margin, p=True, data=True)
+    train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()
 
     window = 3*3600

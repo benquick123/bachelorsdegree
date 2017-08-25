@@ -5,6 +5,7 @@ import time
 from scipy import sparse
 import numpy as np
 from datetime import datetime
+from multiprocessing.dummy import Pool as ThreadPool
 
 articles = []
 
