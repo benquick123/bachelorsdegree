@@ -150,13 +150,8 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
     if learn:
         testing_indexes = daily_split(data_X, dates, False)
 
-<<<<<<< HEAD
         pool = ThreadPool(10)
-        results = pool.starmap(train_in_parallel, zip(list(range(max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
-=======
-        pool = ThreadPool()
         results = pool.starmap(train_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
->>>>>>> 39f37d5a37a37e38a3978029133b1197ffe6e29f
         pool.close()
         pool.join()
 

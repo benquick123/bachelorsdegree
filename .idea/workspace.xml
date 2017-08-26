@@ -26,8 +26,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="153" column="68" lean-forward="false" selection-start-line="153" selection-start-column="68" selection-end-line="153" selection-end-column="68" />
+            <state relative-caret-position="264">
+              <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
@@ -35,8 +35,6 @@
                 <element signature="e#1555#2141#0" expanded="false" />
                 <element signature="e#2192#2723#0" expanded="false" />
                 <element signature="e#2844#3599#0" expanded="false" />
-                <element signature="e#11204#14706#0" expanded="false" />
-                <element signature="e#14826#18529#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -81,12 +79,11 @@
       <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="199" column="50" lean-forward="true" selection-start-line="199" selection-start-column="50" selection-end-line="199" selection-end-column="50" />
+            <state relative-caret-position="784">
+              <caret line="199" column="50" lean-forward="false" selection-start-line="199" selection-start-column="50" selection-end-line="199" selection-end-column="50" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#913#3470#0" expanded="false" />
-                <element signature="e#7354#9130#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -772,13 +769,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00018" summary="back_window v1">
-      <created>1502572960799</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1502572960799</updated>
-    </task>
     <task id="LOCAL-00019" summary="parallelization bug fix v2">
       <created>1502573414436</created>
       <option name="number" value="00019" />
@@ -1115,7 +1105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503758968907</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="empty shape fix">
+      <created>1503762078334</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1503762078334</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1127,7 +1124,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.49789253" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.49789253" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27952328" sideWeight="0.4873551" order="2" side_tool="false" content_ui="tabs" x="1" y="31" width="958" height="1008" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1173,7 +1170,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="file saving fix" />
     <MESSAGE value="file saving fix v2" />
     <MESSAGE value="final file fix thank god" />
     <MESSAGE value="test" />
@@ -1198,7 +1194,8 @@
     <MESSAGE value="merge" />
     <MESSAGE value="Merge branch 'master' of https://github.com/benquick123/diplomsko-delo&#10;&#10;# Conflicts:&#10;#&#9;v2/__init__.py&#10;" />
     <MESSAGE value="article matrix creation" />
-    <option name="LAST_COMMIT_MESSAGE" value="article matrix creation" />
+    <MESSAGE value="empty shape fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="empty shape fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1378,20 +1375,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="199" column="50" lean-forward="true" selection-start-line="199" selection-start-column="50" selection-end-line="199" selection-end-column="50" />
+        <state relative-caret-position="784">
+          <caret line="199" column="50" lean-forward="false" selection-start-line="199" selection-start-column="50" selection-end-line="199" selection-end-column="50" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#913#3470#0" expanded="false" />
-            <element signature="e#7354#9130#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="153" column="68" lean-forward="false" selection-start-line="153" selection-start-column="68" selection-end-line="153" selection-end-column="68" />
+        <state relative-caret-position="264">
+          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />
@@ -1399,8 +1395,6 @@
             <element signature="e#1555#2141#0" expanded="false" />
             <element signature="e#2192#2723#0" expanded="false" />
             <element signature="e#2844#3599#0" expanded="false" />
-            <element signature="e#11204#14706#0" expanded="false" />
-            <element signature="e#14826#18529#0" expanded="false" />
           </folding>
         </state>
       </provider>
