@@ -183,14 +183,13 @@ def create_matrix(articles, window, margin, p=False):
     # general attr
     labels = ["w", "title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
     # data_averages
-    labels += ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_a_30min", "polarity_a_30min", "sentiment_a_30min"] + ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"]
+    labels += ["distribution_a_1200", "polarity_a_1200", "sentiment_a_1200"] + ["distribution_a_11100", "polarity_a_11100", "sentiment_a_11100"] + ["distribution_a_22800", "polarity_a_22800", "sentiment_a_22800"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"]
     # db_averages
     labels += ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"]
-    labels += ["distribution_t_30min", "polarity_t_30min", "sentiment_t_30min"] + ["distribution_c_30min", "polarity_c_30min", "sentiment_c_30min"]
-    labels += ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"] + ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"]
-    labels += ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"] + ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"]
+    labels += ["distribution_t_11100", "polarity_t_11100", "sentiment_t_11100"] + ["distribution_c_11100", "polarity_c_11100", "sentiment_c_11100"]
+    labels += ["distribution_t_22800", "polarity_t_22800", "sentiment_t_22800"] + ["distribution_c_22800", "polarity_c_22800", "sentiment_c_22800"]
     # technical data
-    labels += ["price_15min", "volume_15min", "price_all_15min", "price_30min", "volume_30min", "price_all_30min", "price_1h", "volume_1h", "price_all_1h", "price_6h", "volume_6h", "volume_all_6h"]
+    labels += ["price_1200", "volume_1200", "price_all_1200", "price_11100", "volume_11100", "price_all_11100", "price_22800", "volume_22800", "volume_all_22800"]
     # topics
     labels += ["topic_" + str(i) for i in range(len(articles[0]["topics"]))]
     labels += ["average_topic_" + str(i) for i in range(len(articles[0]["topics"]))]

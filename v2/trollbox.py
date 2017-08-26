@@ -195,19 +195,18 @@ def create_X(client, i, conversation_data, weights, currency):
     data_averages = []
     average_tfidf, n = sparse.csr_matrix([]), 0
 
-    time_windows = [900, 3600, 6*3600]  # 15 min, 60 min, 6h
-    the_window = 900
+    time_windows = [900, 3600, 6*3600, 1500]  # 15 min, 60 min, 6h
+    the_window = 1500
     for time_window in time_windows:
-        technical_data.append(common.get_price_change(client, currency, date_from - time_window, date_from))
-        technical_data.append(common.get_total_volume(client, currency, date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
-        technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
-
-        db_averages += common.get_averages_from_db(client, conversation_data["conversation_end"], time_window, currency, conversations=False)
         if time_window != the_window:
             data_averages += common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, threshold=0.0, type="conversation", data_averages_only=True)
+            technical_data.append(common.get_price_change(client, currency, date_from - time_window, date_from))
+            technical_data.append(common.get_total_volume(client, currency, date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
+            technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
+
+            db_averages += common.get_averages_from_db(client, conversation_data["conversation_end"], time_window, currency, conversations=False)
         else:
-            _data_averages, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=False)
-            data_averages += _data_averages
+            _, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=False)
 
     avg_reputation = []
     for message in conversation_data["messages"]:
