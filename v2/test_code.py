@@ -51,7 +51,7 @@ def optimal_attr_number(plot=False, **kwargs):
     while i < n_iter:
         # threshold = threshold_range[0] + np.random.rand() * (threshold_range[1] - threshold_range[0])
         threshold = threshold_range[0] + i/n_iter * (threshold_range[1] - threshold_range[0])
-        feature_selector = SelectFromModel(LinearSVC(), threshold=str(threshold) + "*mean")
+        feature_selector = SelectFromModel(RandomForestClassifier(), threshold=str(threshold) + "*mean")
 
         # threshold = threshold_range[0] + (i / n_iter) * (threshold_range[1] - threshold_range[0])
         _, score, precision, recall, matrix_shape, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
