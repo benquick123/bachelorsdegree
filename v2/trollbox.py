@@ -173,14 +173,10 @@ def create_matrix(conversations, window, margin, p=False):
 
     # general attr
     labels = ["w", "avg_sentiment", "avg_polarity", "avg_reputation", "messages_len"]
-    # data averages
-    labels += ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"] + ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"] + ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"]
-    # db averages
-    labels += ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"]
-    labels += ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"]
-    labels += ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"]
-    # technical data
-    labels += ["price_15min", "volume_15min", "price_all_15min", "price_1h", "volume_1h", "price_all_1h", "price_6h", "volume_6h", "volume_all_6h"]
+    # averages
+    labels += ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"] + ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"] + ["price_15min", "volume_15min", "price_all_15min"]
+    labels += ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"] + ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"] + ["price_1h", "volume_1h", "price_all_1h"]
+    labels += ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"] + ["price_6h", "volume_6h", "volume_all_6h"]
     # tfidf
     labels += vocabulary
 

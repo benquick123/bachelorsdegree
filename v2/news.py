@@ -182,19 +182,15 @@ def create_matrix(articles, window, margin, p=False):
 
     # general attr
     labels = ["w", "title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
-    # data_averages
-    labels += ["distribution_a_1200", "polarity_a_1200", "sentiment_a_1200"] + ["distribution_a_11100", "polarity_a_11100", "sentiment_a_11100"] + ["distribution_a_22800", "polarity_a_22800", "sentiment_a_22800"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"]
-    # db_averages
-    labels += ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"]
-    labels += ["distribution_t_11100", "polarity_t_11100", "sentiment_t_11100"] + ["distribution_c_11100", "polarity_c_11100", "sentiment_c_11100"]
-    labels += ["distribution_t_22800", "polarity_t_22800", "sentiment_t_22800"] + ["distribution_c_22800", "polarity_c_22800", "sentiment_c_22800"]
-    # technical data
-    labels += ["price_1200", "volume_1200", "price_all_1200", "price_11100", "volume_11100", "price_all_11100", "price_22800", "volume_22800", "volume_all_22800"]
+    # averages
+    labels += ["distribution_a_1200", "polarity_a_1200", "sentiment_a_1200"] + ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"] + ["price_1200", "volume_1200", "price_all_1200"]
+    labels += ["distribution_a_11100", "polarity_a_11100", "sentiment_a_11100"] + ["distribution_t_11100", "polarity_t_11100", "sentiment_t_11100"] + ["distribution_c_11100", "polarity_c_11100", "sentiment_c_11100"] + ["price_11100", "volume_11100", "price_all_11100"]
+    labels += ["distribution_a_22800", "polarity_a_22800", "sentiment_a_22800"] + ["distribution_t_22800", "polarity_t_22800", "sentiment_t_22800"] + ["distribution_c_22800", "polarity_c_22800", "sentiment_c_22800"] + ["price_22800", "volume_22800", "volume_all_22800"]
+    # tfidf
+    labels += vocabulary
     # topics
     labels += ["topic_" + str(i) for i in range(len(articles[0]["topics"]))]
     labels += ["average_topic_" + str(i) for i in range(len(articles[0]["topics"]))]
-    # tfidf
-    labels += vocabulary
 
     return X, Y, IDs, labels
 

@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/__init__.py" afterPath="$PROJECT_DIR$/v2/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/news.py" afterPath="$PROJECT_DIR$/v2/news.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/trollbox.py" afterPath="$PROJECT_DIR$/v2/trollbox.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/twitter.py" afterPath="$PROJECT_DIR$/v2/twitter.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,7 +25,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="263">
@@ -44,8 +44,8 @@
       <file leaf-file-name="trollbox.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/trollbox.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="725">
-              <caret line="208" column="13" lean-forward="false" selection-start-line="208" selection-start-column="13" selection-end-line="208" selection-end-column="13" />
+            <state relative-caret-position="-91">
+              <caret line="178" column="0" lean-forward="false" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -53,11 +53,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="news.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="twitter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/v2/twitter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="153" column="13" lean-forward="true" selection-start-line="153" selection-start-column="13" selection-end-line="153" selection-end-column="13" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="news.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/news.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="185" column="210" lean-forward="false" selection-start-line="185" selection-start-column="210" selection-end-line="185" selection-end-column="210" />
+            <state relative-caret-position="442">
+              <caret line="187" column="34" lean-forward="false" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -187,7 +199,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/trollbox/conversations.py" />
         <option value="$PROJECT_DIR$/other/trader.py" />
         <option value="$PROJECT_DIR$/downloaders/twitter-downloader.py" />
         <option value="$PROJECT_DIR$/downloaders/crypto-values-downloader.py" />
@@ -235,9 +246,10 @@
         <option value="$PROJECT_DIR$/v2/parameter_search.py" />
         <option value="$PROJECT_DIR$/v2/other code/best_params_analysis.py" />
         <option value="$PROJECT_DIR$/v2/test_code.py" />
-        <option value="$PROJECT_DIR$/v2/trollbox.py" />
-        <option value="$PROJECT_DIR$/v2/news.py" />
         <option value="$PROJECT_DIR$/v2/__init__.py" />
+        <option value="$PROJECT_DIR$/v2/news.py" />
+        <option value="$PROJECT_DIR$/v2/twitter.py" />
+        <option value="$PROJECT_DIR$/v2/trollbox.py" />
       </list>
     </option>
   </component>
@@ -772,13 +784,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00012" summary="proof-of-concept&#10;~60% classification accuracy @events /w 10%+ price change&#10;~57% classification accuracy @events /w 5%+ price change&#10;news only">
-      <created>1492083439654</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1492083439654</updated>
-    </task>
     <task id="LOCAL-00013" summary="proof-of-concept done">
       <created>1492366738097</created>
       <option name="number" value="00013" />
@@ -1115,7 +1120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503715798564</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="articles matrix creation fix">
+      <created>1503716430110</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1503716430110</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1201,12 +1213,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="14" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Program Files (x86)/Python/Python 3.4.4/Lib/site-packages/summa/graph.py" />
     <entry file="file://C:/Program Files (x86)/Python/Python 3.4.4/Lib/site-packages/summa/__init__.py" />
     <entry file="file://C:/Program Files (x86)/Python/Python 3.4.4/Lib/site-packages/summa/commons.py" />
     <entry file="file://C:/Program Files (x86)/Python/Python 3.4.4/Lib/site-packages/summa/preprocessing/snowball.py" />
@@ -1306,19 +1317,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="278" column="24" lean-forward="false" selection-start-line="278" selection-start-column="24" selection-end-line="278" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#913#3470#0" expanded="false" />
-            <element signature="e#3861#10397#0" expanded="false" />
-            <element signature="e#5005#7149#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/common.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
@@ -1358,26 +1356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/trollbox.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
-          <caret line="208" column="13" lean-forward="false" selection-start-line="208" selection-start-column="13" selection-end-line="208" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v2/news.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="185" column="210" lean-forward="false" selection-start-line="185" selection-start-column="210" selection-end-line="185" selection-end-column="210" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
@@ -1388,6 +1366,49 @@
             <element signature="e#5131#6080#1" expanded="false" />
             <element signature="e#7448#8296#1" expanded="false" />
             <element signature="e#14582#18285#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="278" column="24" lean-forward="false" selection-start-line="278" selection-start-column="24" selection-end-line="278" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#913#3470#0" expanded="false" />
+            <element signature="e#3861#10397#0" expanded="false" />
+            <element signature="e#5005#7149#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/twitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="153" column="13" lean-forward="true" selection-start-line="153" selection-start-column="13" selection-end-line="153" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/trollbox.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-91">
+          <caret line="178" column="0" lean-forward="false" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/news.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="187" column="34" lean-forward="false" selection-start-line="187" selection-start-column="34" selection-end-line="187" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
