@@ -484,10 +484,10 @@ def tfidf_test(**kwargs):
 
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
     f.write(type + "\n")
-    f.write("non weighted - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("non weighted - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     financial_weights = common.create_financial_vocabulary(vocabulary) + 1
@@ -495,9 +495,9 @@ def tfidf_test(**kwargs):
     _f.setdiag(financial_weights)
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _f]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("only financial weights - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("only financial weights - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     sentiment_weights = common.calc_sentiment_for_vocabulary(vocabulary)
@@ -506,9 +506,9 @@ def tfidf_test(**kwargs):
     _s.setdiag(sentiment_weights)
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _s]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("only sentiment weights - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("only sentiment weights - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     weights = sparse.csr_matrix(financial_weights * sentiment_weights)
@@ -516,9 +516,9 @@ def tfidf_test(**kwargs):
     _w.setdiag(weights.toarray()[0])
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _w]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("sentiment & financial weights - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("sentiment & financial weights - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     back_window = 3600 * 3
@@ -547,23 +547,23 @@ def tfidf_test(**kwargs):
 
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("average_tfidf weighted - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
+    f.write("average_tfidf weighted - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
     f.close()
 
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _s]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("average_tfidf and sentiment weighted - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
+    f.write("average_tfidf and sentiment weighted - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
     f.close()
 
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _f]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("average_tfidf and financial weighted - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
+    f.write("average_tfidf and financial weighted - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
     f.close()
 
     financial_weights = common.create_financial_vocabulary(vocabulary) + 1
@@ -575,15 +575,15 @@ def tfidf_test(**kwargs):
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _w]).tocsr()
     pls.save_matrix_X(data_X, "conversations", k=20000)
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("average_tfidf, sentiment and financial weighted - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
+    f.write("average_tfidf, sentiment and financial weighted - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
     f.close()
 
     data_X = data_X[:, ~tfidf_indexes]
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
-    f.write("without tfidf - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("without tfidf - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.write("\n")
     f.close()
 
@@ -624,28 +624,28 @@ def topics_test(**kwargs):
         elif label.find("topic") != -1:
             topic_indexes[i] = True             # topic indexes are the same as average topic indexes; consequence of deletion from matrix
 
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/topic_test_scores.txt", "a")
-    f.write("full - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("full - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     average_topics = data_X[:, average_topic_indexes]
     data_X = data_X[:, ~average_topic_indexes]
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/topic_test_scores.txt", "a")
-    f.write("topics only - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("topics only - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     data_X = data_X[:, ~topic_indexes[:data_X.shape[1]]]
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/topic_test_scores.txt", "a")
-    f.write("none: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("none: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     data_X = sparse.hstack([data_X, average_topics]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/topic_test_scores.txt", "a")
-    f.write("average topics only - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
+    f.write("average topics only - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
     date_key = ""
@@ -668,9 +668,9 @@ def topics_test(**kwargs):
     average_topics = sparse.csr_matrix(average_topics)
     data_X = data_X[:, :-average_topics.shape[1]]
     data_X = sparse.hstack([data_X, average_topics]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/topic_test_scores.txt", "a")
-    f.write("average topics only - score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + "\n")
+    f.write("average topics only - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + "\n")
     f.write("\n")
     f.close()
 
@@ -713,36 +713,36 @@ def technical_test(**kwargs):
     prices = data_X[:, price_labels]
     volumes = data_X[:, volume_labels]
 
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/technical_test_scores", "a")
     f.write(type + " - window: " + str(window) + ", margin: " + str(margin) + "\n")
-    f.write("past prices - scores: " + str(score) + ", scores_std: " + str(score_std) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = data_X[:, price_labels | price_all_labels | volume_labels]
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/technical_test_scores", "a")
-    f.write("no technical - scores: " + str(score) + ", scores_std: " + str(score_std) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("no technical - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = sparse.hstack([data_X, prices]).tocsr()
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/technical_test_scores", "a")
-    f.write("past prices - scores: " + str(score) + ", scores_std: " + str(score_std) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = data_X[:, :-prices.shape[1]]
     data_X = sparse.hstack([data_X, all_prices])
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/technical_test_scores", "a")
-    f.write("all past prices - scores: " + str(score) + ", scores_std: " + str(score_std) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("all past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = data_X[:, :-all_prices.shape[1]]
     data_X = sparse.hstack([data_X, volumes])
-    _, score, score_std, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
+    _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, save=False, learn=True, test=False)
     f = open("results/technical_test_scores", "a")
-    f.write("past prices - scores: " + str(score) + ", scores_std: " + str(score_std) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.write("\n")
     f.close()
 
