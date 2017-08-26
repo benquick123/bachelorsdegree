@@ -35,7 +35,8 @@
                 <element signature="e#1555#2141#0" expanded="false" />
                 <element signature="e#2192#2723#0" expanded="false" />
                 <element signature="e#2844#3599#0" expanded="false" />
-                <marker date="1503775645773" expanded="true" signature="22320:22673" ph="..." />
+                <marker date="1503777203053" expanded="true" signature="22228:22842" ph="..." />
+                <marker date="1503777203053" expanded="true" signature="22320:22651" ph="..." />
               </folding>
             </state>
           </provider>
@@ -142,8 +143,8 @@
       <file leaf-file-name="test_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="710" column="8" lean-forward="false" selection-start-line="710" selection-start-column="8" selection-end-line="710" selection-end-column="8" />
+            <state relative-caret-position="368">
+              <caret line="734" column="30" lean-forward="false" selection-start-line="734" selection-start-column="30" selection-end-line="734" selection-end-column="30" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#832#2936#0" expanded="false" />
@@ -153,10 +154,10 @@
                 <element signature="e#10928#17182#0" expanded="false" />
                 <element signature="e#17329#27473#0" expanded="false" />
                 <element signature="e#27517#31905#0" expanded="false" />
-                <element signature="e#35844#36431#0" expanded="false" />
-                <element signature="e#36483#44314#0" expanded="false" />
-                <element signature="e#44367#46419#0" expanded="false" />
-                <element signature="e#46464#47639#0" expanded="false" />
+                <element signature="e#35862#36449#0" expanded="false" />
+                <element signature="e#36501#44332#0" expanded="false" />
+                <element signature="e#44385#46437#0" expanded="false" />
+                <element signature="e#46482#47657#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -797,13 +798,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00022" summary="bug fix v4">
-      <created>1502712658771</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1502712658771</updated>
-    </task>
     <task id="LOCAL-00023" summary="immediate file saving">
       <created>1502800994443</created>
       <option name="number" value="00023" />
@@ -1140,7 +1134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503776386709</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="technical fix">
+      <created>1503777184583</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1503777184583</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1198,7 +1199,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="final file fix thank god" />
     <MESSAGE value="test" />
     <MESSAGE value="db error wtf" />
     <MESSAGE value="multithreading enabled" />
@@ -1223,7 +1223,8 @@
     <MESSAGE value="empty shape fix" />
     <MESSAGE value="merge" />
     <MESSAGE value="technical data fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="technical data fix" />
+    <MESSAGE value="technical fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="technical fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1392,7 +1393,8 @@
             <element signature="e#1555#2141#0" expanded="false" />
             <element signature="e#2192#2723#0" expanded="false" />
             <element signature="e#2844#3599#0" expanded="false" />
-            <marker date="1503775645773" expanded="true" signature="22320:22673" ph="..." />
+            <marker date="1503777203053" expanded="true" signature="22228:22842" ph="..." />
+            <marker date="1503777203053" expanded="true" signature="22320:22651" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1421,8 +1423,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/test_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="710" column="8" lean-forward="false" selection-start-line="710" selection-start-column="8" selection-end-line="710" selection-end-column="8" />
+        <state relative-caret-position="368">
+          <caret line="734" column="30" lean-forward="false" selection-start-line="734" selection-start-column="30" selection-end-line="734" selection-end-column="30" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#832#2936#0" expanded="false" />
@@ -1432,10 +1434,10 @@
             <element signature="e#10928#17182#0" expanded="false" />
             <element signature="e#17329#27473#0" expanded="false" />
             <element signature="e#27517#31905#0" expanded="false" />
-            <element signature="e#35844#36431#0" expanded="false" />
-            <element signature="e#36483#44314#0" expanded="false" />
-            <element signature="e#44367#46419#0" expanded="false" />
-            <element signature="e#46464#47639#0" expanded="false" />
+            <element signature="e#35862#36449#0" expanded="false" />
+            <element signature="e#36501#44332#0" expanded="false" />
+            <element signature="e#44385#46437#0" expanded="false" />
+            <element signature="e#46482#47657#0" expanded="false" />
           </folding>
         </state>
       </provider>
