@@ -2099,3 +2099,5 @@ conversations, window: 17700, thirds margin: 0.0372547126608
 conversations, window: 8100, thirds margin: 0.0265680691096
 conversations, window: 15300, thirds margin: 0.0349761554293
 conversations, window: 10800, thirds margin: 0.0301564110525
+articles, window: 6600, thirds margin: 0.00967742793041
+articles, window: 6600, thirds margin: 0.00967742793041

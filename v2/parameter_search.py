@@ -98,7 +98,7 @@ def price_distribution(plot=True, **kwargs):
 
 def parallelized_matrix_creation(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type, articles, conversations, tweets):
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
-    window = 6600
+    # window = 6600
     kwargs["window"] = window
     margin = price_distribution(plot=False, **kwargs)
     # margin = margin + margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
@@ -107,10 +107,10 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     back_window_long = 300 * round((back_window_long_range[0] + np.random.rand() * (back_window_long_range[1] - back_window_long_range[0])) / 300)
     back_window_other = 300 * round((back_window_range[0] + np.random.rand() * (back_window_range[1] - back_window_range[0])) / 300)
 
-    back_window_short = 1200
-    back_window_medium = 11100
-    back_window_long = 22800
-    back_window_other = 30000
+    # back_window_short = 1200
+    # back_window_medium = 11100
+    # back_window_long = 22800
+    # back_window_other = 30000
 
     curr_tfidf_weight = 1
     _tfidf = None
@@ -192,9 +192,9 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     data_Y = get_Y_f(ids, window, margin)
     dates = get_dates_f(set(ids), raw_data, type)
 
-    pls.save_matrix_X(data_X, type)
-    pls.save_matrix_Y(data_Y, type, window, margin)
-    pls.save_matrix_IDs(ids, type)
+    # pls.save_matrix_X(data_X, type)
+    # pls.save_matrix_Y(data_Y, type, window, margin)
+    # pls.save_matrix_IDs(ids, type)
 
     _, score, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
     result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
@@ -285,14 +285,13 @@ def randomized_data_params_search(**kwargs):
 
     data_X = data_X[:, ~to_remove_mask]
     n_features = data_X.shape[1]
-    n_iter = 1
 
-    pool = ThreadPool(1)
+    pool = ThreadPool(16)
     results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
     pool.close()
     pool.join()
 
-    # general attr
+    """# general attr
     labels = ["w", "title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
     # averages
     labels += ["distribution_a_1200", "polarity_a_1200", "sentiment_a_1200"] + ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"] + ["price_1200", "volume_1200", "price_all_1200"]
@@ -303,7 +302,7 @@ def randomized_data_params_search(**kwargs):
     # topics
     labels += ["topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
     labels += ["average_topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
-    pls.save_labels(labels, type)
+    pls.save_labels(labels, type)"""
 
     # f = open("results/data_params_search_results.txt", "a")
     # for result in results:
