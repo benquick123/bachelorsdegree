@@ -203,8 +203,8 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         testing_indexes = daily_split(final_test_X, final_test_dates, True)
         pred_Y = []
 
-        pool = ThreadPool()
-        results = pool.starmap(test_in_parallel, zip(list(range(max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(final_test_X), itertools.repeat(final_test_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
+        pool = ThreadPool(16)
+        results = pool.starmap(test_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(final_test_X), itertools.repeat(final_test_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
 
