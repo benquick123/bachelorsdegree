@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/__init__.py" afterPath="$PROJECT_DIR$/v2/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/test_code.py" afterPath="$PROJECT_DIR$/v2/test_code.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,11 +23,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="249">
-              <caret line="326" column="46" lean-forward="false" selection-start-line="326" selection-start-column="46" selection-end-line="326" selection-end-column="46" />
+            <state relative-caret-position="793">
+              <caret line="358" column="34" lean-forward="true" selection-start-line="358" selection-start-column="34" selection-end-line="358" selection-end-column="34" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
@@ -126,22 +126,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_code.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="55" column="199" lean-forward="false" selection-start-line="55" selection-start-column="199" selection-end-line="55" selection-end-column="199" />
+            <state relative-caret-position="436">
+              <caret line="52" column="67" lean-forward="false" selection-start-line="52" selection-start-column="67" selection-end-line="52" selection-end-column="67" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
-                <element signature="e#3156#5623#0" expanded="false" />
-                <element signature="e#5681#8389#0" expanded="false" />
-                <element signature="e#8426#11033#0" expanded="false" />
-                <element signature="e#11086#17340#0" expanded="false" />
-                <element signature="e#17487#27631#0" expanded="false" />
-                <element signature="e#27675#32063#0" expanded="false" />
-                <element signature="e#36207#44038#0" expanded="false" />
-                <element signature="e#44091#46143#0" expanded="false" />
-                <element signature="e#46188#47363#0" expanded="false" />
+                <element signature="e#3169#5636#0" expanded="false" />
+                <element signature="e#5694#8402#0" expanded="false" />
+                <element signature="e#8439#11046#0" expanded="false" />
+                <element signature="e#11099#17353#0" expanded="false" />
+                <element signature="e#17500#27644#0" expanded="false" />
+                <element signature="e#27688#32076#0" expanded="false" />
+                <element signature="e#36220#44051#0" expanded="false" />
+                <element signature="e#44104#46156#0" expanded="false" />
+                <element signature="e#46201#47376#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -256,8 +256,8 @@
         <option value="$PROJECT_DIR$/v2/trollbox.py" />
         <option value="$PROJECT_DIR$/v2/parameter_search.py" />
         <option value="$PROJECT_DIR$/v2/results/articles_results.txt" />
-        <option value="$PROJECT_DIR$/v2/test_code.py" />
         <option value="$PROJECT_DIR$/v2/__init__.py" />
+        <option value="$PROJECT_DIR$/v2/test_code.py" />
       </list>
     </option>
   </component>
@@ -792,13 +792,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00028" summary="final file fix thank god">
-      <created>1503400120457</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1503400120457</updated>
-    </task>
     <task id="LOCAL-00029" summary="final file fix thank god">
       <created>1503400213666</created>
       <option name="number" value="00029" />
@@ -1135,7 +1128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503781041468</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="optimal attr num (articles)">
+      <created>1503781144529</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1503781144529</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1295,7 +1295,7 @@
         <state relative-caret-position="1853">
           <caret line="109" column="17" lean-forward="false" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1398,29 +1398,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/test_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="55" column="199" lean-forward="false" selection-start-line="55" selection-start-column="199" selection-end-line="55" selection-end-column="199" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-            <element signature="e#3156#5623#0" expanded="false" />
-            <element signature="e#5681#8389#0" expanded="false" />
-            <element signature="e#8426#11033#0" expanded="false" />
-            <element signature="e#11086#17340#0" expanded="false" />
-            <element signature="e#17487#27631#0" expanded="false" />
-            <element signature="e#27675#32063#0" expanded="false" />
-            <element signature="e#36207#44038#0" expanded="false" />
-            <element signature="e#44091#46143#0" expanded="false" />
-            <element signature="e#46188#47363#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="326" column="46" lean-forward="false" selection-start-line="326" selection-start-column="46" selection-end-line="326" selection-end-column="46" />
+        <state relative-caret-position="793">
+          <caret line="358" column="34" lean-forward="true" selection-start-line="358" selection-start-column="34" selection-end-line="358" selection-end-column="34" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />
@@ -1428,6 +1409,25 @@
             <element signature="e#1555#2141#0" expanded="false" />
             <element signature="e#2192#2723#0" expanded="false" />
             <element signature="e#2844#3599#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/test_code.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="52" column="67" lean-forward="false" selection-start-line="52" selection-start-column="67" selection-end-line="52" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#3169#5636#0" expanded="false" />
+            <element signature="e#5694#8402#0" expanded="false" />
+            <element signature="e#8439#11046#0" expanded="false" />
+            <element signature="e#11099#17353#0" expanded="false" />
+            <element signature="e#17500#27644#0" expanded="false" />
+            <element signature="e#27688#32076#0" expanded="false" />
+            <element signature="e#36220#44051#0" expanded="false" />
+            <element signature="e#44104#46156#0" expanded="false" />
+            <element signature="e#46201#47376#0" expanded="false" />
           </folding>
         </state>
       </provider>
