@@ -1,0 +1,7 @@
+articles - window: 6600, margin: 0.00967742793041
+all past - scores: 0.463836477987, precision: 0.468882282102, recall: 0.463836477987
+no technical - scores: 0.410377358491, precision: 0.416171476493, recall: 0.410377358491
+past prices - scores: 0.416666666667, precision: 0.423863296033, recall: 0.416666666667
+all_past prices - scores: 0.410377358491, precision: 0.416992293656, recall: 0.410377358491
+past volumes - scores: 0.454402515723, precision: 0.458894055094, recall: 0.454402515723
+
