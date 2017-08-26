@@ -539,12 +539,12 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
 def __init__():
     # initial_load()
 
-    functions = [parameter_search.randomized_data_params_search]
+    functions = [test_code.tfidf_test, test_code.topics_test, test_code.technical_test]
 
-    # window = 6600
-    # margin = 0.00968
-    # train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
-    # exit()
+    window = 6600
+    margin = 0.00968
+    train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
+    exit()
 
     window = 3*3600
     margin = 0.017

@@ -915,7 +915,6 @@ def randomized_data_params_search(**kwargs):
         train_f(feature_selector, model, data_X, data_Y, dates, save=False, p=False, learn=True, test=False)
 
 
-
 def randomized_model_params_search(**kwargs):
     print("GRID SEARCH")
     # do grid search to find best params for every learning algorithm used
