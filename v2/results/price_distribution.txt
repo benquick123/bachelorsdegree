@@ -2117,3 +2117,16 @@ tweets, window: 1800, thirds margin: 0.00867104518584
 tweets, window: 3000, thirds margin: 0.0115198638388
 tweets, window: 9600, thirds margin: 0.0195283165319
 tweets, window: 1200, thirds margin: 0.00657364569655
+conversations, window: 2700, thirds margin: 0.0149871732868
+conversations, window: 1200, thirds margin: 0.00875202355884
+conversations, window: 1500, thirds margin: 0.01027043603
+conversations, window: 3300, thirds margin: 0.0167767894293
+conversations, window: 12900, thirds margin: 0.0324907084642
+conversations, window: 18300, thirds margin: 0.0377603160001
+conversations, window: 11400, thirds margin: 0.0308422960291
+conversations, window: 13800, thirds margin: 0.0334444625516
+conversations, window: 14400, thirds margin: 0.0340708960653
+conversations, window: 12600, thirds margin: 0.0321791404308
+conversations, window: 15000, thirds margin: 0.0346694875423
+conversations, window: 20400, thirds margin: 0.0394685794578
+conversations, window: 20400, thirds margin: 0.0394685794578

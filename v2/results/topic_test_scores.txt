@@ -7,3 +7,10 @@ average topics only - score: 0.448917800589 (+/- 0.0646809320766), precision: 0.
 average topics only - score: 0.452313201241 (+/- 0.0639919655828), precision: 0.458725009785, recall: 0.452313201241, margin: 0.004, window: 1800, back_window: 3600
 average topics only - score: 0.45174504655 (+/- 0.0720803213471), precision: 0.463688612141, recall: 0.45174504655, margin: 0.004, window: 1800, back_window: 21600
 
+articles
+full - score: 0.463836477987, precision: 0.468882282102, recall: 0.463836477987, margin: 0.00967742793041, window: 6600
+topics only - score: 0.446540880503, precision: 0.450969465118, recall: 0.446540880503, margin: 0.00967742793041, window: 6600
+none: 0.477987421384, precision: 0.484966781223, recall: 0.477987421384, margin: 0.00967742793041, window: 6600
+average topics only - score: 0.477987421384, precision: 0.484292735775, recall: 0.477987421384, margin: 0.00967742793041, window: 6600
+average topics only - score: 0.477987421384, precision: 0.484292735775, recall: 0.477987421384, margin: 0.00967742793041, window: 6600, back_window: 30000
+

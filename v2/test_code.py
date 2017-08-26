@@ -477,7 +477,7 @@ def tfidf_test(**kwargs):
                         _tfidf = sparse.vstack([_tfidf, tfidf[i, :]])
         tfidf = sparse.csr_matrix(_tfidf)
 
-    max_n = 50000
+    max_n = 500000
     if data_X.shape[0] > max_n:
         data_X = data_X[:max_n, :]
         data_Y = data_Y[:max_n]
@@ -527,22 +527,23 @@ def tfidf_test(**kwargs):
     curr_tfidf_weight = 1
     k = 0
 
+    print(tfidf.shape, len(raw_data))
     if not is_conversation:
         for i, text in enumerate(raw_data):
             # if k >= max_n:
             #     break
-            text["tfidf"] = tfidf[i]
             if text["_id"] in ids:
+                text["tfidf"] = tfidf[k]
                 _, average_tfidf, _n, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1])
                 tfidf[k, :] = tfidf[k, :] * (curr_tfidf_weight / (_n+1)) + (average_tfidf * (_n / (_n+1))).multiply(tfidf[k, :].power(0))
                 k += 1
     else:
         for i, text in enumerate(raw_data):
-            text["tfidf"] = tfidf[i]
             for currency in text[currency_key]:
                 # if k >= max_n:
                 #     break
                 if str(text["_id"]) + ":" + currency in ids:
+                    text["tfidf"] = tfidf[i]
                     _, average_tfidf, _n, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1])
                     tfidf[k, :] = tfidf[k, :] * (curr_tfidf_weight / (_n + 1)) + (average_tfidf * (_n / (_n + 1))).multiply(tfidf[k, :].power(0))
                     k += 1
