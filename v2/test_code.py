@@ -725,9 +725,9 @@ def technical_test(**kwargs):
     f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
-    print(sum(np.array(np.where(all_prices == True, True, False), dtype="int")))
-    print(sum(np.array(np.where(prices == True, True, False), dtype="int")))
-    print(sum(np.array(np.where(volumes == True, True, False), dtype="int")))
+    print(np.sum(all_prices))
+    print(np.sum(prices))
+    print(np.sum(volumes))
 
     data_X = data_X[:, price_labels | price_all_labels | volume_labels]
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
