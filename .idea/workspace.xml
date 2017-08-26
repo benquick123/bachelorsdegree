@@ -142,8 +142,8 @@
       <file leaf-file-name="test_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="714" column="32" lean-forward="false" selection-start-line="714" selection-start-column="32" selection-end-line="714" selection-end-column="32" />
+            <state relative-caret-position="436">
+              <caret line="729" column="24" lean-forward="false" selection-start-line="729" selection-start-column="24" selection-end-line="729" selection-end-column="24" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#832#2936#0" expanded="false" />
@@ -153,10 +153,10 @@
                 <element signature="e#10928#17182#0" expanded="false" />
                 <element signature="e#17329#27473#0" expanded="false" />
                 <element signature="e#27517#31905#0" expanded="false" />
-                <element signature="e#35884#36471#0" expanded="false" />
-                <element signature="e#36523#44354#0" expanded="false" />
-                <element signature="e#44407#46459#0" expanded="false" />
-                <element signature="e#46504#47679#0" expanded="false" />
+                <element signature="e#35731#36318#0" expanded="false" />
+                <element signature="e#36370#44201#0" expanded="false" />
+                <element signature="e#44254#46306#0" expanded="false" />
+                <element signature="e#46351#47526#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -797,13 +797,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00020" summary="faster?">
-      <created>1502573942854</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1502573942854</updated>
-    </task>
     <task id="LOCAL-00021" summary="bug fix v3">
       <created>1502621379760</created>
       <option name="number" value="00021" />
@@ -1140,7 +1133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503762370832</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="technical data fix">
+      <created>1503776135571</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1503776135572</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1198,7 +1198,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="file saving fix v2" />
     <MESSAGE value="final file fix thank god" />
     <MESSAGE value="test" />
     <MESSAGE value="db error wtf" />
@@ -1223,7 +1222,8 @@
     <MESSAGE value="article matrix creation" />
     <MESSAGE value="empty shape fix" />
     <MESSAGE value="merge" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge" />
+    <MESSAGE value="technical data fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="technical data fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1421,8 +1421,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/test_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="714" column="32" lean-forward="false" selection-start-line="714" selection-start-column="32" selection-end-line="714" selection-end-column="32" />
+        <state relative-caret-position="436">
+          <caret line="729" column="24" lean-forward="false" selection-start-line="729" selection-start-column="24" selection-end-line="729" selection-end-column="24" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#832#2936#0" expanded="false" />
@@ -1432,10 +1432,10 @@
             <element signature="e#10928#17182#0" expanded="false" />
             <element signature="e#17329#27473#0" expanded="false" />
             <element signature="e#27517#31905#0" expanded="false" />
-            <element signature="e#35884#36471#0" expanded="false" />
-            <element signature="e#36523#44354#0" expanded="false" />
-            <element signature="e#44407#46459#0" expanded="false" />
-            <element signature="e#46504#47679#0" expanded="false" />
+            <element signature="e#35731#36318#0" expanded="false" />
+            <element signature="e#36370#44201#0" expanded="false" />
+            <element signature="e#44254#46306#0" expanded="false" />
+            <element signature="e#46351#47526#0" expanded="false" />
           </folding>
         </state>
       </provider>
