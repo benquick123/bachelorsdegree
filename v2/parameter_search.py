@@ -186,7 +186,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     data_Y = get_Y_f(ids, window, margin)
     dates = get_dates_f(set(ids), raw_data, type)
 
-    _, score, score_std, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
+    _, score, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)
     result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_windows) + "back_other: " + str(back_window_other) + "\n\n"
 

@@ -62,9 +62,15 @@ def get_dates_list(ids, data, type):
         date_key = "posted_time"
 
     ids = set(ids)
-    for text in data:
-        if text["_id"] in ids:
-            dates.append(text[date_key])
+    if type != "conversations":
+        for text in data:
+            if text["_id"] in ids:
+                dates.append(text[date_key])
+    else:
+        for text in data:
+            for currency in text["coin_mentions"]:
+                if str(text["_id"]) + ":" + currency in ids:
+                    dates.append(text[date_key])
 
     return dates
 
@@ -548,20 +554,20 @@ def __init__():
     functions = [parameter_search.randomized_data_params_search]
     functions = [test_code.topics_test, test_code.tfidf_test, test_code.technical_test]
 
-    window = 6600
-    margin = 0.00968
-    train_articles(window, margin, p=True, data=True)
-    exit()
+    # window = 6600
+    # margin = 0.00968
+    # train_articles(window, margin, p=True, data=True)
+    # exit()
 
-    window = 3*3600
-    margin = 0.017
-    train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
-    exit()
+    # window = 3*3600
+    # margin = 0.017
+    # train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
+    # exit()
 
     window = 900
     margin = 0.005
     n_conversations = 150000
-    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True, functions=functions)
+    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True)
     # exit()
 
 if __name__ == "__main__":
