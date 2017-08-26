@@ -149,8 +149,11 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
 
     if learn:
         testing_indexes = daily_split(data_X, dates, False)
+        if type == "conversations":
+            testing_indexes = np.where(testing_indexes >= 0, testing_indexes+1, -1)
+        print(Counter(testing_indexes))
 
-        pool = ThreadPool(10)
+        pool = ThreadPool()
         results = pool.starmap(train_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
@@ -198,7 +201,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         testing_indexes = daily_split(final_test_X, final_test_dates, True)
         pred_Y = []
 
-        pool = ThreadPool(16)
+        pool = ThreadPool()
         results = pool.starmap(test_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(final_test_X), itertools.repeat(final_test_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
@@ -559,15 +562,15 @@ def __init__():
     # train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     # exit()
 
-    window = 3*3600
-    margin = 0.017
-    train_tweets(window, margin, p=True, data=True, matrix=True)
-    exit()
+    # window = 3*3600
+    # margin = 0.017
+    # train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
+    # exit()
 
     window = 900
     margin = 0.005
     n_conversations = 150000
-    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True)
+    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True, functions=functions)
     # exit()
 
 if __name__ == "__main__":
