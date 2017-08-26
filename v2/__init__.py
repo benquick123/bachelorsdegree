@@ -128,7 +128,8 @@ def train_in_parallel(i, testing_indexes, data_X, data_Y, feature_selector, mode
     model.fit(reduced_data_X[train_mask, :], data_Y[train_mask])
     pred_Y = model.predict(reduced_data_X[test_mask, :])
 
-    return accuracy_score(data_Y[test_mask], pred_Y), precision_score(data_Y[test_mask], pred_Y, average="weighted"), recall_score(data_Y[test_mask], pred_Y, average="weighted"), reduced_data_X.shape
+    return pred_Y.tolist(), reduced_data_X.shape
+    # return accuracy_score(data_Y[test_mask], pred_Y), precision_score(data_Y[test_mask], pred_Y, average="weighted"), recall_score(data_Y[test_mask], pred_Y, average="weighted"), reduced_data_X.shape
 
 
 def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=True, learn=True, test=True):
@@ -141,7 +142,6 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
     classes = dict(Counter(data_Y))
 
     if learn:
-        scores, precisions, recalls, earnings = [], [], [], []
         testing_indexes = daily_split(data_X, dates, False)
 
         pool = ThreadPool()
@@ -149,11 +149,10 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         pool.close()
         pool.join()
 
+        pred_Y = []
         for result in results:
-            scores.append(result[0])
-            precisions.append(result[1])
-            recalls.append(result[2])
-        reduced_data_X_shape = results[-1][3]
+            pred_Y += result[0]
+        reduced_data_X_shape = results[-1][1]
 
         """for i in range(max(testing_indexes)+1):
             train_mask = np.where(testing_indexes < i, True, False)
@@ -175,10 +174,14 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             precisions.append(precision_score(data_Y[test_mask], pred_Y, average="weighted"))
             recalls.append(recall_score(data_Y[test_mask], pred_Y, average="weighted"))"""
 
+        learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
+        learn_precision = precision_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
+        learn_recall = recall_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
+
         if p:
             print("classes:", dict(Counter(data_Y)))
-            print("accuracy: %0.3f (+/- %0.3f)" % (np.mean(scores), np.std(scores)))
-            print("precision: %0.3f, recall: %0.3f" % (np.mean(precisions), np.mean(recalls)))
+            print("accuracy: %0.3f" % learn_score)
+            print("precision: %0.3f, recall: %0.3f" % (learn_precision, learn_recall))
 
     if test:
         classes = dict(Counter(final_test_Y))
@@ -196,7 +199,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
 
         for result in results:
             if result is not None:
-                pred_Y += result
+                pred_Y += result[0]
         reduced_final_test_X_shape = results[-1][1]
 
         """for i in range(max(testing_indexes)+1):
@@ -220,17 +223,17 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             model.fit(X, Y)
             pred_Y += model.predict(reduced_final_test_X[test_mask]).tolist()"""
 
-        score = accuracy_score(final_test_Y, pred_Y)
-        precision = precision_score(final_test_Y, pred_Y, average="weighted")
-        recall = recall_score(final_test_Y, pred_Y, average="weighted")
+        test_score = accuracy_score(final_test_Y, pred_Y)
+        test_precision = precision_score(final_test_Y, pred_Y, average="weighted")
+        test_recall = recall_score(final_test_Y, pred_Y, average="weighted")
 
         final_Y = label_binarize(final_test_Y, classes=[-1, 0, 1])
         pred_Y = label_binarize(pred_Y, classes=[-1, 0, 1])
-        roc = roc_auc_score(final_Y, pred_Y, average="weighted")
+        test_roc = roc_auc_score(final_Y, pred_Y, average="weighted")
 
         if p:
-            print("accuracy: %0.3f" % score)
-            print("precision: %0.3f, recall: %0.3f" % (precision, recall))
+            print("accuracy: %0.3f" % test_score)
+            print("precision: %0.3f, recall: %0.3f" % (test_precision, test_recall))
 
         if save:
             f = open("results/" + type + "_results.txt", "a")
@@ -238,11 +241,11 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             s += "samples: " + str(reduced_final_test_X_shape[0]) + ", features: " + str(reduced_final_test_X_shape[1]) + "\n"
             s += "days: " + str(len(Counter(testing_indexes))) + "\n"
             s += "majority class: " + str(max(classes.values()) / len(final_test_Y))[:5] + "\n"
-            s += "accuracy: " + str(score)[:5] + "\n"
-            s += "precision: " + str(precision)[:5] + ", recall: " + str(recall)[:5] + "\n"
-            s += "area under roc: " + str(roc)
+            s += "accuracy: " + str(test_score)[:5] + "\n"
+            s += "precision: " + str(test_precision)[:5] + ", recall: " + str(test_recall)[:5] + "\n"
+            s += "area under roc: " + str(test_roc)
             if learn:
-                s += "cv - accuracy: " + str(np.mean(scores))[:5] + " (+/- " + str(np.std(scores))[:5] + ")\n"
+                s += "validation set - accuracy: " + str(learn_score)[:5] + "\n"
             s += "feature selection: " + str(feature_selector).replace("\n", "").replace("  ", "") + "\n"
             s += "model: " + str(model).replace("\n", "").replace("  ", "") + "\n"
             f.write(s)
@@ -254,8 +257,8 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         s = ""
         s += "samples: " + str(reduced_data_X_shape[0]) + ", features: " + str(reduced_data_X_shape[1]) + "\n"
         s += "majority class: " + str(max(classes.values()) / len(data_Y))[:5] + "\n"
-        s += "accuracy: " + str(np.mean(scores))[:5] + " (+/- " + str(np.std(scores))[:5] + ")\n"
-        s += "precision: " + str(np.mean(precisions))[:5] + ", recall: " + str(np.mean(recalls))[:5] + "\n"
+        s += "accuracy: " + str(learn_score)[:5] + "\n"
+        s += "precision: " + str(learn_precision)[:5] + ", recall: " + str(learn_recall)[:5] + "\n"
         s += "days: " + str(len(Counter(testing_indexes))) + "\n"
         s += "feature selection: " + str(feature_selector).replace("\n", " ").replace("     ", "") + "\n"
         s += "model: " + str(model).replace("\n", " ").replace("     ", "") + "\n"
@@ -263,9 +266,9 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         f.close()
 
     if learn and not test:
-        return model, np.mean(scores), np.std(scores), np.mean(precisions), np.mean(recalls), reduced_data_X_shape, classes
+        return model, learn_score, learn_precision, learn_recall, reduced_data_X_shape, classes
     elif test:
-        return model, score, precision, recall, reduced_final_test_X_shape, classes
+        return model, test_score, test_precision, test_recall, reduced_final_test_X_shape, classes
 
     return model
 

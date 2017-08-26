@@ -280,7 +280,10 @@ def get_price_change(client, currency, date_from, date_to):
         start_price = db[currency.lower()].find_one({"_id": date_from}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
         end_price = db[currency.lower()].find_one({"_id": date_to}, {"_id": 0, "weightedAverage": 1})["weightedAverage"]
 
-        percent_change = (end_price - start_price) / start_price
+        if start_price > 0:
+            percent_change = (end_price - start_price) / start_price
+        else:
+            percent_change = 0
         return percent_change
     except TypeError:
         return np.nan
