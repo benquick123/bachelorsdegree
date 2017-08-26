@@ -522,7 +522,7 @@ def tfidf_test(**kwargs):
     f.write("sentiment & financial weights - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
-    back_window = 3600 * 3
+    back_window = 30000
     # if previous TF-IDFs contribute to accuracy, try different weights
     curr_tfidf_weight = 1
     k = 0
@@ -628,6 +628,7 @@ def topics_test(**kwargs):
 
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
     f = open("results/topic_test_scores.txt", "a")
+    f.write(type + "\n")
     f.write("full - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + "\n")
     f.close()
 
@@ -659,7 +660,7 @@ def topics_test(**kwargs):
         date_key = "posted_time"
         currency_key = "crypto_currency"
 
-    back_window = 6 * 3600
+    back_window = 30000
     average_topics = []
     for i, text in enumerate(raw_data):
         if text["_id"] in ids:
