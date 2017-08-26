@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/__init__.py" afterPath="$PROJECT_DIR$/v2/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/test_code.py" afterPath="$PROJECT_DIR$/v2/test_code.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3686">
-              <caret line="453" column="105" lean-forward="true" selection-start-line="453" selection-start-column="105" selection-end-line="453" selection-end-column="105" />
+            <state relative-caret-position="6049">
+              <caret line="517" column="60" lean-forward="false" selection-start-line="517" selection-start-column="60" selection-end-line="517" selection-end-column="60" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#5131#6080#1" expanded="false" />
@@ -114,8 +115,8 @@
       <file leaf-file-name="test_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3162">
-              <caret line="489" column="53" lean-forward="false" selection-start-line="489" selection-start-column="53" selection-end-line="489" selection-end-column="53" />
+            <state relative-caret-position="-54">
+              <caret line="613" column="25" lean-forward="false" selection-start-line="613" selection-start-column="25" selection-end-line="613" selection-end-column="25" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#832#2936#0" expanded="false" />
@@ -123,10 +124,10 @@
                 <element signature="e#5523#8231#0" expanded="false" />
                 <element signature="e#8268#10875#0" expanded="false" />
                 <element signature="e#10928#17182#0" expanded="false" />
-                <element signature="e#35172#35759#0" expanded="false" />
-                <element signature="e#35811#43642#0" expanded="false" />
-                <element signature="e#43695#45747#0" expanded="false" />
-                <element signature="e#45792#46967#0" expanded="false" />
+                <element signature="e#35503#36090#0" expanded="false" />
+                <element signature="e#36142#43973#0" expanded="false" />
+                <element signature="e#44026#46078#0" expanded="false" />
+                <element signature="e#46123#47298#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -230,8 +231,8 @@
         <option value="$PROJECT_DIR$/v2/other code/best_params_analysis.py" />
         <option value="$PROJECT_DIR$/v2/news.py" />
         <option value="$PROJECT_DIR$/v2/parameter_search.py" />
-        <option value="$PROJECT_DIR$/v2/__init__.py" />
         <option value="$PROJECT_DIR$/v2/common.py" />
+        <option value="$PROJECT_DIR$/v2/__init__.py" />
         <option value="$PROJECT_DIR$/v2/test_code.py" />
       </list>
     </option>
@@ -724,13 +725,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00006" summary="trollbox: conversations, coin_mentions">
-      <created>1484610757384</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1484610757384</updated>
-    </task>
     <task id="LOCAL-00007" summary="trollbox: conversations, coin_mentions done">
       <created>1484763801723</created>
       <option name="number" value="00007" />
@@ -1067,7 +1061,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503710435354</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="zero division fix, articles attr importances">
+      <created>1503710730647</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1503710730647</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1312,8 +1313,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3686">
-          <caret line="453" column="105" lean-forward="true" selection-start-line="453" selection-start-column="105" selection-end-line="453" selection-end-column="105" />
+        <state relative-caret-position="6049">
+          <caret line="517" column="60" lean-forward="false" selection-start-line="517" selection-start-column="60" selection-end-line="517" selection-end-column="60" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#5131#6080#1" expanded="false" />
@@ -1324,8 +1325,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/test_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3162">
-          <caret line="489" column="53" lean-forward="false" selection-start-line="489" selection-start-column="53" selection-end-line="489" selection-end-column="53" />
+        <state relative-caret-position="-54">
+          <caret line="613" column="25" lean-forward="false" selection-start-line="613" selection-start-column="25" selection-end-line="613" selection-end-column="25" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#832#2936#0" expanded="false" />
@@ -1333,10 +1334,10 @@
             <element signature="e#5523#8231#0" expanded="false" />
             <element signature="e#8268#10875#0" expanded="false" />
             <element signature="e#10928#17182#0" expanded="false" />
-            <element signature="e#35172#35759#0" expanded="false" />
-            <element signature="e#35811#43642#0" expanded="false" />
-            <element signature="e#43695#45747#0" expanded="false" />
-            <element signature="e#45792#46967#0" expanded="false" />
+            <element signature="e#35503#36090#0" expanded="false" />
+            <element signature="e#36142#43973#0" expanded="false" />
+            <element signature="e#44026#46078#0" expanded="false" />
+            <element signature="e#46123#47298#0" expanded="false" />
           </folding>
         </state>
       </provider>

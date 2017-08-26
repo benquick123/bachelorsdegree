@@ -336,6 +336,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
         arguments["raw_data"] = articles
         arguments["type"] = "articles"
         arguments["IDs"] = IDs
+        arguments["dates"] = get_dates_list(set(IDs), articles, "articles")
         arguments["labels"] = labels
         arguments["window"] = window
         arguments["margin"] = margin
@@ -425,6 +426,7 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
         arguments["raw_data"] = conversations
         arguments["type"] = "conversations"
         arguments["IDs"] = IDs
+        arguments["dates"] = get_dates_list(set(IDs), conversations, "articles")
         arguments["labels"] = labels
         arguments["window"] = window
         arguments["margin"] = margin
@@ -513,6 +515,7 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
         arguments["raw_data"] = tweets
         arguments["type"] = "tweets"
         arguments["IDs"] = IDs
+        arguments["dates"] = get_dates_list(set(IDs), tweets, "articles")
         arguments["labels"] = labels
         arguments["window"] = window
         arguments["margin"] = margin
