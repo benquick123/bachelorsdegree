@@ -546,10 +546,10 @@ def __init__():
     train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()
 
-    window = 3*3600
-    margin = 0.017
-    train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
-    exit()
+    # window = 3*3600
+    # margin = 0.017
+    # train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
+    # exit()
 
     window = 900
     margin = 0.005
