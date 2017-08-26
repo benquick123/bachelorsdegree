@@ -175,8 +175,8 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             recalls.append(recall_score(data_Y[test_mask], pred_Y, average="weighted"))"""
 
         learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
-        learn_precision = precision_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
-        learn_recall = recall_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
+        learn_precision = precision_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
+        learn_recall = recall_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
 
         if p:
             print("classes:", dict(Counter(data_Y)))
