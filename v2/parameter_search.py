@@ -193,7 +193,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     dates = get_dates_f(set(ids), raw_data, type)
 
     pls.save_matrix_X(data_X, type)
-    pls.save_matrix_Y(data_Y, type)
+    pls.save_matrix_Y(data_Y, type, window, margin)
     pls.save_matrix_IDs(ids, type)
 
     _, score, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, type, dates, save=False, p=False, learn=True, test=False)

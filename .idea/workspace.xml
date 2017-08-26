@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/__init__.py" afterPath="$PROJECT_DIR$/v2/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/parameter_search.py" afterPath="$PROJECT_DIR$/v2/parameter_search.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
@@ -24,10 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
+            <state relative-caret-position="541">
               <caret line="554" column="6" lean-forward="false" selection-start-line="554" selection-start-column="6" selection-end-line="554" selection-end-column="6" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
@@ -72,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parameter_search.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
+            <state relative-caret-position="631">
+              <caret line="305" column="33" lean-forward="false" selection-start-line="305" selection-start-column="33" selection-end-line="305" selection-end-column="33" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#913#3470#0" expanded="false" />
@@ -86,24 +85,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pickle_loading_saving.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/v2/pickle_loading_saving.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1383">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="best_params_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/other code/best_params_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
+            <state relative-caret-position="1173">
               <caret line="69" column="66" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pickle_loading_saving.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/v2/pickle_loading_saving.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-765">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -252,8 +251,8 @@
         <option value="$PROJECT_DIR$/v2/news.py" />
         <option value="$PROJECT_DIR$/v2/twitter.py" />
         <option value="$PROJECT_DIR$/v2/trollbox.py" />
-        <option value="$PROJECT_DIR$/v2/parameter_search.py" />
         <option value="$PROJECT_DIR$/v2/__init__.py" />
+        <option value="$PROJECT_DIR$/v2/parameter_search.py" />
       </list>
     </option>
   </component>
@@ -788,13 +787,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00016" summary="parallelization bug fix">
-      <created>1502536855639</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1502536855640</updated>
-    </task>
     <task id="LOCAL-00017" summary="parallelization classes save">
       <created>1502541508884</created>
       <option name="number" value="00017" />
@@ -1131,7 +1123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503755335708</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="article matrix creation">
+      <created>1503758750158</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1503758750158</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1201,7 +1200,6 @@
     <MESSAGE value="back window fix 2&#10;" />
     <MESSAGE value="back window fix 3&#10;" />
     <MESSAGE value="margin fix" />
-    <MESSAGE value="article matrix creation" />
     <MESSAGE value="tweet matrix creation" />
     <MESSAGE value="matrix margin" />
     <MESSAGE value="articles attr testing" />
@@ -1214,7 +1212,8 @@
     <MESSAGE value="giant mess correction" />
     <MESSAGE value="merge" />
     <MESSAGE value="Merge branch 'master' of https://github.com/benquick123/diplomsko-delo&#10;&#10;# Conflicts:&#10;#&#9;v2/__init__.py&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/benquick123/diplomsko-delo&#10;&#10;# Conflicts:&#10;#&#9;v2/__init__.py&#10;" />
+    <MESSAGE value="article matrix creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="article matrix creation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1364,24 +1363,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/other code/best_params_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="69" column="66" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v2/pickle_loading_saving.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1383">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/news.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -1392,24 +1373,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
+    <entry file="file://$PROJECT_DIR$/v2/other code/best_params_analysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
+        <state relative-caret-position="1173">
+          <caret line="69" column="66" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#913#3470#0" expanded="false" />
-            <element signature="e#7354#9130#0" expanded="false" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/pickle_loading_saving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-765">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
+        <state relative-caret-position="541">
           <caret line="554" column="6" lean-forward="false" selection-start-line="554" selection-start-column="6" selection-end-line="554" selection-end-column="6" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/parameter_search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="305" column="33" lean-forward="false" selection-start-line="305" selection-start-column="33" selection-end-line="305" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#913#3470#0" expanded="false" />
+            <element signature="e#7354#9130#0" expanded="false" />
           </folding>
         </state>
       </provider>
