@@ -531,13 +531,14 @@ def tfidf_test(**kwargs):
         for i, text in enumerate(raw_data):
             # if k >= max_n:
             #     break
+            text["tfidf"] = tfidf[i]
             if text["_id"] in ids:
-                text["tfidf"] = tfidf[k]
                 _, average_tfidf, _n, _ = common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1])
                 tfidf[k, :] = tfidf[k, :] * (curr_tfidf_weight / (_n+1)) + (average_tfidf * (_n / (_n+1))).multiply(tfidf[k, :].power(0))
                 k += 1
     else:
         for i, text in enumerate(raw_data):
+            text["tfidf"] = tfidf[i]
             for currency in text[currency_key]:
                 # if k >= max_n:
                 #     break

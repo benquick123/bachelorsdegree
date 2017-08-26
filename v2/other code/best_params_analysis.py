@@ -4,19 +4,19 @@ import matplotlib.pyplot as plt
 
 
 def blankspace_fix(filename):
-    f = open("results/parameter_search/" + filename, "r")
+    f = open("results/parameter_search/articles/" + filename, "r")
     s = f.read()
     f.close()
     i = s.find("]") + 1
     s = s[:i] + ", " + s[i:]
-    f = open("results/parameter_search/" + filename, "w")
+    f = open("results/parameter_search/articles/" + filename, "w")
     f.write(s)
     f.close()
 
 
 def read_file(filename):
     params = dict()
-    f = open("results/parameter_search/" + filename, "r")
+    f = open("results/parameter_search/articles/" + filename, "r")
     s = f.read()
     f.close()
     s = ", ".join(s.split("\n")[:-2]).split(", ")
@@ -67,7 +67,7 @@ def find_best(all_params):
 
 def parse_files():
     params = []
-    for filename in os.listdir("results/parameter_search"):
+    for filename in os.listdir("results/parameter_search/articles/"):
         if filename != "trash":     # and int(filename.split(".")[0].split("_")[-1]) >= 200:
             _params = read_file(filename)
             params.append(_params)

@@ -185,7 +185,7 @@ def create_matrix(articles, window, margin, p=False):
     # data_averages
     labels += ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_a_30min", "polarity_a_30min", "sentiment_a_30min"] + ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"]
     # db_averages
-    labels += ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"] + ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"]
+    labels += ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"]
     labels += ["distribution_t_30min", "polarity_t_30min", "sentiment_t_30min"] + ["distribution_c_30min", "polarity_c_30min", "sentiment_c_30min"]
     labels += ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"] + ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"]
     labels += ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"] + ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"]
@@ -208,19 +208,17 @@ def create_X(client, i, article_data, weights):
     data_averages = []
     average_tfidf, n, average_topics = sparse.csr_matrix([]), 0, np.array([])
 
-    time_windows = [1200, 11100, 22800, 30000]                                        # 15 min, 60 min, 6h
+    time_windows = [1200, 11100, 22800, 30000]
     the_window = 30000
     for time_window in time_windows:
-        technical_data.append(common.get_price_change(client, article_data["currency"], date_from - time_window, date_from))
-        technical_data.append(common.get_total_volume(client, article_data["currency"], date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
-        technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
-
-        db_averages += common.get_averages_from_db(client, article_data["date"], time_window, article_data["currency"], articles=False)
         if time_window != the_window:
+            db_averages += common.get_averages_from_db(client, article_data["date"], time_window, article_data["currency"], articles=False)
             data_averages += common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, threshold=0.0, type="article", data_averages_only=True)
+            technical_data.append(common.get_price_change(client, article_data["currency"], date_from - time_window, date_from))
+            technical_data.append(common.get_total_volume(client, article_data["currency"], date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
+            technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
         else:
-            _data_averages, average_tfidf, n, average_topics = common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, threshold=0.0, type="article", data_averages_only=False)
-            data_averages += _data_averages
+            _, average_tfidf, n, average_topics = common.get_averages_from_data(articles, article_data["date"], time_window, article_data["currency"], i, threshold=0.0, type="article", data_averages_only=False)
 
     _X = [1 / (n + 1), article_data["title_sentiment"], article_data["reduced_text_sentiment"], article_data["title_polarity"], article_data["reduced_text_polarity"], article_data["currency_in_title"]] + data_averages + db_averages + technical_data
 
