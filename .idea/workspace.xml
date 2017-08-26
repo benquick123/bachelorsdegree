@@ -129,19 +129,19 @@
       <file leaf-file-name="test_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="52" column="67" lean-forward="false" selection-start-line="52" selection-start-column="67" selection-end-line="52" selection-end-column="67" />
+            <state relative-caret-position="725">
+              <caret line="63" column="17" lean-forward="false" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
-                <element signature="e#3169#5636#0" expanded="false" />
-                <element signature="e#5694#8402#0" expanded="false" />
-                <element signature="e#8439#11046#0" expanded="false" />
-                <element signature="e#11099#17353#0" expanded="false" />
-                <element signature="e#17500#27644#0" expanded="false" />
-                <element signature="e#27688#32076#0" expanded="false" />
-                <element signature="e#36220#44051#0" expanded="false" />
-                <element signature="e#44104#46156#0" expanded="false" />
-                <element signature="e#46201#47376#0" expanded="false" />
+                <element signature="e#3311#5778#0" expanded="false" />
+                <element signature="e#5836#8544#0" expanded="false" />
+                <element signature="e#8581#11188#0" expanded="false" />
+                <element signature="e#11241#17495#0" expanded="false" />
+                <element signature="e#17642#27786#0" expanded="false" />
+                <element signature="e#27830#32218#0" expanded="false" />
+                <element signature="e#36362#44193#0" expanded="false" />
+                <element signature="e#44246#46298#0" expanded="false" />
+                <element signature="e#46343#47518#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -792,13 +792,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00029" summary="final file fix thank god">
-      <created>1503400213666</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1503400213666</updated>
-    </task>
     <task id="LOCAL-00030" summary="test">
       <created>1503400565590</created>
       <option name="number" value="00030" />
@@ -1135,7 +1128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503781144529</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="optimal attr num (articles) - random forest">
+      <created>1503784406304</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1503784406305</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1193,7 +1193,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="db error wtf" />
     <MESSAGE value="multithreading enabled" />
     <MESSAGE value="parameter search alpha update" />
     <MESSAGE value="alpha update: back to plotting regular distributions" />
@@ -1218,7 +1217,8 @@
     <MESSAGE value="technical data fix" />
     <MESSAGE value="technical fix" />
     <MESSAGE value="optimal attr num (articles)" />
-    <option name="LAST_COMMIT_MESSAGE" value="optimal attr num (articles)" />
+    <MESSAGE value="optimal attr num (articles) - random forest" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimal attr num (articles) - random forest" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1415,19 +1415,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/test_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="52" column="67" lean-forward="false" selection-start-line="52" selection-start-column="67" selection-end-line="52" selection-end-column="67" />
+        <state relative-caret-position="725">
+          <caret line="63" column="17" lean-forward="false" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
-            <element signature="e#3169#5636#0" expanded="false" />
-            <element signature="e#5694#8402#0" expanded="false" />
-            <element signature="e#8439#11046#0" expanded="false" />
-            <element signature="e#11099#17353#0" expanded="false" />
-            <element signature="e#17500#27644#0" expanded="false" />
-            <element signature="e#27688#32076#0" expanded="false" />
-            <element signature="e#36220#44051#0" expanded="false" />
-            <element signature="e#44104#46156#0" expanded="false" />
-            <element signature="e#46201#47376#0" expanded="false" />
+            <element signature="e#3311#5778#0" expanded="false" />
+            <element signature="e#5836#8544#0" expanded="false" />
+            <element signature="e#8581#11188#0" expanded="false" />
+            <element signature="e#11241#17495#0" expanded="false" />
+            <element signature="e#17642#27786#0" expanded="false" />
+            <element signature="e#27830#32218#0" expanded="false" />
+            <element signature="e#36362#44193#0" expanded="false" />
+            <element signature="e#44246#46298#0" expanded="false" />
+            <element signature="e#46343#47518#0" expanded="false" />
           </folding>
         </state>
       </provider>

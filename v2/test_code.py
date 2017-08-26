@@ -46,6 +46,7 @@ def optimal_attr_number(plot=False, **kwargs):
     scores = []
     f = open("results/attribute_selection.txt", "a")
     f.write(type + ", " + str(feature_selector)[:10] + "\n")
+    f.close()
 
     while i < n_iter:
         # threshold = threshold_range[0] + np.random.rand() * (threshold_range[1] - threshold_range[0])
@@ -58,10 +59,13 @@ def optimal_attr_number(plot=False, **kwargs):
             best_threshold = threshold
             best_score = score
 
+        f = open("results/attribute_selection.txt", "a")
         f.write(str(i) + " - threshold: " + str(threshold) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", ~n_attr: " + str(matrix_shape[1]) + "\n")
+        f.close()
         scores.append((score, matrix_shape[1]))
         i += 1
 
+    f = open("results/attribute_selection.txt", "a")
     f.write("\n")
     f.close()
 
