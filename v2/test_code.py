@@ -708,6 +708,11 @@ def technical_test(**kwargs):
     price_labels = np.zeros(len(labels), dtype="bool")
     volume_labels = np.zeros(len(labels), dtype="bool")
     for i, label in enumerate(labels):
+        t = label.split("_")[-1]
+        try:
+            int(t)
+        except ValueError:
+            continue
         if label.find("price_all_") != -1:
             price_all_labels[i] = True
         elif label.find("price_") != -1:
