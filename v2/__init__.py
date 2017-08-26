@@ -413,8 +413,8 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
 
     if len(functions) != 0:
         arguments = dict()
-        arguments["n_iter"] = 200
-        arguments["threshold_range"] = [-0.01, 3.0]
+        arguments["n_iter"] = 50
+        arguments["threshold_range"] = [0.0, 3.0]
         arguments["margin_range"] = [0.0, 0.03]
         arguments["window_range"] = [300, 6 * 3600]
         arguments["back_window_short"] = [300, 3600]

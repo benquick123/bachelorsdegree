@@ -24,7 +24,7 @@ import common as common
 import pickle_loading_saving as pls
 
 
-def optimal_attr_number(plot=True, **kwargs):
+def optimal_attr_number(plot=False, **kwargs):
     print("FIND OPTIMAL ARRTIBUTE NUMBER")
     # optimal attribute number
     # learn model several times with changing threshold.
@@ -37,6 +37,7 @@ def optimal_attr_number(plot=True, **kwargs):
     data_X = kwargs["data_X"]
     data_Y = kwargs["data_Y"]
     type = kwargs["type"]
+    dates = kwargs["dates"]
     del kwargs
 
     i = 0
@@ -47,16 +48,18 @@ def optimal_attr_number(plot=True, **kwargs):
     f.write(type + ", " + str(feature_selector)[:10] + "\n")
 
     while i < n_iter:
-        threshold = threshold_range[0] + np.random.rand() * (threshold_range[1] - threshold_range[0])
+        # threshold = threshold_range[0] + np.random.rand() * (threshold_range[1] - threshold_range[0])
+        threshold = threshold_range[0] + i/n_iter * (threshold_range[1] - threshold_range[0])
+        feature_selector = SelectFromModel(LinearSVC(), threshold=threshold)
 
         # threshold = threshold_range[0] + (i / n_iter) * (threshold_range[1] - threshold_range[0])
-        _, score, score_std, precision, recall, matrix_shape, _ = train_f(n=n, feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, threshold=threshold, save=False, train_seperate_set=False)
+        _, score, precision, recall, matrix_shape, _ = train_f(n=n, feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, train_seperate_set=False)
         if score >= best_score:
             best_threshold = threshold
             best_score = score
 
-        f.write(str(i) + " - threshold: " + str(threshold) + ", score: " + str(score) + " (+/- " + str(score_std) + "), precision: " + str(precision) + ", recall: " + str(recall) + ", ~n_attr: " + str(matrix_shape[1]) + "\n")
-        scores.append((score, score_std, matrix_shape[1]))
+        f.write(str(i) + " - threshold: " + str(threshold) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", ~n_attr: " + str(matrix_shape[1]) + "\n")
+        scores.append((score, matrix_shape[1]))
         i += 1
 
     f.write("\n")
@@ -64,11 +67,12 @@ def optimal_attr_number(plot=True, **kwargs):
 
     #plot
     if plot:
+        plt.ioff()
         scores.sort(key=lambda x: x[2])
         plt.plot([shape for _, _, shape in scores], [sc for sc, _, _ in scores])
         plt.fill_between([shape for _, _, shape in scores], np.array([sc for sc, _, _ in scores]) - np.array([std for _, std, _ in scores]), np.array([sc for sc, _, _ in scores]) + np.array([std for _, std, _ in scores]), alpha=0.5)
         # plt.errorbar([shape for _, _, shape in scores], [sc for sc, _, _ in scores], yerr=[std for _, std, _ in scores])
-        plt.show()
+        plt.savefig()
 
     print(best_score, best_threshold)
     return best_score, best_threshold
@@ -730,7 +734,7 @@ def technical_test(**kwargs):
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
     f = open("results/technical_test_scores.txt", "a")
     f.write(type + " - window: " + str(window) + ", margin: " + str(margin) + "\n")
-    f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("all past - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     print(np.sum(price_labels))
@@ -754,43 +758,19 @@ def technical_test(**kwargs):
     data_X = sparse.hstack([data_X, all_prices]).tocsr()
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
     f = open("results/technical_test_scores.txt", "a")
-    f.write("all past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("all_past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = data_X[:, :-all_prices.shape[1]]
     data_X = sparse.hstack([data_X, volumes]).tocsr()
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
     f = open("results/technical_test_scores.txt", "a")
-    f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
+    f.write("past volumes - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.write("\n")
     f.close()
 
 
 # -----------------------------------------------------------------------------------------------------
-
-def get_most_info_windows(**kwargs):
-    n_iter = kwargs["n_iter"]
-    type = kwargs["type"]
-    raw_data = kwargs["raw_data"]
-    window_range = kwargs["window_range"]
-    margin = kwargs["margin"]
-    back_window_range = kwargs["back_window_range"]
-    back_window_ratio = kwargs["back_window_ratio"]
-    ids = np.array(kwargs["IDs"])
-    final_set_f = kwargs["final_set_f"]
-    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
-    del kwargs
-
-    if type == "articles":
-        pass
-    elif type == "conversations":
-        pass
-    elif type == "tweets":
-        pass
-
-    i = 0
-    while i < n_iter:
-        pass
 
 
 def randomized_data_params_search(**kwargs):
