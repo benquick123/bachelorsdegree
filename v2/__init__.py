@@ -426,7 +426,7 @@ def train_conversations(window, margin, n=None, p=False, data=False, matrix=Fals
         arguments["raw_data"] = conversations
         arguments["type"] = "conversations"
         arguments["IDs"] = IDs
-        arguments["dates"] = get_dates_list(set(IDs), conversations, "articles")
+        arguments["dates"] = get_dates_list(set(IDs), conversations, "tweets")
         arguments["labels"] = labels
         arguments["window"] = window
         arguments["margin"] = margin
@@ -545,17 +545,17 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
 def __init__():
     # initial_load()
 
-    functions = [test_code.tfidf_test, test_code.topics_test, test_code.technical_test]
+    functions = [parameter_search.randomized_data_params_search]
 
-    window = 6600
-    margin = 0.00968
-    train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
-    exit()
-
-    # window = 3*3600
-    # margin = 0.017
-    # train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
+    #  window = 6600
+    # margin = 0.00968
+    # train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     # exit()
+
+    window = 3*3600
+    margin = 0.017
+    train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
+    exit()
 
     window = 900
     margin = 0.005
