@@ -53,7 +53,7 @@ def optimal_attr_number(plot=False, **kwargs):
         feature_selector = SelectFromModel(LinearSVC(), threshold=threshold)
 
         # threshold = threshold_range[0] + (i / n_iter) * (threshold_range[1] - threshold_range[0])
-        _, score, precision, recall, matrix_shape, _ = train_f(n=n, feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, train_seperate_set=False)
+        _, score, precision, recall, matrix_shape, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
         if score >= best_score:
             best_threshold = threshold
             best_score = score

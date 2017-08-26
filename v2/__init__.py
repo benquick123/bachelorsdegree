@@ -555,7 +555,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.technical_test]
+    functions = [test_code.optimal_attr_number]
 
     window = 6600
     margin = 0.00967742793041
