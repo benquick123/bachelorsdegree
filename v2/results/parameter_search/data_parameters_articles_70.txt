@@ -1,0 +1,3 @@
+i: 70, score: 0.716163006462, precision: 0.634682556407, recall: 0.716163006462, classes: {0: 2611, 1: 298, -1: 268}
+margin: 0.0336934596695, window: 7500, back_windows: [2400, 5400, 36600]back_other: 33900
+

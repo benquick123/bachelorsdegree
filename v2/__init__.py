@@ -145,7 +145,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         testing_indexes = daily_split(data_X, dates, False)
 
         pool = ThreadPool()
-        results = pool.starmap(train_in_parallel, zip(list(range(max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
+        results = pool.starmap(train_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
 
@@ -193,7 +193,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         pred_Y = []
 
         pool = ThreadPool()
-        results = pool.starmap(test_in_parallel, zip(list(range(max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(final_test_X), itertools.repeat(final_test_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
+        results = pool.starmap(test_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(final_test_X), itertools.repeat(final_test_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
 
@@ -548,20 +548,20 @@ def __init__():
     functions = [parameter_search.randomized_data_params_search]
     functions = [test_code.topics_test, test_code.tfidf_test, test_code.technical_test]
 
-    window = 6600
-    margin = 0.00968
-    train_articles(window, margin, p=True, data=True)
-    exit()
+    # window = 6600
+    # margin = 0.00968
+    # train_articles(window, margin, p=True, data=True, matrix=True)
+    # exit()
 
-    window = 3*3600
-    margin = 0.017
-    train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
-    exit()
+    # window = 3*3600
+    # margin = 0.017
+    # train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
+    # exit()
 
     window = 900
     margin = 0.005
     n_conversations = 150000
-    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True, functions=functions)
+    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True)
     # exit()
 
 if __name__ == "__main__":
