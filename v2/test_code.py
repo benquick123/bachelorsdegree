@@ -708,11 +708,11 @@ def technical_test(**kwargs):
     price_labels = np.zeros(len(labels), dtype="bool")
     volume_labels = np.zeros(len(labels), dtype="bool")
     for i, label in enumerate(labels):
-        if label.find("price_all") != -1:
+        if label.find("price_all_") != -1:
             price_all_labels[i] = True
-        elif label.find("price") != -1:
+        elif label.find("price_") != -1:
             price_labels[i] = True
-        elif label.find("volume") != -1:
+        elif label.find("volume_") != -1:
             volume_labels[i] = True
 
     all_prices = data_X[:, price_all_labels]
@@ -720,34 +720,38 @@ def technical_test(**kwargs):
     volumes = data_X[:, volume_labels]
 
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
-    f = open("results/technical_test_scores", "a")
+    f = open("results/technical_test_scores.txt", "a")
     f.write(type + " - window: " + str(window) + ", margin: " + str(margin) + "\n")
     f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
+    print(sum(np.array(np.where(all_prices == True, True, False), dtype="int")))
+    print(sum(np.array(np.where(prices == True, True, False), dtype="int")))
+    print(sum(np.array(np.where(volumes == True, True, False), dtype="int")))
+
     data_X = data_X[:, price_labels | price_all_labels | volume_labels]
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
-    f = open("results/technical_test_scores", "a")
+    f = open("results/technical_test_scores.txt", "a")
     f.write("no technical - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = sparse.hstack([data_X, prices]).tocsr()
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
-    f = open("results/technical_test_scores", "a")
+    f = open("results/technical_test_scores.txt", "a")
     f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = data_X[:, :-prices.shape[1]]
-    data_X = sparse.hstack([data_X, all_prices])
+    data_X = sparse.hstack([data_X, all_prices]).tocsr()
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
-    f = open("results/technical_test_scores", "a")
+    f = open("results/technical_test_scores.txt", "a")
     f.write("all past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.close()
 
     data_X = data_X[:, :-all_prices.shape[1]]
-    data_X = sparse.hstack([data_X, volumes])
+    data_X = sparse.hstack([data_X, volumes]).tocsr()
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
-    f = open("results/technical_test_scores", "a")
+    f = open("results/technical_test_scores.txt", "a")
     f.write("past prices - scores: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + "\n")
     f.write("\n")
     f.close()
