@@ -515,7 +515,7 @@ def train_tweets(window, margin, n=None, p=False, data=False, matrix=False, save
         arguments["raw_data"] = tweets
         arguments["type"] = "tweets"
         arguments["IDs"] = IDs
-        arguments["dates"] = get_dates_list(set(IDs), tweets, "articles")
+        arguments["dates"] = get_dates_list(set(IDs), tweets, "tweets")
         arguments["labels"] = labels
         arguments["window"] = window
         arguments["margin"] = margin

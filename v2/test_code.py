@@ -575,7 +575,7 @@ def tfidf_test(**kwargs):
     _w.setdiag(weights.toarray()[0])
     data_X = data_X[:, ~tfidf_indexes]
     data_X = sparse.hstack([data_X, tfidf * _w]).tocsr()
-    pls.save_matrix_X(data_X, "conversations", k=20000)
+    # pls.save_matrix_X(data_X, "conversations", k=20000)
     _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
     f = open("results/tfidf_test_scores.txt", "a")
     f.write("average_tfidf, sentiment and financial weighted - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", margin: " + str(margin) + ", window: " + str(window) + ", back_window: " + str(back_window) + ", curr_tfidf_weight: " + str(curr_tfidf_weight) + "\n")
