@@ -50,7 +50,7 @@ def optimal_attr_number(plot=False, **kwargs):
 
     while i < n_iter:
         # threshold = threshold_range[0] + np.random.rand() * (threshold_range[1] - threshold_range[0])
-        threshold = threshold_range[0] + i/n_iter * (threshold_range[1] - threshold_range[0])
+        threshold = threshold_range[0] + (i+1)/n_iter * (threshold_range[1] - threshold_range[0])
         feature_selector = SelectFromModel(RandomForestClassifier(), threshold=str(threshold) + "*mean")
 
         # threshold = threshold_range[0] + (i / n_iter) * (threshold_range[1] - threshold_range[0])
