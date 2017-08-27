@@ -5,6 +5,8 @@ import numpy as np
 from datetime import datetime
 import time
 from scipy import sparse
+from multiprocessing.dummy import Pool as ThreadPool
+from itertools import repeat
 
 conversations = []
 
@@ -149,9 +151,24 @@ def create_matrix(conversations, window, margin, p=False):
     sentiment_weights = np.where(sentiment_weights >= 0, sentiment_weights + 1, sentiment_weights - 1)
     weights = sparse.csr_matrix(financial_weights * sentiment_weights)
 
-    date_start = datetime(2015, 11, 2, 0, 0, 0)
+    for conversation, conversation_tfidf in zip(conversations, tfidf):
+        conversation["tfidf"] = conversation_tfidf
 
-    for i, (conversation, conversation_tfidf) in enumerate(zip(conversations, tfidf)):
+    pool = ThreadPool()
+    results = pool.starmap(create_matrix_line_multi, zip(repeat(p), repeat(client), range(len(conversations)), repeat(conversations), repeat(weights), repeat(window), repeat(margin)))
+    pool.close()
+    pool.join()
+
+    for result in results:
+        if len(result[1]) > 0:
+            Y.append(result[1])
+            IDs.append(result[2])
+            if X is None:
+                X = sparse.csr_matrix(result[0])
+            else:
+                X = sparse.vstack([X, result[0]])
+
+    """for i, (conversation, conversation_tfidf) in enumerate(zip(conversations, tfidf)):
         for currency in conversation["coin_mentions"]:
             if p:
                 print("processing conversation", str(conversation["_id"]), "(" + currency + ")", i)
@@ -169,18 +186,43 @@ def create_matrix(conversations, window, margin, p=False):
                     else:
                         X = sparse.vstack([X, _X])
                     Y.append(_Y)
-                    IDs.append(str(conversation["_id"]) + ":" + currency)
+                    IDs.append(str(conversation["_id"]) + ":" + currency)"""
 
     # general attr
     labels = ["w", "avg_sentiment", "avg_polarity", "avg_reputation", "messages_len"]
     # averages
-    labels += ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"] + ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"] + ["price_15min", "volume_15min", "price_all_15min"]
-    labels += ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"] + ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"] + ["price_1h", "volume_1h", "price_all_1h"]
-    labels += ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"] + ["price_6h", "volume_6h", "volume_all_6h"]
+    labels += ["distribution_c_15min", "polarity_c_15min", "sentiment_c_15min"] + ["distribution_a_15min", "polarity_a_15min", "sentiment_a_15min"] + ["distribution_t_15min", "polarity_t_15min", "sentiment_t_15min"] + ["price_15min", "price_all_15min", "volume_15min"]
+    labels += ["distribution_c_1h", "polarity_c_1h", "sentiment_c_1h"] + ["distribution_a_1h", "polarity_a_1h", "sentiment_a_1h"] + ["distribution_t_1h", "polarity_t_1h", "sentiment_t_1h"] + ["price_1h", "price_all_1h", "volume_1h"]
+    labels += ["distribution_c_6h", "polarity_c_6h", "sentiment_c_6h"] + ["distribution_a_6h", "polarity_a_6h", "sentiment_a_6h"] + ["distribution_t_6h", "polarity_t_6h", "sentiment_t_6h"] + ["price_6h", "price_all_6h", "volume_6h"]
     # tfidf
     labels += vocabulary
 
     return X, Y, IDs, labels
+
+
+def create_matrix_line_multi(p, client, i, data, weights, window, margin):
+    date_start = datetime(2015, 11, 2, 0, 0, 0)
+    X = None
+    Y = []
+    IDs = []
+    for currency in data["coin_mentions"]:
+        if p:
+            print("processing conversation", str(data["_id"]), "(" + currency + ")", i)
+        if data["conversation_end"] >= date_start:
+            _Y = create_Y(client, data, currency, window, margin)
+            if _Y is None:
+                continue
+
+            _X = create_X(client, i, data, weights, currency)
+            if _X is not None:
+                if X is None:
+                    X = sparse.csr_matrix(_X)
+                else:
+                    X = sparse.vstack([X, _X])
+                Y.append(_Y)
+                IDs.append(str(data["_id"]) + ":" + currency)
+
+    return X, Y, IDs
 
 
 def create_X(client, i, conversation_data, weights, currency):
@@ -191,24 +233,23 @@ def create_X(client, i, conversation_data, weights, currency):
     data_averages = []
     average_tfidf, n = sparse.csr_matrix([]), 0
 
-    time_windows = [900, 3600, 6*3600, 1500]  # 15 min, 60 min, 6h
+    time_windows = [900, 3600, 6*3600]  # 15 min, 60 min, 6h
     the_window = 1500
+    averages = []
     for time_window in time_windows:
-        if time_window != the_window:
-            data_averages += common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, threshold=0.0, type="conversation", data_averages_only=True)
-            technical_data.append(common.get_price_change(client, currency, date_from - time_window, date_from))
-            technical_data.append(common.get_total_volume(client, currency, date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
-            technical_data.append(common.get_all_price_changes(client, date_from - time_window, date_from))
+        averages += common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, threshold=0.0, type="conversation", data_averages_only=True)
+        averages += common.get_averages_from_db(client, conversation_data["conversation_end"], time_window, currency, conversations=False)
+        averages.append(common.get_price_change(client, currency, date_from - time_window, date_from))
+        averages.append(common.get_all_price_changes(client, date_from - time_window, date_from))
+        averages.append(common.get_total_volume(client, currency, date_from - time_window, date_from) / common.get_total_volume(client, "all", date_from - time_window, date_from))
 
-            db_averages += common.get_averages_from_db(client, conversation_data["conversation_end"], time_window, currency, conversations=False)
-        else:
-            _, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], time_window, currency, i, 0, type="conversation", data_averages_only=False)
+    _, average_tfidf, n, _ = common.get_averages_from_data(conversations, conversation_data["conversation_end"], the_window, currency, i, 0, type="conversation", data_averages_only=False)
 
     avg_reputation = []
     for message in conversation_data["messages"]:
         avg_reputation.append(get_user_reputation(client, message))
 
-    _X = [1 / (n + 1), conversation_data["avg_sentiment"], conversation_data["avg_polarity"], 1 / (np.mean(avg_reputation) + 1), 1 / conversation_data["messages_len"]] + data_averages + db_averages + technical_data
+    _X = [1 / (n + 1), conversation_data["avg_sentiment"], conversation_data["avg_polarity"], 1 / (np.mean(avg_reputation) + 1), 1 / conversation_data["messages_len"]] + averages
 
     if not np.all(np.isfinite(_X)):
         return None

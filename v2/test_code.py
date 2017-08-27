@@ -919,7 +919,7 @@ def randomized_data_params_search(**kwargs):
 
 
 def randomized_model_params_search(**kwargs):
-    print("GRID SEARCH")
+    print("MODEL PARAMS SEARCH")
     # do grid search to find best params for every learning algorithm used
 
     n = kwargs["n"]
@@ -934,7 +934,7 @@ def randomized_model_params_search(**kwargs):
     del kwargs
 
     data_X, data_Y, _, _ = final_set_f(data_X, np.array(data_Y))
-    sfm = SelectFromModel(feature_selector, threshold=str(threshold) + "*mean")
+    sfm = feature_selector
     sfm.fit(data_X, data_Y)
     data_X = sfm.transform(data_X)
 
@@ -951,7 +951,7 @@ def randomized_model_params_search(**kwargs):
         print("unknown classifier!")
         exit()
 
-    rs = RandomizedSearchCV(model, param_distributions=params, cv=n, n_iter=n_iter, error_score=0, verbose=1000)
+    rs = RandomizedSearchCV(model, param_distributions=params, cv=n, n_iter=n_iter, n_jobs=-1, error_score=0, verbose=1000)
     rs.fit(data_X, data_Y)
     results = rs.cv_results_
 
