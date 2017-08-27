@@ -7,11 +7,14 @@ from scipy.optimize import curve_fit
 from scipy.misc import factorial
 from sklearn.linear_model import LinearRegression
 from sklearn.feature_selection import SelectFromModel
+from sklearn.feature_selection import SelectPercentile
+from sklearn.feature_selection import mutual_info_classif
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.svm import LinearSVC
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+
 from sklearn.mixture import GaussianMixture, GMM
 from sklearn.feature_selection import RFECV
 import pymongo
@@ -44,14 +47,14 @@ def optimal_attr_number(plot=False, **kwargs):
     best_threshold = 0
     best_score = 0
     scores = []
-    f = open("results/attribute_selection.txt", "a")
+    f = open("results/attribute_selection_mutual_info.txt", "a")
     f.write(type + ", " + str(feature_selector)[:20] + "\n")
     f.close()
 
     while i < n_iter:
         # threshold = threshold_range[0] + np.random.rand() * (threshold_range[1] - threshold_range[0])
-        threshold = threshold_range[0] + (i+1)/n_iter * (threshold_range[1] - threshold_range[0])
-        feature_selector = SelectFromModel(RandomForestClassifier(), threshold=str(threshold) + "*mean")
+        threshold = threshold_range[0] + i/n_iter * (threshold_range[1] - threshold_range[0])
+        feature_selector = SelectFromModel(LinearSVC(), threshold=str(threshold) + "*mean")
 
         # threshold = threshold_range[0] + (i / n_iter) * (threshold_range[1] - threshold_range[0])
         _, score, precision, recall, matrix_shape, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
@@ -59,13 +62,13 @@ def optimal_attr_number(plot=False, **kwargs):
             best_threshold = threshold
             best_score = score
 
-        f = open("results/attribute_selection.txt", "a")
+        f = open("results/attribute_selection_mutual_info.txt", "a")
         f.write(str(i) + " - threshold: " + str(threshold) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", ~n_attr: " + str(matrix_shape[1]) + "\n")
         f.close()
         scores.append((score, matrix_shape[1]))
         i += 1
 
-    f = open("results/attribute_selection.txt", "a")
+    f = open("results/attribute_selection_mutual_info.txt", "a")
     f.write("\n")
     f.close()
 
