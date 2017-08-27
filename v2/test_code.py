@@ -936,7 +936,7 @@ def randomized_model_params_search(**kwargs):
     final_set_f = kwargs["final_set_f"]
     del kwargs
 
-    data_X, data_Y, _, _ = final_set_f(data_X, np.array(data_Y))
+    data_X, data_Y, _, _, _ = final_set_f(data_X, np.array(data_Y))
     sfm = feature_selector
     sfm.fit(data_X, data_Y)
     data_X = sfm.transform(data_X)

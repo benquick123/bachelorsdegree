@@ -338,7 +338,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
         arguments["feature_selector"] = feature_selector
         arguments["feature_selectors"] = [LinearSVC(), RandomForestClassifier()]
         arguments["model"] = model
-        arguments["models"] = [LinearSVC(), RandomForestClassifier(n_jobs=16), KNeighborsClassifier(), MLPClassifier(n_jobs=16)]
+        arguments["models"] = [LinearSVC(), RandomForestClassifier(), KNeighborsClassifier(), MLPClassifier()]
         arguments["n"] = 10
         arguments["data_X"] = articles_X
         arguments["data_Y"] = articles_Y
