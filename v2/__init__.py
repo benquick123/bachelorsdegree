@@ -316,8 +316,8 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
             elif articles_Y is None:
                 exit()
 
-    threshold = 1.0
-    feature_selector = SelectFromModel(LinearSVC(), threshold=str(threshold) + "*mean")
+    threshold = 2.95
+    feature_selector = SelectFromModel(RandomForestClassifier(), threshold=str(threshold) + "*mean")
     # feature_selector = SelectPercentile(mutual_info_classif, 20)
     model = LinearSVC()
 
@@ -338,7 +338,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
         arguments["feature_selector"] = feature_selector
         arguments["feature_selectors"] = [LinearSVC(), RandomForestClassifier()]
         arguments["model"] = model
-        arguments["models"] = [LinearSVC(), RandomForestClassifier(), KNeighborsClassifier(), MLPClassifier()]
+        arguments["models"] = [LinearSVC(), RandomForestClassifier(n_jobs=16), KNeighborsClassifier(), MLPClassifier(n_jobs=16)]
         arguments["n"] = 10
         arguments["data_X"] = articles_X
         arguments["data_Y"] = articles_Y
@@ -555,7 +555,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.optimal_attr_number]
+    functions = [test_code.randomized_model_params_search]
 
     window = 6600
     margin = 0.00967742793041
