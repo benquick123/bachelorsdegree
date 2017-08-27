@@ -153,7 +153,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             testing_indexes = np.where(testing_indexes >= 0, testing_indexes+1, -1)
         print(Counter(testing_indexes))
 
-        pool = ThreadPool()
+        pool = ThreadPool(1)
         results = pool.starmap(train_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
@@ -319,7 +319,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
     threshold = 2.95
     feature_selector = SelectFromModel(RandomForestClassifier(), threshold=str(threshold) + "*mean")
     # feature_selector = SelectPercentile(mutual_info_classif, 20)
-    model = LinearSVC()
+    model = RandomForestClassifier(n_estimators=19, max_features=None, min_samples_leaf=25, n_jobs=-1)
 
     if len(functions) != 0:
         arguments = dict()
@@ -555,7 +555,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.randomized_model_params_search]
+    functions = [test_code.tfidf_test, test_code.topics_test, test_code.technical_test]
 
     window = 6600
     margin = 0.00967742793041

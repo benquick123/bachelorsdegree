@@ -1,0 +1,9 @@
+articles, SelectFromModel(esti
+articles, SelectFromModel(esti
+0 - threshold: 0.0, score: 0.454402515723, precision: 0.463671490758, recall: 0.454402515723, ~n_attr: 772
+1 - threshold: 0.05, score: 0.481132075472, precision: 0.482921319289, recall: 0.481132075472, ~n_attr: 2314
+2 - threshold: 0.1, score: 0.482704402516, precision: 0.488750443536, recall: 0.482704402516, ~n_attr: 3857
+3 - threshold: 0.15000000000000002, score: 0.47641509434, precision: 0.481918210011, recall: 0.47641509434, ~n_attr: 4629
+4 - threshold: 0.2, score: 0.47641509434, precision: 0.481553866898, recall: 0.47641509434, ~n_attr: 6172
+5 - threshold: 0.25, score: 0.474842767296, precision: 0.480267879212, recall: 0.474842767296, ~n_attr: 7715
+6 - threshold: 0.30000000000000004, score: 0.474842767296, precision: 0.481190782815, recall: 0.474842767296, ~n_attr: 8487

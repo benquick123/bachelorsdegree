@@ -944,12 +944,12 @@ def randomized_model_params_search(**kwargs):
     params = dict()
     if isinstance(model, LinearSVC):
         params = {"C": stats.randint(1, 10), "penalty": ["l1", "l2"], "dual": [True, False], "loss": ["hinge", "squared_hinge"]}
-    elif isinstance(model, MLPClassifier()):
-        params = {"solver": ["lbfgs", "sgd", "adam"], "hidden_layer_sizes": tuple([stats.randint(50, 200)])}
-    elif isinstance(model, RandomForestClassifier()):
+    elif isinstance(model, MLPClassifier):
+        params = {"solver": ["lbfgs", "sgd", "adam"], "activation": ["identity", "logistic", "tanh", "relu"], "learning_rate": ["constant", "invscaling", "adaptive"]}
+    elif isinstance(model, RandomForestClassifier):
         params = {"n_estimators": stats.randint(5, 40), "max_features": [None, "auto", stats.randint(1000, data_X.shape[1])], "min_samples_leaf": stats.randint(1, 100)}
-    elif isinstance(model, KNeighborsClassifier()):
-        params = {"k_neighbours": stats.randint(2, 20), "algorithm": ["auto", "ball_tree", "kd_tree"], "leaf_size": stats.randint(10, 40), "p": [1, 2]}
+    elif isinstance(model, KNeighborsClassifier):
+        params = {"n_neighbors": stats.randint(2, 20), "algorithm": ["auto", "ball_tree", "kd_tree"], "leaf_size": stats.randint(10, 40), "p": [1, 2]}
     else:
         print("unknown classifier!")
         exit()
