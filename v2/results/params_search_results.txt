@@ -326,3 +326,105 @@ split3_test_score	std_fit_time	mean_test_score	split9_train_score	split1_test_sc
 0.457680250784	0.0161195665697	0.460716530484	0.552879581152	0.4	0.00594747717777	0.551832460733	1	19	0.0617388963699	0.56129933636	0.551675977654	18.2956950665	0.0544959278753	0.548895899054	0.55497382199	0.48427672956	0.388012618297	0.41065830721	0.566736547869	0.4125	1.25012331146	{'n_neighbors': 19, 'algorithm': 'kd_tree', 'leaf_size': 31, 'p': 1}	kd_tree	0.569881201957	0.470031545741	0.558211243054	1	0.555361508907	0.557262569832	31	0.539432176656	0.560209424084	0.496855345912	
 0.413793103448	0.0158054944149	0.41640477687	0.610820244328	0.384375	0.00636480567175	0.610471204188	45	8	0.0450527906418	0.617883339155	0.607891061453	17.8162003756	0.0513548218896	0.492113564669	0.613612565445	0.443396226415	0.334384858044	0.413793103448	0.625436757512	0.33125	2.51699549579	{'n_neighbors': 8, 'algorithm': 'kd_tree', 'leaf_size': 29, 'p': 1}	kd_tree	0.619846261356	0.479495268139	0.616769233214	1	0.623471882641	0.612081005587	29	0.444794952681	0.626178010471	0.427672955975	
 
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+0 - score: 0.469811320755, precision: 0.475494688747, recall: 0.469811320755, params:{'penalty': 'l2', 'loss': 'squared_hinge', 'C': 1, 'dual': False}
+1 - score: 0.444182389937, precision: 0.446159197248, recall: 0.444182389937, params:{'penalty': 'l2', 'loss': 'squared_hinge', 'C': 7, 'dual': False}
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+articles - LinearSVC(C=1.0, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=None, tol=0.0001,
+     verbose=0)
+0 - score: 0.452830188679, precision: 0.454624254153, recall: 0.452830188679, params:{'dual': False, 'penalty': 'l2', 'C': 3, 'loss': 'squared_hinge'}
+1 - score: 0.449371069182, precision: 0.447622677427, recall: 0.449371069182, params:{'dual': True, 'penalty': 'l2', 'C': 5, 'loss': 'hinge'}
+2 - score: 0.404088050314, precision: 0.404157764566, recall: 0.404088050314, params:{'dual': False, 'penalty': 'l1', 'C': 8, 'loss': 'squared_hinge'}
+3 - score: 0.443396226415, precision: 0.441930769146, recall: 0.443396226415, params:{'dual': True, 'penalty': 'l2', 'C': 6, 'loss': 'hinge'}
+4 - score: 0.452830188679, precision: 0.454624254153, recall: 0.452830188679, params:{'dual': False, 'penalty': 'l2', 'C': 3, 'loss': 'squared_hinge'}
+5 - score: 0.443396226415, precision: 0.444847539557, recall: 0.443396226415, params:{'dual': False, 'penalty': 'l2', 'C': 4, 'loss': 'squared_hinge'}
+6 - score: 0.425786163522, precision: 0.427913259307, recall: 0.425786163522, params:{'dual': False, 'penalty': 'l1', 'C': 3, 'loss': 'squared_hinge'}
+7 - score: 0.422955974843, precision: 0.424177361053, recall: 0.422955974843, params:{'dual': False, 'penalty': 'l2', 'C': 8, 'loss': 'squared_hinge'}
+8 - score: 0.422955974843, precision: 0.424177361053, recall: 0.422955974843, params:{'dual': True, 'penalty': 'l2', 'C': 8, 'loss': 'squared_hinge'}
+9 - score: 0.473270440252, precision: 0.47302000306, recall: 0.473270440252, params:{'dual': True, 'penalty': 'l2', 'C': 1, 'loss': 'hinge'}
+10 - score: 0.422955974843, precision: 0.424177361053, recall: 0.422955974843, params:{'dual': False, 'penalty': 'l2', 'C': 8, 'loss': 'squared_hinge'}
+11 - score: 0.421383647799, precision: 0.4222644687, recall: 0.421383647799, params:{'dual': True, 'penalty': 'l2', 'C': 7, 'loss': 'squared_hinge'}
+12 - score: 0.463836477987, precision: 0.466442422679, recall: 0.463836477987, params:{'dual': False, 'penalty': 'l2', 'C': 2, 'loss': 'squared_hinge'}
+13 - score: 0.452830188679, precision: 0.454624254153, recall: 0.452830188679, params:{'dual': True, 'penalty': 'l2', 'C': 3, 'loss': 'squared_hinge'}
+14 - score: 0.429245283019, precision: 0.42967824888, recall: 0.429245283019, params:{'dual': True, 'penalty': 'l2', 'C': 6, 'loss': 'squared_hinge'}
+15 - score: 0.412264150943, precision: 0.413559852236, recall: 0.412264150943, params:{'dual': False, 'penalty': 'l1', 'C': 6, 'loss': 'squared_hinge'}
+16 - score: 0.463836477987, precision: 0.466442422679, recall: 0.463836477987, params:{'dual': False, 'penalty': 'l2', 'C': 2, 'loss': 'squared_hinge'}
+articles - RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            n_estimators=10, n_jobs=16, oob_score=False, random_state=None,
+            verbose=0, warm_start=False)
+articles - RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            n_estimators=10, n_jobs=16, oob_score=False, random_state=None,
+            verbose=0, warm_start=False)
+0 - score: 0.433962264151, precision: 0.477610702798, recall: 0.433962264151, params:{'n_estimators': 21, 'max_features': None, 'min_samples_leaf': 94}
+articles - RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            n_estimators=10, n_jobs=16, oob_score=False, random_state=None,
+            verbose=0, warm_start=False)
+0 - score: 0.392767295597, precision: 0.410991911272, recall: 0.392767295597, params:{'n_estimators': 29, 'min_samples_leaf': 96, 'max_features': 'auto'}
+1 - score: 0.456603773585, precision: 0.504071574544, recall: 0.456603773585, params:{'n_estimators': 28, 'min_samples_leaf': 24, 'max_features': None}
+2 - score: 0.402830188679, precision: 0.437735281059, recall: 0.402830188679, params:{'n_estimators': 18, 'min_samples_leaf': 6, 'max_features': 'auto'}
+3 - score: 0.452201257862, precision: 0.500895227268, recall: 0.452201257862, params:{'n_estimators': 35, 'min_samples_leaf': 64, 'max_features': None}
+4 - score: 0.394968553459, precision: 0.446429265626, recall: 0.394968553459, params:{'n_estimators': 27, 'min_samples_leaf': 23, 'max_features': 'auto'}
+5 - score: 0.404402515723, precision: 0.4493449177, recall: 0.404402515723, params:{'n_estimators': 27, 'min_samples_leaf': 29, 'max_features': 'auto'}
+6 - score: 0.456918238994, precision: 0.504666844398, recall: 0.456918238994, params:{'n_estimators': 18, 'min_samples_leaf': 58, 'max_features': None}
+7 - score: 0.411320754717, precision: 0.448492859709, recall: 0.411320754717, params:{'n_estimators': 36, 'min_samples_leaf': 70, 'max_features': 'auto'}
+8 - score: 0.436163522013, precision: 0.476557091052, recall: 0.436163522013, params:{'n_estimators': 8, 'min_samples_leaf': 27, 'max_features': None}
+9 - score: 0.40251572327, precision: 0.416753512469, recall: 0.40251572327, params:{'n_estimators': 12, 'min_samples_leaf': 65, 'max_features': 'auto'}
+10 - score: 0.401886792453, precision: 0.427071325307, recall: 0.401886792453, params:{'n_estimators': 33, 'min_samples_leaf': 85, 'max_features': 'auto'}
+11 - score: 0.393710691824, precision: 0.442532326951, recall: 0.393710691824, params:{'n_estimators': 33, 'min_samples_leaf': 40, 'max_features': 'auto'}
+12 - score: 0.4, precision: 0.417045201208, recall: 0.4, params:{'n_estimators': 19, 'min_samples_leaf': 83, 'max_features': 'auto'}
+13 - score: 0.431761006289, precision: 0.470855252795, recall: 0.431761006289, params:{'n_estimators': 5, 'min_samples_leaf': 71, 'max_features': None}
+14 - score: 0.441509433962, precision: 0.480666291847, recall: 0.441509433962, params:{'n_estimators': 9, 'min_samples_leaf': 47, 'max_features': None}
+15 - score: 0.44748427673, precision: 0.489510973084, recall: 0.44748427673, params:{'n_estimators': 7, 'min_samples_leaf': 36, 'max_features': None}
+16 - score: 0.442767295597, precision: 0.486704141679, recall: 0.442767295597, params:{'n_estimators': 19, 'min_samples_leaf': 64, 'max_features': None}
+17 - score: 0.403144654088, precision: 0.413129505719, recall: 0.403144654088, params:{'n_estimators': 15, 'min_samples_leaf': 79, 'max_features': 'auto'}
+18 - score: 0.381132075472, precision: 0.386499563539, recall: 0.381132075472, params:{'n_estimators': 19, 'min_samples_leaf': 82, 'max_features': 'auto'}
+19 - score: 0.435849056604, precision: 0.477181482049, recall: 0.435849056604, params:{'n_estimators': 32, 'min_samples_leaf': 5, 'max_features': None}
+20 - score: 0.449056603774, precision: 0.494597244002, recall: 0.449056603774, params:{'n_estimators': 33, 'min_samples_leaf': 21, 'max_features': None}
+21 - score: 0.429245283019, precision: 0.464166757503, recall: 0.429245283019, params:{'n_estimators': 6, 'min_samples_leaf': 47, 'max_features': None}
+22 - score: 0.391509433962, precision: 0.393031628938, recall: 0.391509433962, params:{'n_estimators': 5, 'min_samples_leaf': 58, 'max_features': 'auto'}
+23 - score: 0.429245283019, precision: 0.468627794737, recall: 0.429245283019, params:{'n_estimators': 6, 'min_samples_leaf': 97, 'max_features': None}
+24 - score: 0.43679245283, precision: 0.479564267968, recall: 0.43679245283, params:{'n_estimators': 23, 'min_samples_leaf': 4, 'max_features': None}
+25 - score: 0.437421383648, precision: 0.484422934866, recall: 0.437421383648, params:{'n_estimators': 32, 'min_samples_leaf': 84, 'max_features': None}
+26 - score: 0.445283018868, precision: 0.488857460895, recall: 0.445283018868, params:{'n_estimators': 26, 'min_samples_leaf': 4, 'max_features': None}
+27 - score: 0.453459119497, precision: 0.500907372185, recall: 0.453459119497, params:{'n_estimators': 14, 'min_samples_leaf': 40, 'max_features': None}
+28 - score: 0.399056603774, precision: 0.417268025054, recall: 0.399056603774, params:{'n_estimators': 21, 'min_samples_leaf': 70, 'max_features': 'auto'}
+29 - score: 0.411635220126, precision: 0.428491573011, recall: 0.411635220126, params:{'n_estimators': 19, 'min_samples_leaf': 52, 'max_features': 'auto'}
+30 - score: 0.451572327044, precision: 0.499097473835, recall: 0.451572327044, params:{'n_estimators': 25, 'min_samples_leaf': 27, 'max_features': None}
+31 - score: 0.450314465409, precision: 0.497202461396, recall: 0.450314465409, params:{'n_estimators': 29, 'min_samples_leaf': 13, 'max_features': None}
