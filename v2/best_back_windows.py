@@ -17,7 +17,7 @@ import trollbox as trollbox
 import twitter as twitter
 
 
-def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, type, date_key, currency_key, client, is_conversation, articles, conversations, tweets):
+def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, type, date_key, currency_key, client):
     back_window = 300 * round((back_window_range[0] + (k + 1 / n_iter) * (back_window_range[1] - back_window_range[0])) / 300)
 
     print("THREAD", k)
@@ -99,7 +99,7 @@ def best_back_windows(**kwargs):
 
 
     pool = ThreadPool()
-    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(n_iter), repeat(back_window_range), repeat(raw_data), repeat(ids), repeat(type), repeat(date_key), repeat(currency_key), repeat(client), repeat(is_conversation), repeat(articles), repeat(conversations), repeat(tweets)))
+    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(n_iter), repeat(back_window_range), repeat(raw_data), repeat(ids), repeat(type), repeat(date_key), repeat(currency_key), repeat(client)))
     pool.close()
     pool.join()
 

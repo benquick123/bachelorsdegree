@@ -56,8 +56,8 @@
       <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="56" column="27" lean-forward="false" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
+            <state relative-caret-position="388">
+              <caret line="101" column="224" lean-forward="false" selection-start-line="101" selection-start-column="224" selection-end-line="101" selection-end-column="224" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -676,13 +676,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00053" summary="articles attr testing">
-      <created>1503706363744</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1503706363744</updated>
-    </task>
     <task id="LOCAL-00054" summary="zero division fix, articles attr importances">
       <created>1503710435354</created>
       <option name="number" value="00054" />
@@ -1019,7 +1012,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503939370081</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="best back windows">
+      <created>1503940107680</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1503940107681</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1329,8 +1329,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="56" column="27" lean-forward="false" selection-start-line="56" selection-start-column="27" selection-end-line="56" selection-end-column="27" />
+        <state relative-caret-position="388">
+          <caret line="101" column="224" lean-forward="false" selection-start-line="101" selection-start-column="224" selection-end-line="101" selection-end-column="224" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
