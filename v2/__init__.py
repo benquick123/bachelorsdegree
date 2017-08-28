@@ -183,13 +183,18 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             precisions.append(precision_score(data_Y[test_mask], pred_Y, average="weighted"))
             recalls.append(recall_score(data_Y[test_mask], pred_Y, average="weighted"))"""
 
-        learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
+        learning_Y = data_Y[np.where(testing_indexes >= 0, True, False)]
+        learn_score = list()
+        learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == -1)], np.array(pred_Y)[np.where(learning_Y == -1)]))
+        learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 0)], np.array(pred_Y)[np.where(learning_Y == 0)]))
+        learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 1)], np.array(pred_Y)[np.where(learning_Y == 1)]))
+        # learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
         learn_precision = precision_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
         learn_recall = recall_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
 
         if p:
             print("classes:", dict(Counter(data_Y)))
-            print("accuracy: %0.3f" % learn_score)
+            print("accuracy: %0.3f" % learn_score[0])
             print("precision: %0.3f, recall: %0.3f" % (learn_precision, learn_recall))
 
     if test:
@@ -323,9 +328,9 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
 
     if len(functions) != 0:
         arguments = dict()
-        arguments["n_iter"] = 60
+        arguments["n_iter"] = 50
         arguments["threshold_range"] = [0.0, 1.0]
-        arguments["margin_range"] = [-0.01, 0.03]
+        arguments["margin_range"] = [0.0, 0.06]
         arguments["window_range"] = [300, 6*3600]
         arguments["back_window_short"] = [300, 3600]
         arguments["back_window_medium"] = [3900, 6*3600]
@@ -555,7 +560,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.randomized_model_params_search]
+    functions = [test_code.optimal_margin]
 
     window = 6600
     margin = 0.00967742793041
