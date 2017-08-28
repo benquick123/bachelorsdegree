@@ -555,7 +555,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.tfidf_test, test_code.topics_test, test_code.technical_test]
+    functions = [test_code.randomized_model_params_search]
 
     window = 6600
     margin = 0.00967742793041
