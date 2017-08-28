@@ -560,23 +560,12 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.randomized_model_params_search]
+    functions = [best_back_windows.best_back_windows]
 
     window = 6600
     margin = 0.00967742793041
     train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()
-
-    # window = 3*3600
-    # margin = 0.017
-    # train_tweets(window, margin, p=True, data=True, matrix=True, functions=functions)
-    # exit()
-
-    window = 900
-    margin = 0.005
-    n_conversations = 150000
-    train_conversations(window, margin, n=n_conversations, p=True, data=True, matrix=True, functions=functions)
-    # exit()
 
 if __name__ == "__main__":
     __init__()
