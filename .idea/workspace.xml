@@ -26,8 +26,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="321" column="22" lean-forward="true" selection-start-line="321" selection-start-column="22" selection-end-line="321" selection-end-column="22" />
+            <state relative-caret-position="-57">
+              <caret line="196" column="49" lean-forward="false" selection-start-line="196" selection-start-column="49" selection-end-line="196" selection-end-column="49" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
@@ -137,8 +137,8 @@
       <file leaf-file-name="test_code.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="165" column="31" lean-forward="false" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="31" />
+            <state relative-caret-position="695">
+              <caret line="924" column="34" lean-forward="false" selection-start-line="924" selection-start-column="4" selection-end-line="924" selection-end-column="34" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#959#3413#0" expanded="false" />
@@ -730,13 +730,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00047" summary="margin fix">
-      <created>1503581768080</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1503581768080</updated>
-    </task>
     <task id="LOCAL-00048" summary="margin fix">
       <created>1503582093643</created>
       <option name="number" value="00048" />
@@ -1073,7 +1066,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503887702733</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="optimal margin">
+      <created>1503900938075</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1503900938075</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1334,27 +1334,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v2/test_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="165" column="31" lean-forward="false" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-            <element signature="e#959#3413#0" expanded="false" />
-            <element signature="e#3475#5942#0" expanded="false" />
-            <element signature="e#8765#11372#0" expanded="false" />
-            <element signature="e#11425#17679#0" expanded="false" />
-            <element signature="e#17826#27970#0" expanded="false" />
-            <element signature="e#28014#32402#0" expanded="false" />
-            <element signature="e#32439#36388#0" expanded="false" />
-            <element signature="e#36546#44377#0" expanded="false" />
-            <element signature="e#44430#48265#0" expanded="false" />
-            <element signature="e#47658#48194#1" expanded="false" />
-            <element signature="e#48310#49485#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1394">
@@ -1373,10 +1352,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v2/test_code.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="695">
+          <caret line="924" column="34" lean-forward="false" selection-start-line="924" selection-start-column="4" selection-end-line="924" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#959#3413#0" expanded="false" />
+            <element signature="e#3475#5942#0" expanded="false" />
+            <element signature="e#8765#11372#0" expanded="false" />
+            <element signature="e#11425#17679#0" expanded="false" />
+            <element signature="e#17826#27970#0" expanded="false" />
+            <element signature="e#28014#32402#0" expanded="false" />
+            <element signature="e#32439#36388#0" expanded="false" />
+            <element signature="e#36546#44377#0" expanded="false" />
+            <element signature="e#44430#48265#0" expanded="false" />
+            <element signature="e#47658#48194#1" expanded="false" />
+            <element signature="e#48310#49485#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="321" column="22" lean-forward="true" selection-start-line="321" selection-start-column="22" selection-end-line="321" selection-end-column="22" />
+        <state relative-caret-position="-57">
+          <caret line="196" column="49" lean-forward="false" selection-start-line="196" selection-start-column="49" selection-end-line="196" selection-end-column="49" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />

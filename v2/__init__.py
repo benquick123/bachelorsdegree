@@ -188,13 +188,13 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == -1)], np.array(pred_Y)[np.where(learning_Y == -1)]))
         learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 0)], np.array(pred_Y)[np.where(learning_Y == 0)]))
         learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 1)], np.array(pred_Y)[np.where(learning_Y == 1)]))
-        # learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
+        learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
         learn_precision = precision_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
         learn_recall = recall_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
 
         if p:
             print("classes:", dict(Counter(data_Y)))
-            print("accuracy: %0.3f" % learn_score[0])
+            print("accuracy: %0.3f" % learn_score)
             print("precision: %0.3f, recall: %0.3f" % (learn_precision, learn_recall))
 
     if test:
@@ -560,7 +560,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [test_code.optimal_margin]
+    functions = [test_code.randomized_model_params_search]
 
     window = 6600
     margin = 0.00967742793041
