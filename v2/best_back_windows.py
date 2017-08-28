@@ -23,53 +23,29 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
     print("THREAD", k)
     matrix = None
 
-    if not is_conversation:
-        for i, text in enumerate(raw_data):
-            print("iteration", i)
-            if text["_id"] in ids:
-                date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
-                matrix_line = []
-                matrix_line += common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1], data_averages_only=True)
-                matrix_line += common.get_averages_from_db(client, text[date_key], back_window, text[currency_key], articles=articles, conversations=conversations, tweets=tweets)
+    for i, text in enumerate(raw_data):
+        print("iteration", i, "" if matrix is None else matrix.shape)
+        if text["_id"] in ids:
+            date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
+            matrix_line = []
+            matrix_line += common.get_averages_from_data(raw_data, text[date_key], back_window, text[currency_key], i, threshold=0.0, type=type[:-1], data_averages_only=True)
+            # matrix_line += common.get_averages_from_db(client, text[date_key], back_window, text[currency_key], articles=articles, conversations=conversations, tweets=tweets)
 
-                matrix_line.append(common.get_price_change(client, text[currency_key], date_from - back_window, date_from))
-                matrix_line.append(common.get_all_price_changes(client, date_from - back_window, date_from))
+            matrix_line.append(common.get_price_change(client, text[currency_key], date_from - back_window, date_from))
+            matrix_line.append(common.get_all_price_changes(client, date_from - back_window, date_from))
 
-                volume_all = common.get_total_volume(client, "all", date_from - back_window, date_from)
-                volume_curr = common.get_total_volume(client, text[currency_key], date_from - back_window, date_from)
-                matrix_line.append(0 if volume_all == 0 else volume_curr / volume_all)
+            volume_all = common.get_total_volume(client, "all", date_from - back_window, date_from)
+            volume_curr = common.get_total_volume(client, text[currency_key], date_from - back_window, date_from)
+            matrix_line.append(0 if volume_all == 0 else volume_curr / volume_all)
 
-                matrix_line = np.where(np.isfinite(matrix_line), matrix_line, 0)
+            matrix_line = np.where(np.isfinite(matrix_line), matrix_line, 0)
 
-                if matrix is None:
-                    matrix = sparse.csr_matrix(matrix_line)
-                else:
-                    matrix = sparse.hstack([matrix, sparse.csr_matrix(matrix_line)]).tocsr()
-    else:
-        for i, text in enumerate(raw_data):
-            print("iteration", i)
-            for currency in text[currency_key]:
-                if str(text["_id"]) + ":" + currency in ids:
-                    date_from = int(time.mktime(text[date_key].timetuple()) + 3600)
-                    matrix_line = []
-                    matrix_line += common.get_averages_from_data(raw_data, text[date_key], back_window, currency, i, threshold=0.0, type=type[:-1], data_averages_only=True)
-                    matrix_line += common.get_averages_from_db(client, text[date_key], back_window, currency, articles=articles, conversations=conversations, tweets=tweets)
+            if matrix is None:
+                matrix = sparse.csr_matrix(matrix_line)
+            else:
+                matrix = sparse.vstack([matrix, sparse.csr_matrix(matrix_line)]).tocsr()
 
-                    matrix_line.append(common.get_price_change(client, currency, date_from - back_window, date_from))
-                    matrix_line.append(common.get_all_price_changes(client, date_from - back_window, date_from))
-
-                    volume_all = common.get_total_volume(client, "all", date_from - back_window, date_from)
-                    volume_curr = common.get_total_volume(client, currency, date_from - back_window, date_from)
-                    matrix_line.append(0 if volume_all == 0 else volume_curr / volume_all)
-
-                    matrix_line = np.where(np.isfinite(matrix_line), matrix_line, 0)
-
-                    if matrix is None:
-                        matrix = sparse.csr_matrix(matrix_line)
-                    else:
-                        matrix = sparse.hstack([matrix, sparse.csr_matrix(matrix_line)]).tocsr()
-
-    labels = ["distribution_1", "polarity_1", "sentiment_1", "distribution_2", "polarity_2", "sentiment_2", "distribution_3", "polarity_3", "sentiment_3", "price", "price_all", "volume"]
+    labels = ["distribution", "polarity", "sentiment", "price", "price_all", "volume"]
     for i in range(len(labels)):
         labels[i] += "_" + str(back_window)
 
@@ -80,7 +56,7 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
 
 def get_mutual_info(X, Y, type, window, save):
     mi = mutual_info_classif(X, Y)
-    mi = np.array(mi).reshape((-1, 12))
+    mi = np.array(mi).reshape((-1, 6))
     mi = mi.mean(axis=1)
 
     if save:
@@ -116,15 +92,10 @@ def best_back_windows(**kwargs):
     ids = set(final_set_f(None, None, ids)[0])
 
     is_conversation = False
-    date_key = ""
-    currency_key = ""
-    articles = conversations = tweets = True
-    get_Y_f = None
-    if type == "articles":
-        date_key = "date"
-        currency_key = "currency"
-        articles = False
-        get_Y_f = news.get_Y
+    date_key = "date"
+    currency_key = "currency"
+    articles = False
+    get_Y_f = news.get_Y
 
 
     pool = ThreadPool()
