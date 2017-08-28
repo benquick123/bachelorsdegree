@@ -14,6 +14,7 @@ from sklearn.svm import LinearSVC
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+import copy
 
 from sklearn.mixture import GaussianMixture, GMM
 from sklearn.feature_selection import RFECV
@@ -934,27 +935,78 @@ def randomized_model_params_search(**kwargs):
     threshold = kwargs["threshold"]
     feature_selector = kwargs["feature_selector"]
     final_set_f = kwargs["final_set_f"]
+    train_f = kwargs["train_f"]
+    get_dates_f = kwargs["dates_f"]
+    type = kwargs["type"]
+    raw_data = kwargs["raw_data"]
+    ids = kwargs["IDs"]
     del kwargs
 
-    data_X, data_Y, _, _, _ = final_set_f(data_X, np.array(data_Y))
-    sfm = feature_selector
-    sfm.fit(data_X, data_Y)
-    data_X = sfm.transform(data_X)
+    # data_X, data_Y, _, _, _ = final_set_f(data_X, np.array(data_Y))
+    # sfm = feature_selector
+    # sfm.fit(data_X, data_Y)
+    # data_X = sfm.transform(data_X)
 
     params = dict()
     if isinstance(model, LinearSVC):
-        params = {"C": stats.randint(1, 10), "penalty": ["l1", "l2"], "dual": [True, False], "loss": ["hinge", "squared_hinge"]}
+        params = {"C": (1, 10), "penalty": ["l1", "l2"], "dual": [True, False], "loss": ["hinge", "squared_hinge"]}
     elif isinstance(model, MLPClassifier):
         params = {"solver": ["lbfgs", "sgd", "adam"], "activation": ["identity", "logistic", "tanh", "relu"], "learning_rate": ["constant", "invscaling", "adaptive"]}
     elif isinstance(model, RandomForestClassifier):
-        params = {"n_estimators": stats.randint(5, 40), "max_features": [None, "auto", stats.randint(1000, data_X.shape[1])], "min_samples_leaf": stats.randint(1, 100)}
+        params = {"n_estimators": (5, 40), "max_features": [None, "auto", (1000, data_X.shape[1])], "min_samples_leaf": (1, 100)}
     elif isinstance(model, KNeighborsClassifier):
-        params = {"n_neighbors": stats.randint(2, 20), "algorithm": ["auto", "ball_tree", "kd_tree"], "leaf_size": stats.randint(10, 40), "p": [1, 2]}
+        params = {"n_neighbors": (2, 20), "algorithm": ["auto", "ball_tree", "kd_tree"], "leaf_size": (10, 40), "p": [1, 2]}
     else:
         print("unknown classifier!")
         exit()
 
-    rs = RandomizedSearchCV(model, param_distributions=params, cv=n, n_iter=n_iter, n_jobs=-1, error_score=0, verbose=1000)
+    f = open("results/params_search_results.txt", "a")
+    f.write(type + " - " + str(model) + "\n")
+    f.close()
+
+    dates = get_dates_f(set(ids), raw_data, type)
+    i = 0
+    best_score = 0
+    best_params = dict()
+    while i < n_iter:
+        print("iteration", i)
+        j = 0
+        _params = dict()
+        scores, precisions, recalls = [], [], []
+        for param, value in params.items():
+            if isinstance(value, list):
+                _params[param] = np.random.choice(value)
+            elif isinstance(value, tuple):
+                _params[param] = np.random.randint(*value)
+
+        model.set_params(**_params)
+        model = copy.deepcopy(model)
+        while j < n:
+            print("training", j)
+            _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, dates=dates, save=False, p=False, learn=True, test=False)
+            scores.append(score)
+            precision.append(precision)
+            recall.append(recall)
+            j += 1
+
+        score = np.mean(scores)
+        precision = np.mean(precisions)
+        recall = np.mean(recalls)
+        f = open("results/params_search_results.txt", "a")
+        f.write(str(i) + " - score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", params:" + str(_params) + "\n")
+        f.close()
+
+        if score > best_score:
+            best_score = score
+            best_params = _params
+
+        i += 1
+
+    f = open("results/params_search_results.txt", "a")
+    f.write("\n\n")
+    f.close()
+
+    """rs = RandomizedSearchCV(model, param_distributions=params, cv=n, n_iter=n_iter, n_jobs=-1, error_score=0, verbose=1000)
     rs.fit(data_X, data_Y)
     results = rs.cv_results_
 
@@ -968,10 +1020,10 @@ def randomized_model_params_search(**kwargs):
             f.write(str(item[i]) + "\t")
         f.write("\n")
     f.write("\n")
-    f.close()
+    f.close()"""
 
-    print(rs.best_score_, rs.best_params_)
-    return rs.best_score_, rs.best_params_
+    print(best_score, best_params)
+    return best_score, best_params
 
 
 def feature_selection_test(**kwargs):
