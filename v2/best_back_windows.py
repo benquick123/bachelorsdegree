@@ -81,7 +81,7 @@ def best_back_windows(**kwargs):
     n_iter = 100
     back_window_range = kwargs["back_window_range"]
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
-    ids = np.array(kwargs["IDs"])
+    ids = set(kwargs["IDs"])
     raw_data = kwargs["raw_data"]
     type = kwargs["type"]
     final_set_f = kwargs["final_set_f"]
@@ -89,12 +89,10 @@ def best_back_windows(**kwargs):
     margin = kwargs["margin"]
     del kwargs
 
-    ids = set(final_set_f(None, None, ids)[0])
+    # ids = set(final_set_f(None, None, ids)[0])
 
-    is_conversation = False
     date_key = "date"
     currency_key = "currency"
-    articles = False
     get_Y_f = news.get_Y
 
 
@@ -113,12 +111,14 @@ def best_back_windows(**kwargs):
             X = sparse.hstack([X, result[0]]).tocsr()
         labels += result[1]
         back_windows.append(result[2])
+        print(X.shape, len(labels), len(back_windows))
 
     pickle.dump(X, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_X_back_windows.pickle", "wb"))
     pickle.dump(labels, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_labels_back_windows.pickle", "wb"))
     pickle.dump(back_windows, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "wb"))
 
     Y = get_Y_f(ids, window, margin)
+    X, Y, _, _, _ = final_set_f(X, Y)
     get_mutual_info(X, Y, type, window, True)
     plot(window)
 

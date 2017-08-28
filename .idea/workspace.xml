@@ -26,12 +26,11 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2425">
-              <caret line="562" column="52" lean-forward="false" selection-start-line="562" selection-start-column="52" selection-end-line="562" selection-end-column="52" />
+            <state relative-caret-position="395">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
-                <element signature="e#1052#1511#0" expanded="false" />
                 <element signature="e#1555#2141#0" expanded="false" />
                 <element signature="e#2192#2723#0" expanded="false" />
                 <element signature="e#2844#3599#0" expanded="false" />
@@ -56,8 +55,8 @@
       <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="101" column="224" lean-forward="false" selection-start-line="101" selection-start-column="224" selection-end-line="101" selection-end-column="224" />
+            <state relative-caret-position="745">
+              <caret line="120" column="36" lean-forward="false" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="36" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -676,13 +675,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00054" summary="zero division fix, articles attr importances">
-      <created>1503710435354</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1503710435354</updated>
-    </task>
     <task id="LOCAL-00055" summary="zero division fix, articles attr importances">
       <created>1503710730647</created>
       <option name="number" value="00055" />
@@ -1019,7 +1011,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503940107681</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="best back windows">
+      <created>1503940172717</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1503940172717</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1218,7 +1217,7 @@
         <state relative-caret-position="1274">
           <caret line="204" column="119" lean-forward="false" selection-start-line="204" selection-start-column="119" selection-end-line="204" selection-end-column="119" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="false" />
             <element signature="e#4990#5663#1" expanded="false" />
           </folding>
         </state>
@@ -1245,7 +1244,7 @@
         <state relative-caret-position="-1927">
           <caret line="157" column="124" lean-forward="false" selection-start-line="157" selection-start-column="124" selection-end-line="157" selection-end-column="124" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="false" />
             <element signature="e#6134#7030#1" expanded="false" />
           </folding>
         </state>
@@ -1311,12 +1310,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2425">
-          <caret line="562" column="52" lean-forward="false" selection-start-line="562" selection-start-column="52" selection-end-line="562" selection-end-column="52" />
+        <state relative-caret-position="395">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />
-            <element signature="e#1052#1511#0" expanded="false" />
             <element signature="e#1555#2141#0" expanded="false" />
             <element signature="e#2192#2723#0" expanded="false" />
             <element signature="e#2844#3599#0" expanded="false" />
@@ -1329,8 +1327,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="101" column="224" lean-forward="false" selection-start-line="101" selection-start-column="224" selection-end-line="101" selection-end-column="224" />
+        <state relative-caret-position="745">
+          <caret line="120" column="36" lean-forward="false" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="36" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
