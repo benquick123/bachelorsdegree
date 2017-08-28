@@ -26,8 +26,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="318" column="20" lean-forward="false" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
+            <state relative-caret-position="657">
+              <caret line="341" column="26" lean-forward="false" selection-start-line="341" selection-start-column="26" selection-end-line="341" selection-end-column="26" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
@@ -719,13 +719,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00044" summary="margin fix">
-      <created>1503580208596</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1503580208596</updated>
-    </task>
     <task id="LOCAL-00045" summary="margin fix">
       <created>1503580496728</created>
       <option name="number" value="00045" />
@@ -1062,7 +1055,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503879375466</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="random params search">
+      <created>1503884767232</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1503884767232</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1366,8 +1366,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="318" column="20" lean-forward="false" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
+        <state relative-caret-position="657">
+          <caret line="341" column="26" lean-forward="false" selection-start-line="341" selection-start-column="26" selection-end-line="341" selection-end-column="26" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />
