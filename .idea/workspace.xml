@@ -4,7 +4,6 @@
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/__init__.py" afterPath="$PROJECT_DIR$/v2/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/test_code.py" afterPath="$PROJECT_DIR$/v2/test_code.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,8 +26,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="562" column="41" lean-forward="false" selection-start-line="562" selection-start-column="41" selection-end-line="562" selection-end-column="41" />
+            <state relative-caret-position="385">
+              <caret line="321" column="22" lean-forward="true" selection-start-line="321" selection-start-column="22" selection-end-line="321" selection-end-column="22" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
@@ -38,6 +37,16 @@
                 <element signature="e#2844#3599#0" expanded="false" />
                 <element signature="e#3693#4478#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plotting.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1394">
+              <caret line="109" column="17" lean-forward="false" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -106,7 +115,7 @@
       <file leaf-file-name="best_params_analysis.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/other code/best_params_analysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
+            <state relative-caret-position="555">
               <caret line="69" column="66" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -721,13 +730,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00046" summary="margin fix">
-      <created>1503581026859</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1503581026859</updated>
-    </task>
     <task id="LOCAL-00047" summary="margin fix">
       <created>1503581768080</created>
       <option name="number" value="00047" />
@@ -1064,7 +1066,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503885021039</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="optimal margin">
+      <created>1503887702733</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1503887702733</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1122,7 +1131,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="alpha update: back to plotting regular distributions" />
     <MESSAGE value="back window fix 1" />
     <MESSAGE value="back window fix 2&#10;" />
     <MESSAGE value="back window fix 3&#10;" />
@@ -1147,7 +1155,8 @@
     <MESSAGE value="optimal attr num (articles) - random forest" />
     <MESSAGE value="articles model hiperparams" />
     <MESSAGE value="random params search" />
-    <option name="LAST_COMMIT_MESSAGE" value="random params search" />
+    <MESSAGE value="optimal margin" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimal margin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1216,16 +1225,6 @@
     <entry file="file://$PROJECT_DIR$/twitter/functions.py" />
     <entry file="file://$PROJECT_DIR$/wrapper.py" />
     <entry file="file://$PROJECT_DIR$/v2/results/parameter_search.py" />
-    <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="109" column="17" lean-forward="false" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/v2/results/parameter_search/articles/data_parameters_articles_200.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1255,16 +1254,6 @@
         <state relative-caret-position="130">
           <caret line="362" column="45" lean-forward="false" selection-start-line="362" selection-start-column="45" selection-end-line="362" selection-end-column="45" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v2/other code/best_params_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="69" column="66" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1366,10 +1355,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v2/other code/plotting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1394">
+          <caret line="109" column="17" lean-forward="false" selection-start-line="109" selection-start-column="17" selection-end-line="109" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/v2/other code/best_params_analysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="69" column="66" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="562" column="41" lean-forward="false" selection-start-line="562" selection-start-column="41" selection-end-line="562" selection-end-column="41" />
+        <state relative-caret-position="385">
+          <caret line="321" column="22" lean-forward="true" selection-start-line="321" selection-start-column="22" selection-end-line="321" selection-end-column="22" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />

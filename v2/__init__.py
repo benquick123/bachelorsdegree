@@ -324,7 +324,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
     threshold = 3.26
     feature_selector = SelectFromModel(LinearSVC(), threshold=str(threshold) + "*mean")
     # feature_selector = SelectPercentile(mutual_info_classif, 20)
-    model = LinearSVC()
+    model = RandomForestClassifier(n_jobs=16)
 
     if len(functions) != 0:
         arguments = dict()
