@@ -117,7 +117,7 @@ def best_back_windows(**kwargs):
     pickle.dump(labels, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_labels_back_windows.pickle", "wb"))
     pickle.dump(back_windows, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "wb"))
 
-    Y = get_Y_f(ids, window, margin)
+    Y = np.array(get_Y_f(ids, window, margin))
     X, Y, _, _, _ = final_set_f(X, Y)
     get_mutual_info(X, Y, type, window, True)
     plot(window)

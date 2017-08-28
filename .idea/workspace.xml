@@ -26,7 +26,7 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
+            <state relative-caret-position="344">
               <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
@@ -55,8 +55,8 @@
       <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="745">
-              <caret line="120" column="36" lean-forward="false" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="36" />
+            <state relative-caret-position="728">
+              <caret line="119" column="46" lean-forward="false" selection-start-line="119" selection-start-column="46" selection-end-line="119" selection-end-column="46" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -675,13 +675,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00055" summary="zero division fix, articles attr importances">
-      <created>1503710730647</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1503710730647</updated>
-    </task>
     <task id="LOCAL-00056" summary="dates fix">
       <created>1503711110989</created>
       <option name="number" value="00056" />
@@ -1018,7 +1011,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503940172717</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="best back windows">
+      <created>1503942332499</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1503942332499</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1310,7 +1310,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
+        <state relative-caret-position="344">
           <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
@@ -1327,8 +1327,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="120" column="36" lean-forward="false" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="36" />
+        <state relative-caret-position="728">
+          <caret line="119" column="46" lean-forward="false" selection-start-line="119" selection-start-column="46" selection-end-line="119" selection-end-column="46" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
