@@ -110,7 +110,7 @@ def best_back_windows(**kwargs):
         if X is None:
             X = sparse.csr_matrix(result[0])
         else:
-            X = sparse.vstack([X, result[0]]).tocsr()
+            X = sparse.hstack([X, result[0]]).tocsr()
         labels += result[1]
         back_windows.append(result[2])
 
