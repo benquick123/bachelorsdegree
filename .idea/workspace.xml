@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="19d6a003-b066-473d-89da-1a17b34e9188" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/__init__.py" afterPath="$PROJECT_DIR$/v2/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v2/test_code.py" afterPath="$PROJECT_DIR$/v2/test_code.py" />
     </list>
     <ignored path="Proletarian 1.0.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,10 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
+            <state relative-caret-position="-142">
               <caret line="155" column="27" lean-forward="false" selection-start-line="155" selection-start-column="27" selection-end-line="155" selection-end-column="27" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
@@ -134,11 +134,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_code.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_code.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/test_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="695">
-              <caret line="924" column="34" lean-forward="false" selection-start-line="924" selection-start-column="4" selection-end-line="924" selection-end-column="34" />
+            <state relative-caret-position="693">
+              <caret line="979" column="113" lean-forward="false" selection-start-line="979" selection-start-column="113" selection-end-line="979" selection-end-column="113" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#959#3413#0" expanded="false" />
@@ -149,9 +149,8 @@
                 <element signature="e#28014#32402#0" expanded="false" />
                 <element signature="e#32439#36388#0" expanded="false" />
                 <element signature="e#36546#44377#0" expanded="false" />
-                <element signature="e#44430#48265#0" expanded="false" />
-                <element signature="e#47658#48194#1" expanded="false" />
-                <element signature="e#48310#49485#0" expanded="false" />
+                <element signature="e#47828#48364#1" expanded="false" />
+                <element signature="e#48480#49655#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -256,8 +255,8 @@
         <option value="$PROJECT_DIR$/v2/news.py" />
         <option value="$PROJECT_DIR$/v2/trollbox.py" />
         <option value="$PROJECT_DIR$/v2/twitter.py" />
-        <option value="$PROJECT_DIR$/v2/test_code.py" />
         <option value="$PROJECT_DIR$/v2/__init__.py" />
+        <option value="$PROJECT_DIR$/v2/test_code.py" />
       </list>
     </option>
   </component>
@@ -730,13 +729,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00049" summary="article matrix creation">
-      <created>1503626327627</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1503626327627</updated>
-    </task>
     <task id="LOCAL-00050" summary="tweet matrix creation">
       <created>1503662556231</created>
       <option name="number" value="00050" />
@@ -1073,7 +1065,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503901112902</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="randomized model params search">
+      <created>1503901182915</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1503901182915</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1352,10 +1351,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v2/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-142">
+          <caret line="155" column="27" lean-forward="false" selection-start-line="155" selection-start-column="27" selection-end-line="155" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#885#992#0" expanded="false" />
+            <element signature="e#1052#1511#0" expanded="false" />
+            <element signature="e#1555#2141#0" expanded="false" />
+            <element signature="e#2192#2723#0" expanded="false" />
+            <element signature="e#2844#3599#0" expanded="false" />
+            <element signature="e#3693#4478#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v2/test_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="695">
-          <caret line="924" column="34" lean-forward="false" selection-start-line="924" selection-start-column="4" selection-end-line="924" selection-end-column="34" />
+        <state relative-caret-position="693">
+          <caret line="979" column="113" lean-forward="false" selection-start-line="979" selection-start-column="113" selection-end-line="979" selection-end-column="113" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#959#3413#0" expanded="false" />
@@ -1366,25 +1381,8 @@
             <element signature="e#28014#32402#0" expanded="false" />
             <element signature="e#32439#36388#0" expanded="false" />
             <element signature="e#36546#44377#0" expanded="false" />
-            <element signature="e#44430#48265#0" expanded="false" />
-            <element signature="e#47658#48194#1" expanded="false" />
-            <element signature="e#48310#49485#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/v2/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="155" column="27" lean-forward="false" selection-start-line="155" selection-start-column="27" selection-end-line="155" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-            <element signature="e#885#992#0" expanded="false" />
-            <element signature="e#1052#1511#0" expanded="false" />
-            <element signature="e#1555#2141#0" expanded="false" />
-            <element signature="e#2192#2723#0" expanded="false" />
-            <element signature="e#2844#3599#0" expanded="false" />
-            <element signature="e#3693#4478#0" expanded="false" />
+            <element signature="e#47828#48364#1" expanded="false" />
+            <element signature="e#48480#49655#0" expanded="false" />
           </folding>
         </state>
       </provider>

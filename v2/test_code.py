@@ -976,6 +976,8 @@ def randomized_model_params_search(**kwargs):
         for param, value in params.items():
             if isinstance(value, list):
                 _params[param] = np.random.choice(value)
+                if isinstance(_params[param], tuple):
+                    _params[param] = _params[param][0] + np.random.rand() * (_params[param][1] - _params[param][0])
             elif isinstance(value, tuple):
                 _params[param] = np.random.randint(*value)
 
