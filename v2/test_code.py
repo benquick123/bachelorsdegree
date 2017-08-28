@@ -983,7 +983,7 @@ def randomized_model_params_search(**kwargs):
         model = copy.deepcopy(model)
         while j < n:
             print("training", j)
-            _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, dates=dates, save=False, p=False, learn=True, test=False)
+            _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, p=False, learn=True, test=False)
             scores.append(score)
             precision.append(precision)
             recall.append(recall)
