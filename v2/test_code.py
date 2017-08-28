@@ -986,8 +986,8 @@ def randomized_model_params_search(**kwargs):
                 print("training", j)
                 _, score, precision, recall, _, _ = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, p=False, learn=True, test=False)
                 scores.append(score)
-                precision.append(precision)
-                recall.append(recall)
+                precisions.append(precision)
+                recalls.append(recall)
                 j += 1
         except ValueError:
             continue
