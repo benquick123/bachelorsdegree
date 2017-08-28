@@ -26,8 +26,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-57">
-              <caret line="196" column="49" lean-forward="false" selection-start-line="196" selection-start-column="49" selection-end-line="196" selection-end-column="49" />
+            <state relative-caret-position="62">
+              <caret line="155" column="27" lean-forward="false" selection-start-line="155" selection-start-column="27" selection-end-line="155" selection-end-column="27" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#885#992#0" expanded="false" />
@@ -730,13 +730,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00048" summary="margin fix">
-      <created>1503582093643</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1503582093643</updated>
-    </task>
     <task id="LOCAL-00049" summary="article matrix creation">
       <created>1503626327627</created>
       <option name="number" value="00049" />
@@ -1073,7 +1066,14 @@
       <option name="project" value="LOCAL" />
       <updated>1503900938075</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="randomized model params search">
+      <created>1503901112902</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1503901112902</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1131,7 +1131,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="back window fix 1" />
     <MESSAGE value="back window fix 2&#10;" />
     <MESSAGE value="back window fix 3&#10;" />
     <MESSAGE value="margin fix" />
@@ -1156,7 +1155,8 @@
     <MESSAGE value="articles model hiperparams" />
     <MESSAGE value="random params search" />
     <MESSAGE value="optimal margin" />
-    <option name="LAST_COMMIT_MESSAGE" value="optimal margin" />
+    <MESSAGE value="randomized model params search" />
+    <option name="LAST_COMMIT_MESSAGE" value="randomized model params search" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1375,8 +1375,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="196" column="49" lean-forward="false" selection-start-line="196" selection-start-column="49" selection-end-line="196" selection-end-column="49" />
+        <state relative-caret-position="62">
+          <caret line="155" column="27" lean-forward="false" selection-start-line="155" selection-start-column="27" selection-end-line="155" selection-end-column="27" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#885#992#0" expanded="false" />

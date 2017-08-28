@@ -153,7 +153,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             testing_indexes = np.where(testing_indexes >= 0, testing_indexes+1, -1)
         print(Counter(testing_indexes))
 
-        pool = ThreadPool()
+        pool = ThreadPool(1)
         results = pool.starmap(train_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
