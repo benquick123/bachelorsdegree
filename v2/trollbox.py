@@ -155,7 +155,7 @@ def create_matrix(conversations, window, margin, p=False):
         conversation["tfidf"] = conversation_tfidf
 
     pool = ThreadPool()
-    results = pool.starmap(create_matrix_line_multi, zip(repeat(p), repeat(client), range(len(conversations)), repeat(conversations), repeat(weights), repeat(window), repeat(margin)))
+    results = pool.starmap(create_matrix_line_multi, zip(repeat(p), repeat(client), range(len(conversations)), conversations, repeat(weights), repeat(window), repeat(margin)))
     pool.close()
     pool.join()
 
