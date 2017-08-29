@@ -5,6 +5,7 @@ import common as common
 import time
 from scipy import sparse
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 from collections import Counter
 from multiprocessing.dummy import Pool as ThreadPool
 from sklearn.feature_selection import mutual_info_classif
@@ -77,7 +78,6 @@ def plot(window, type="articles"):
     mi = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb"))
     back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
     back_windows = np.array(back_windows)
-    print(back_windows.tolist())
     to_plot = list(zip(back_windows, mi))
 
     back_windows = [back_window for back_window, _ in to_plot]
@@ -89,25 +89,51 @@ def plot(window, type="articles"):
 
 def reverse_matrix(X):
     _X = None
-    X = X.todense()
     print(X.shape)
-    for row in range(X.shape[0]):
-        new_column = []
-        for column in range(X.shape[1]):
-            new_column.append(X[row, column])
-
-        print(new_column)
-        if _X is None:
-            _X = sparse.csr_matrix(new_column)
-        else:
-            _X = sparse.vstack([_X, sparse.csr_matrix(new_column)]).tocsr()
-
-    print(_X.shape)
-    return _X
+    X = X.toarray().transpose()
+    return sparse.csr_matrix(X)
 
 
 def k_means(X):
-    pass
+    back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_back_windows.pickle", "rb"))
+    back_windows = np.array(back_windows)
+    
+    X = X.toarray()
+    select = np.array(list(range(0, 600, 6)))
+    for n_clusters in range(2, 3):
+        silhouettes = []
+        all_windows = []
+        for i in range(6):
+            # print(i)
+            _X = X[select + i, :]
+            kmeans = KMeans(n_clusters=n_clusters, n_jobs=-1, n_init=20)
+            labels = kmeans.fit_predict(_X)
+            clusters = Counter(labels).keys()
+            windows = []
+            for cluster in clusters:
+                selection = back_windows[np.where(labels == cluster)]
+                windows.append((np.mean(selection), np.std(selection)))
+        
+            windows.sort(key=lambda x: x[0])
+            # for window in windows:
+            #     print(window)
+            silhouette = silhouette_score(_X, labels)
+            silhouettes.append(silhouette)
+            all_windows.append(windows)
+            # print("silhouette score", silhouette)
+        print(np.mean(all_windows, axis=0))
+        print("NCLUSTERS", n_clusters, "SILHOUETTE SCORE", np.mean(silhouettes))
+        
+    opt_windows = np.mean(all_windows, axis=0)
+    windows = []
+    indexes = []
+    for i in range(len(opt_windows)):
+        window = int(300 * round(opt_windows[i][0] / 300))
+        windows.append(window)
+        indexes.append(back_windows.tolist().index(window))
+    print(windows, indexes)
+        
+    
 
 
 def best_back_windows(**kwargs):
@@ -188,4 +214,5 @@ def create_k_means(**kwargs):
     X, Y, _, _, _ = final_set_f(X, Y)
 
     X = reverse_matrix(X)
+    k_means(X)
 
