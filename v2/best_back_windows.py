@@ -78,11 +78,11 @@ def plot(window, type="articles"):
     back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
     back_windows = np.array(back_windows)
     to_plot = list(zip(back_windows, mi))
-    to_plot.sort(key=lambda x: x[0])
+    # to_plot.sort(key=lambda x: x[0])
     back_windows = [back_window for back_window, _ in to_plot]
     mi = [_mi for _, _mi in to_plot]
 
-    plt.plot(back_windows, mi, "-")
+    plt.plot(back_windows, mi)
     plt.savefig("figures/mutual_info_plot_" + str(window) + ".png")
 
 
