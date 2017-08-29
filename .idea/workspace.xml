@@ -55,8 +55,8 @@
       <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="677">
-              <caret line="142" column="88" lean-forward="false" selection-start-line="142" selection-start-column="88" selection-end-line="142" selection-end-column="88" />
+            <state relative-caret-position="422">
+              <caret line="79" column="16" lean-forward="false" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -675,13 +675,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00058" summary="save matrix X wtf">
-      <created>1503711909384</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1503711909384</updated>
-    </task>
     <task id="LOCAL-00059" summary="fix">
       <created>1503713539243</created>
       <option name="number" value="00059" />
@@ -1018,7 +1011,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504008460863</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="best back windows">
+      <created>1504008768160</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1504008768160</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1327,8 +1327,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="142" column="88" lean-forward="false" selection-start-line="142" selection-start-column="88" selection-end-line="142" selection-end-column="88" />
+        <state relative-caret-position="422">
+          <caret line="79" column="16" lean-forward="false" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
