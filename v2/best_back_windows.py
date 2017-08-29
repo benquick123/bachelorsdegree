@@ -132,6 +132,7 @@ def k_means(X):
         windows.append(window)
         indexes.append(back_windows.tolist().index(window))
     print(windows, indexes)
+    return indexes
         
     
 
@@ -214,5 +215,5 @@ def create_k_means(**kwargs):
     X, Y, _, _, _ = final_set_f(X, Y)
 
     X = reverse_matrix(X)
-    k_means(X)
+    return k_means(X)
 
