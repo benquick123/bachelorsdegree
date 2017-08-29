@@ -96,6 +96,7 @@ def reverse_matrix(X):
         for column in row:
             new_column.append(column)
 
+        print(new_column)
         if _X is None:
             _X = sparse.csr_matrix(new_column)
         else:
