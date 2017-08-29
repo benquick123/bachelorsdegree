@@ -91,10 +91,10 @@ def reverse_matrix(X):
     _X = None
     X = X.todense()
     print(X.shape)
-    for row in X:
+    for row in range(X.shape[0]):
         new_column = []
-        for column in row:
-            new_column.append(column)
+        for column in range(X.shape[1]):
+            new_column.append(X[row, column])
 
         print(new_column)
         if _X is None:

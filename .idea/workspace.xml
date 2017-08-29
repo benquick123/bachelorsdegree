@@ -55,8 +55,8 @@
       <file leaf-file-name="best_back_windows.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="98" column="24" lean-forward="false" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
+            <state relative-caret-position="456">
+              <caret line="96" column="43" lean-forward="false" selection-start-line="96" selection-start-column="43" selection-end-line="96" selection-end-column="43" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -675,13 +675,6 @@
       <option name="presentableId" value="Default" />
       <updated>1474907163158</updated>
     </task>
-    <task id="LOCAL-00069" summary="technical data fix">
-      <created>1503776135571</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1503776135572</updated>
-    </task>
     <task id="LOCAL-00070" summary="technical data fix">
       <created>1503776386709</created>
       <option name="number" value="00070" />
@@ -1018,7 +1011,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504022305835</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="k means">
+      <created>1504022432580</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1504022432580</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1076,7 +1076,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="back window fix 3&#10;" />
     <MESSAGE value="margin fix" />
     <MESSAGE value="tweet matrix creation" />
     <MESSAGE value="matrix margin" />
@@ -1101,7 +1100,8 @@
     <MESSAGE value="optimal margin" />
     <MESSAGE value="randomized model params search" />
     <MESSAGE value="best back windows" />
-    <option name="LAST_COMMIT_MESSAGE" value="best back windows" />
+    <MESSAGE value="k means" />
+    <option name="LAST_COMMIT_MESSAGE" value="k means" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1327,8 +1327,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/v2/best_back_windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="98" column="24" lean-forward="false" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
+        <state relative-caret-position="456">
+          <caret line="96" column="43" lean-forward="false" selection-start-line="96" selection-start-column="43" selection-end-line="96" selection-end-column="43" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
