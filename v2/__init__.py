@@ -560,7 +560,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [best_back_windows.best_back_windows]
+    functions = [best_back_windows.create_mutual_info]
 
     window = 6600
     margin = 0.00967742793041

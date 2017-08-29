@@ -63,6 +63,16 @@ def get_mutual_info(X, Y, type, window, save):
         pickle.dump(mi, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "wb"))
 
 
+def load_mutual_info(X, Y, window, type="articles"):
+    try:
+        pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb"))
+    except FileNotFoundError:
+        mi = mutual_info_classif(X, Y)
+        mi = np.array(mi).reshape((-1, 6))
+        mi = mi.mean(axis=1)
+        pickle.dump(mi, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "wb"))
+
+
 def plot(window, type="articles"):
     mi = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb"))
     back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
@@ -95,7 +105,6 @@ def best_back_windows(**kwargs):
     currency_key = "currency"
     get_Y_f = news.get_Y
 
-
     pool = ThreadPool()
     results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(n_iter), repeat(back_window_range), repeat(raw_data), repeat(ids), repeat(type), repeat(date_key), repeat(currency_key), repeat(client)))
     pool.close()
@@ -121,4 +130,22 @@ def best_back_windows(**kwargs):
     X, Y, _, _, _ = final_set_f(X, Y)
     get_mutual_info(X, Y, type, window, True)
     plot(window)
+
+
+def create_mutual_info(**kwargs):
+    type = "articles"
+    final_set_f = kwargs["final_set_f"]
+    get_Y_f = news.get_Y
+    window = kwargs["window"]
+    margin = kwargs["margin"]
+    ids = set(kwargs["IDs"])
+
+    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
+    Y = np.array(get_Y_f(ids, window, margin))
+    X, Y, _, _, _ = final_set_f(X, Y)
+
+    load_mutual_info(X, Y, window)
+    plot(window)
+
+
 
