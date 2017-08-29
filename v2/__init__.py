@@ -334,7 +334,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
         arguments["window_range"] = [300, 6*3600]
         arguments["back_window_short"] = [300, 3600]
         arguments["back_window_medium"] = [3900, 6*3600]
-        arguments["back_window_long"] = [6*3600+300, 12*3600]
+        arguments["back_window_long"] = [6*3600+300, 48*3600]
         arguments["back_window_range"] = [300, 12*3600]
         arguments["back_window_ratio"] = [0.5, 5]
         arguments["train_f"] = train
@@ -562,7 +562,7 @@ def __init__():
     functions = [parameter_search.randomized_data_params_search]
     functions = [best_back_windows.create_mutual_info]
 
-    window = 9000
+    window = 21000
     margin = 0.00967742793041
     train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()
