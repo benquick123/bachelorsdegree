@@ -134,6 +134,7 @@ def best_back_windows(**kwargs):
 
 
 def create_mutual_info(**kwargs):
+    print("MUTUAL INFORMATION")
     type = "articles"
     final_set_f = kwargs["final_set_f"]
     get_Y_f = news.get_Y
