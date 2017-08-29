@@ -328,7 +328,7 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
 
     if len(functions) != 0:
         arguments = dict()
-        arguments["n_iter"] = 50
+        arguments["n_iter"] = 200
         arguments["threshold_range"] = [0.0, 1.0]
         arguments["margin_range"] = [0.0, 0.06]
         arguments["window_range"] = [300, 6*3600]
@@ -560,7 +560,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [best_back_windows.create_k_means]
+    # functions = [best_back_windows.create_k_means]
 
     window = 21000
     margin = 0.00967742793041

@@ -16,6 +16,7 @@ import pymongo
 import time
 from multiprocessing.dummy import Pool as ThreadPool
 from itertools import repeat
+import pickle
 
 import matplotlib.pyplot as plt
 
@@ -24,6 +25,7 @@ import trollbox as trollbox
 import twitter as twitter
 import common as common
 import pickle_loading_saving as pls
+import best_back_windows as bbw
 
 
 def price_distribution(plot=True, **kwargs):
@@ -96,7 +98,81 @@ def price_distribution(plot=True, **kwargs):
     return threshold1
 
 
-def parallelized_matrix_creation(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type, articles, conversations, tweets):
+def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw_data, tfidf, vocabulary, ids, dates, data_X, get_Y_f, train_f, feature_selector, model):
+    window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
+    kwargs["window"] = window
+    margin = price_distribution(plot=False, **kwargs)
+    back_window_sizes = bbw.create_k_means(kwargs)
+    back_window_other = 300 * round((back_window_range[0] + np.random.rand() * (back_window_range[1] - back_window_range[0])) / 300)
+
+    curr_tfidf_weight = 1
+    _tfidf = None
+    _topic_distributions = None
+    _ns = None
+
+    print(window, margin, back_window_sizes, back_window_other)
+    for i, text in enumerate(raw_data):
+        text["tfidf"] = tfidf[i]
+        if text["_id"] in ids:
+            print("iteration:", i)
+            _, average_tfidf, _n, average_topics = common.get_averages_from_data(raw_data, text["date"], back_window_other, text["currency"], i, threshold=0.0, type="article")
+
+            average_tfidf = text["tfidf"] * (curr_tfidf_weight / (_n + 1)) + (average_tfidf * (_n / (_n + 1))).multiply(text["tfidf"].power(0))
+            _tfidf = sparse.csr_matrix(average_tfidf) if _tfidf is None else sparse.vstack([_tfidf, average_tfidf])
+
+            average_topics = sparse.csr_matrix(list(text["topics"]) + list(average_topics))
+            _topic_distributions = sparse.csr_matrix(average_topics) if _topic_distributions is None else sparse.vstack([_topic_distributions, average_topics])
+
+            _ns = sparse.csr_matrix([1 / _n]) if _ns is None else sparse.vstack([_ns, sparse.csr_matrix([1 / _n])])
+
+    labels = ["title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
+    print(data_X.shape)
+    data_X = sparse.csr_matrix(data_X)
+
+    labels = ["w"] + labels + vocabulary
+    print(_ns.shape, data_X.shape, _tfidf.shape)
+    data_X = sparse.hstack([_ns, data_X, _tfidf]).tocsr()
+
+    labels = labels + ["topic_" + str(i) for i in range(len(raw_data[0]["topics"]))] + ["average_topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
+    print(_topic_distributions.shape)
+    data_X = sparse.hstack([data_X, _topic_distributions])
+
+    l = np.array(pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_labels_back_windows.pickle", "rb")))
+    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_X_back_windows.pickle", "rb"))
+    for back_window in back_window_sizes:
+        indexes = np.zeros(len(l), dtype="bool")
+        for i in range(len(indexes)):
+            if int(l[i].split("_")[1]) == back_window:
+                indexes[i] = True
+
+        history_attrs = X[indexes, :]
+        labels = labels + l[indexes].tolist()
+        print(history_attrs.shape)
+        data_X = sparse.hstack([data_X, history_attrs])
+
+    print(labels)
+
+    data_Y = get_Y_f(ids, margin, window)
+    _, score, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, "articles", dates, save=False, p=False, learn=True, test=False)
+    result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
+    result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_window_sizes) + ", back_other: " + str(back_window_other) + "\n\n"
+
+
+    """# general attr
+        labels = ["w", "title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
+        # averages
+        labels += ["distribution_a_1200", "polarity_a_1200", "sentiment_a_1200"] + ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"] + ["price_1200", "volume_1200", "price_all_1200"]
+        labels += ["distribution_a_11100", "polarity_a_11100", "sentiment_a_11100"] + ["distribution_t_11100", "polarity_t_11100", "sentiment_t_11100"] + ["distribution_c_11100", "polarity_c_11100", "sentiment_c_11100"] + ["price_11100", "volume_11100", "price_all_11100"]
+        labels += ["distribution_a_22800", "polarity_a_22800", "sentiment_a_22800"] + ["distribution_t_22800", "polarity_t_22800", "sentiment_t_22800"] + ["distribution_c_22800", "polarity_c_22800", "sentiment_c_22800"] + ["price_22800", "volume_22800", "volume_all_22800"]
+        # tfidf
+        labels += vocabulary
+        # topics
+        labels += ["topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
+        labels += ["average_topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
+        pls.save_labels(labels, type)"""
+
+
+def parallelized_matrix_creation_old(k, window_range, margin_range, back_window_short_range, back_window_medium_range, back_window_long_range, back_window_range, type, ids, raw_data, data_X, train_f, get_dates_f, feature_selector, model, client, get_Y_f, date_key, currency_key, is_conversation, n_features, tfidf, kwargs, data_per_type, dates_per_type, articles, conversations, tweets):
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     # window = 6600
     kwargs["window"] = window
@@ -175,7 +251,7 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
     if data_X.shape[1] > n_features:
         data_X = data_X[:, :n_features]
 
-    data_X = sparse.hstack([data_X, _other_data, _tfidf])
+    data_X = sparse.hstack([data_X, _other_data, _tfidf, _topic_distributions])
     if _topic_distributions is not None:
         data_X = sparse.hstack([data_X, _topic_distributions])
     data_X = data_X.tocsr()
@@ -214,80 +290,35 @@ def parallelized_matrix_creation(k, window_range, margin_range, back_window_shor
 def randomized_data_params_search(**kwargs):
     print("RANDOMIZED DATA PARAMS")
     n_iter = kwargs["n_iter"]
-    back_window_short_range = kwargs["back_window_short"]
-    back_window_long_range = kwargs["back_window_long"]
-    back_window_medium_range = kwargs["back_window_medium"]
     back_window_range = kwargs["back_window_range"]
     window_range = kwargs["window_range"]
-    margin_range = kwargs["margin_range"]
-    type = kwargs["type"]
     data_X = kwargs["data_X"]
     labels = kwargs["labels"]
     train_f = kwargs["train_f"]
     get_dates_f = kwargs["dates_f"]
     feature_selector = kwargs["feature_selector"]
     model = kwargs["model"]
-    client = pymongo.MongoClient(host="127.0.0.1", port=27017)
 
-    article_data = pls.load_data_pickle("articles")
-    conversation_data = pls.load_data_pickle("conversations", k=20000)
-    tweet_data = pls.load_data_pickle("tweets", k=20000)
-    article_ids = pls.load_matrix_IDs("articles")
-    conversation_ids = pls.load_matrix_IDs("conversations")
-    tweet_ids = pls.load_matrix_IDs("tweets")
-
-    article_dates = get_dates_f(article_ids, article_data, "articles")
-    conversation_dates = get_dates_f(conversation_ids, conversation_data, "conversations")
-    tweet_dates = get_dates_f(tweet_ids, tweet_data, "tweets")
-
-    get_Y_f = None
-    tfidf_key = ""
-    date_key = ""
-    currency_key = ""
     is_conversation = False
-    raw_data = None
-    ids = None
-    articles = True
-    conversations = True
-    tweets = True
 
-    if type == "articles":
-        get_Y_f = news.get_Y
-        tfidf_key = "reduced_text"
-        date_key = "date"
-        currency_key = "currency"
-        raw_data = article_data
-        ids = article_ids
-        articles = False
-    elif type == "conversations":
-        get_Y_f = trollbox.get_Y
-        tfidf_key = "clean_text"
-        date_key = "conversation_end"
-        currency_key = "coin_mentions"
-        is_conversation = True
-        raw_data = conversation_data
-        ids = conversation_ids
-        conversations = False
-    elif type == "tweets":
-        get_Y_f = twitter.get_Y
-        tfidf_key = "clean_text"
-        date_key = "posted_time"
-        currency_key = "crypto_currency"
-        raw_data = tweet_data
-        ids = tweet_ids
-        tweets = False
+    get_Y_f = news.get_Y
+    tfidf_key = "reduced_text"
+    raw_data = pls.load_data_pickle("articles")
+    ids = np.array(pls.load_matrix_IDs("articles"))
+    dates = get_dates_f(ids, raw_data, "articles")
 
     tfidf, vocabulary = common.calc_tf_idf(raw_data, 0.0, 1.0, tfidf_key, is_conversation)
     to_remove_mask = np.zeros(data_X.shape[1], dtype="bool")
     for i, label in enumerate(labels):
-        if label.find(".") != -1 or label.find("polarity_") != -1 or label.find("sentiment_") != -1 or label.find("distribution_") != -1 or label.find("topic_") != -1 or label.find("price_") != -1 or label.find("volume_") != -1:
+        if label == "w" or label.find(".") != -1 or label.find("polarity_") != -1 or label.find("sentiment_") != -1 or label.find("distribution_") != -1 or label.find("topic_") != -1 or label.find("price_") != -1 or label.find("volume_") != -1:
             to_remove_mask[i] = True
 
     data_X = data_X[:, ~to_remove_mask]
-    n_features = data_X.shape[1]
 
     pool = ThreadPool(1)
-    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
+    # k, kwargs, window_range, back_window_range, raw_data, tfidf, vocabulary, ids, dates, data_X, get_Y_f, train_f, feature_selector, model
+    results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(kwargs), repeat(window_range), repeat(back_window_range), repeat(raw_data), repeat(tfidf), repeat(vocabulary), repeat(ids), repeat(dates), repeat(data_X), repeat(get_Y_f), repeat(train_f), repeat(feature_selector), repeat(model)))
+    # results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
     pool.close()
     pool.join()
 

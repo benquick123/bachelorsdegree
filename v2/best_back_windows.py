@@ -132,9 +132,7 @@ def k_means(X):
         windows.append(window)
         indexes.append(back_windows.tolist().index(window))
     print(windows, indexes)
-    return indexes
-        
-    
+    return windows
 
 
 def best_back_windows(**kwargs):
