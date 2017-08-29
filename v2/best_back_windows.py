@@ -140,7 +140,7 @@ def create_mutual_info(**kwargs):
     margin = kwargs["margin"]
     ids = set(kwargs["IDs"])
 
-    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
+    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_X_back_windows.pickle", "rb"))
     Y = np.array(get_Y_f(ids, window, margin))
     X, Y, _, _, _ = final_set_f(X, Y)
 
