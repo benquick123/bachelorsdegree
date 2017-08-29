@@ -87,6 +87,28 @@ def plot(window, type="articles"):
     plt.savefig("figures/mutual_info_plot_" + str(window) + ".png")
 
 
+def reverse_matrix(X):
+    _X = None
+    X = X.todense()
+    print(X.shape)
+    for row in X:
+        new_column = []
+        for column in row:
+            new_column.append(column)
+
+        if _X is None:
+            _X = sparse.csr_matrix(new_column)
+        else:
+            _X = sparse.vstack([_X, sparse.csr_matrix(new_column)]).tocsr()
+
+    print(_X.shape)
+    return _X
+
+
+def k_means(X):
+    pass
+
+
 def best_back_windows(**kwargs):
     print("FIND BEST BACK WINDOWS")
     n_iter = kwargs["n_iter"]
@@ -151,4 +173,18 @@ def create_mutual_info(**kwargs):
     plot(window)
 
 
+def create_k_means(**kwargs):
+    print("KMEANS")
+    type = "articles"
+    final_set_f = kwargs["final_set_f"]
+    get_Y_f = news.get_Y
+    window = kwargs["window"]
+    margin = kwargs["margin"]
+    ids = set(kwargs["IDs"])
+
+    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_X_back_windows.pickle", "rb"))
+    Y = np.array(get_Y_f(ids, window, margin))
+    X, Y, _, _, _ = final_set_f(X, Y)
+
+    X = reverse_matrix(X)
 
