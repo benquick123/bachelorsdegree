@@ -562,7 +562,7 @@ def __init__():
     functions = [parameter_search.randomized_data_params_search]
     functions = [best_back_windows.create_mutual_info]
 
-    window = 6600
+    window = 9000
     margin = 0.00967742793041
     train_articles(window, margin, p=True, data=True, matrix=True, functions=functions)
     exit()

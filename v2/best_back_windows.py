@@ -18,8 +18,8 @@ import twitter as twitter
 
 
 def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, type, date_key, currency_key, client):
-    back_window = 300 * round((back_window_range[0] + (k + 1 / n_iter) * (back_window_range[1] - back_window_range[0])) / 300)
-
+    back_window = 300 * round((back_window_range[0] + ((k + 1) / n_iter) * (back_window_range[1] - back_window_range[0])) / 300)
+    
     print("THREAD", k)
     matrix = None
 
@@ -77,12 +77,13 @@ def plot(window, type="articles"):
     mi = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb"))
     back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
     back_windows = np.array(back_windows)
+    print(back_windows.tolist())
     to_plot = list(zip(back_windows, mi))
 
-    back_windows = [back_window / 300 for back_window, _ in to_plot]
+    back_windows = [back_window for back_window, _ in to_plot]
     mi = [_mi for _, _mi in to_plot]
 
-    plt.plot(back_windows[10:], mi[10:])
+    plt.plot(back_windows, mi)
     plt.savefig("figures/mutual_info_plot_" + str(window) + ".png")
 
 

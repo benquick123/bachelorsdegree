@@ -428,3 +428,4 @@ articles - RandomForestClassifier(bootstrap=True, class_weight=None, criterion='
 29 - score: 0.411635220126, precision: 0.428491573011, recall: 0.411635220126, params:{'n_estimators': 19, 'min_samples_leaf': 52, 'max_features': 'auto'}
 30 - score: 0.451572327044, precision: 0.499097473835, recall: 0.451572327044, params:{'n_estimators': 25, 'min_samples_leaf': 27, 'max_features': None}
 31 - score: 0.450314465409, precision: 0.497202461396, recall: 0.450314465409, params:{'n_estimators': 29, 'min_samples_leaf': 13, 'max_features': None}
+32 - score: 0.450943396226, precision: 0.493304529956, recall: 0.450943396226, params:{'n_estimators': 27, 'min_samples_leaf': 8, 'max_features': None}
