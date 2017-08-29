@@ -82,7 +82,7 @@ def plot(window, type="articles"):
     back_windows = [back_window / 300 for back_window, _ in to_plot]
     mi = [_mi for _, _mi in to_plot]
 
-    plt.plot(back_windows[9:], mi[9:])
+    plt.plot(back_windows[10:], mi[10:])
     plt.savefig("figures/mutual_info_plot_" + str(window) + ".png")
 
 
