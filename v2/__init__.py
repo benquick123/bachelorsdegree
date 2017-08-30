@@ -569,7 +569,7 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    functions = [best_back_windows.create_mutual_info]
+    # functions = [best_back_windows.create_mutual_info]
     # functions = [test_code.optimal_margin]
 
     window = 21000

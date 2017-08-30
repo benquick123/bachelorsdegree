@@ -102,8 +102,14 @@ def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     kwargs["window"] = window
     margin = price_distribution(plot=False, **kwargs)
-    back_window_sizes = bbw.create_k_means(**kwargs)
+    kwargs["margin"] = margin
+    back_window_sizes = bbw.create_mutual_info(**kwargs)
     back_window_other = 300 * round((back_window_range[0] + np.random.rand() * (back_window_range[1] - back_window_range[0])) / 300)
+    
+    margin = 0.0145979514
+    window = 18900
+    back_window_other = 159900
+    back_window_sizes = [59100, 71700, 74700, 75600]
 
     curr_tfidf_weight = 1
     _tfidf = None
@@ -136,9 +142,11 @@ def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw
     labels = labels + ["topic_" + str(i) for i in range(len(raw_data[0]["topics"]))] + ["average_topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
     print(_topic_distributions.shape)
     data_X = sparse.hstack([data_X, _topic_distributions])
-
-    l = np.array(pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_labels_back_windows.pickle", "rb")))
-    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_X_back_windows.pickle", "rb"))
+    
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_labels_back_windows.pickle", "rb")
+    l = np.array(pickle.load(f))
+    f.close()
+    X = kwargs["all_history_data"]
     for back_window in back_window_sizes:
         indexes = np.zeros(len(l), dtype="bool")
         for i in range(len(indexes)):
@@ -315,6 +323,14 @@ def randomized_data_params_search(**kwargs):
     raw_data = pls.load_data_pickle("articles")
     ids = np.array(pls.load_matrix_IDs("articles"))
     dates = get_dates_f(ids, raw_data, "articles")
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_X_back_windows.pickle", "rb")
+    all_history_data = pickle.load(f)
+    f.close()
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_back_windows.pickle", "rb")
+    all_back_windows = pickle.load(f)
+    f.close()
+    kwargs["all_history_data"] = all_history_data
+    kwargs["all_back_windows"] = all_back_windows
 
     tfidf, vocabulary = common.calc_tf_idf(raw_data, 0.0, 1.0, tfidf_key, is_conversation)
     to_remove_mask = np.zeros(data_X.shape[1], dtype="bool")
@@ -323,7 +339,7 @@ def randomized_data_params_search(**kwargs):
             to_remove_mask[i] = True
 
     data_X = data_X[:, ~to_remove_mask]
-
+    
     n_iter = 1
     pool = ThreadPool(1)
     # k, kwargs, window_range, back_window_range, raw_data, tfidf, vocabulary, ids, dates, data_X, get_Y_f, train_f, feature_selector, model
@@ -339,10 +355,11 @@ def randomized_data_params_search(**kwargs):
             best_score = result[2] - result[3]
             final_X = result[0]
             final_labels = result[1]
-            
-    # pls.save_matrix_X(final_X, "articles")
-    # pls.save_labels(final_labels, "articles")
+    
     print(best_score)
+    input("save?")        
+    pls.save_matrix_X(final_X, "articles")
+    pls.save_labels(final_labels, "articles")
 
 
     # f = open("results/data_params_search_results.txt", "a")

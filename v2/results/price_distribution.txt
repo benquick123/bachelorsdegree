@@ -2418,3 +2418,4 @@ articles, window: 8700, thirds margin: 0.0109531864367
 articles, window: 1500, thirds margin: 0.00398418089637
 articles, window: 5700, thirds margin: 0.0089756543194
 articles, window: 21600, thirds margin: 0.0151930466478
+articles, window: 12600, thirds margin: 0.0126689120397

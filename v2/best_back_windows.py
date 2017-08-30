@@ -56,31 +56,40 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
 
 
 def get_mutual_info(X, Y, type, window, save):
+    X = X.todense()
     mi = mutual_info_classif(X, Y, discrete_features=False, n_neighbors=3)
     mi = np.array(mi).reshape((-1, 6))
     mi = mi.mean(axis=1)
 
     if save:
+        print(window)
+        print(str(window))
+        print(type)
+        print(str(type))
         pickle.dump(mi, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "wb"))
+    
+    return mi
 
 
 def load_mutual_info(X, Y, window, type="articles"):
     try:
-        pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb"))
+        f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb")
+        pickle.load(f)
+        f.close()
     except FileNotFoundError:
-        mi = mutual_info_classif(X, Y)
+        X = X.todense()
+        mi = mutual_info_classif(X, Y, discrete_features=False, n_neighbors=3)
         mi = np.array(mi).reshape((-1, 6))
         mi = mi.mean(axis=1)
-        pickle.dump(mi, open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "wb"))
+        f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "wb")
+        pickle.dump(mi, f)
+        f.close()
 
 
-def plot(window, type="articles"):
-    mi = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_mutual_info_for_" + str(window) + ".pickle", "rb"))
-    back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb"))
-    back_windows = np.array(back_windows)
+def plot(mi, back_windows, window):
     to_plot = list(zip(back_windows, mi))
 
-    back_windows = [back_window / 60 for back_window, _ in to_plot]
+    back_windows = [back_window for back_window, _ in to_plot]
     mi = [_mi for _, _mi in to_plot]
 
     plt.plot(back_windows, mi)
@@ -89,17 +98,26 @@ def plot(window, type="articles"):
 
 def reverse_matrix(X):
     _X = None
-    print(X.shape)
     X = X.toarray().transpose()
     return sparse.csr_matrix(X)
 
 
-def k_means(X):
-    back_windows = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_back_windows.pickle", "rb"))
+def k_means(X, Y, window):
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + "articles" + "_back_windows.pickle", "rb")
+    back_windows = pickle.load(f)
+    f.close()
     back_windows = np.array(back_windows)
     
+    mi = get_mutual_info(reverse_matrix(X), Y, "articles", window, False)
+    mi_mask = np.where(mi >= np.mean(mi) - np.std(mi), True, False)
+    print(np.mean(mi) - np.std(mi))
+    
     X = X.toarray()
-    select = np.array(list(range(0, 600, 6)))
+    select = np.array(list(range(0, 3000, 6)))
+    
+    select = select[mi_mask]
+    back_windows = back_windows[mi_mask]
+    
     for n_clusters in range(2, 3):
         silhouettes = []
         all_windows = []
@@ -196,13 +214,22 @@ def create_mutual_info(**kwargs):
     window = kwargs["window"]
     margin = kwargs["margin"]
     ids = set(kwargs["IDs"])
-
+    
+    back_windows = np.array(pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_back_windows.pickle", "rb")))
     X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_X_back_windows.pickle", "rb"))
     Y = np.array(get_Y_f(ids, window, margin))
     X, Y, _, _, _ = final_set_f(X, Y)
 
-    load_mutual_info(X, Y, window)
-    plot(window)
+    # load_mutual_info(X, Y, window)
+    mi = get_mutual_info(X, Y, "articles", window, False)
+    mi = np.array(mi)
+    better_than = np.mean(mi) + 2*np.std(mi)
+    print(better_than)
+    selected_windows = back_windows[np.where(mi >= better_than)]
+    print(selected_windows)
+    
+    # plot(mi, back_windows, window)
+    return selected_windows
 
 
 def create_k_means(**kwargs):
@@ -213,11 +240,14 @@ def create_k_means(**kwargs):
     window = kwargs["window"]
     margin = kwargs["margin"]
     ids = set(kwargs["IDs"])
-
-    X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_X_back_windows.pickle", "rb"))
+    
+    if "all_history_data" in kwargs:
+        X = kwargs["all_history_data"]
+    else:
+        X = pickle.load(open("/home/ubuntu/diploma/Proletarian 1.0/v2/pickles/" + type + "_X_back_windows.pickle", "rb"))
     Y = np.array(get_Y_f(ids, window, margin))
     X, Y, _, _, _ = final_set_f(X, Y)
 
     X = reverse_matrix(X)
-    return k_means(X)
+    return k_means(X, Y, window)
 
