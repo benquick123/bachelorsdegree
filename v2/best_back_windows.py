@@ -56,7 +56,7 @@ def parallelized_matrix_creation(k, n_iter, back_window_range, raw_data, ids, ty
 
 
 def get_mutual_info(X, Y, type, window, save):
-    mi = mutual_info_classif(X, Y)
+    mi = mutual_info_classif(X, Y, discrete_features=False, n_neighbors=3)
     mi = np.array(mi).reshape((-1, 6))
     mi = mi.mean(axis=1)
 
@@ -80,11 +80,11 @@ def plot(window, type="articles"):
     back_windows = np.array(back_windows)
     to_plot = list(zip(back_windows, mi))
 
-    back_windows = [back_window for back_window, _ in to_plot]
+    back_windows = [back_window / 60 for back_window, _ in to_plot]
     mi = [_mi for _, _mi in to_plot]
 
     plt.plot(back_windows, mi)
-    plt.savefig("figures/mutual_info_plot_" + str(window) + ".png")
+    plt.savefig("figures/mutual_info_plot_" + str(window) + "_" + str(time.time()) + ".png")
 
 
 def reverse_matrix(X):
@@ -106,7 +106,7 @@ def k_means(X):
         for i in range(6):
             # print(i)
             _X = X[select + i, :]
-            kmeans = KMeans(n_clusters=n_clusters, n_jobs=-1, n_init=20)
+            kmeans = KMeans(n_clusters=n_clusters, n_jobs=1, n_init=20)
             labels = kmeans.fit_predict(_X)
             clusters = Counter(labels).keys()
             windows = []
@@ -129,8 +129,14 @@ def k_means(X):
     indexes = []
     for i in range(len(opt_windows)):
         window = int(300 * round(opt_windows[i][0] / 300))
+        try:
+            indexes.append(back_windows.tolist().index(window))
+        except ValueError:
+            window -= 300
+            indexes.append(back_windows.tolist().index(window))
         windows.append(window)
-        indexes.append(back_windows.tolist().index(window))
+            
+    
     print(windows, indexes)
     return windows
 
@@ -138,7 +144,7 @@ def k_means(X):
 def best_back_windows(**kwargs):
     print("FIND BEST BACK WINDOWS")
     n_iter = kwargs["n_iter"]
-    n_iter = 100
+    n_iter = 500
     back_window_range = kwargs["back_window_range"]
     client = pymongo.MongoClient(host="127.0.0.1", port=27017)
     ids = set(kwargs["IDs"])

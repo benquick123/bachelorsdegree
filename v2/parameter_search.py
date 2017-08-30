@@ -102,7 +102,7 @@ def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw
     window = 300 * round((window_range[0] + np.random.rand() * (window_range[1] - window_range[0])) / 300)
     kwargs["window"] = window
     margin = price_distribution(plot=False, **kwargs)
-    back_window_sizes = bbw.create_k_means(kwargs)
+    back_window_sizes = bbw.create_k_means(**kwargs)
     back_window_other = 300 * round((back_window_range[0] + np.random.rand() * (back_window_range[1] - back_window_range[0])) / 300)
 
     curr_tfidf_weight = 1
@@ -114,7 +114,8 @@ def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw
     for i, text in enumerate(raw_data):
         text["tfidf"] = tfidf[i]
         if text["_id"] in ids:
-            print("iteration:", i)
+            if i % 100 == 0:
+                print("iteration:", i)
             _, average_tfidf, _n, average_topics = common.get_averages_from_data(raw_data, text["date"], back_window_other, text["currency"], i, threshold=0.0, type="article")
 
             average_tfidf = text["tfidf"] * (curr_tfidf_weight / (_n + 1)) + (average_tfidf * (_n / (_n + 1))).multiply(text["tfidf"].power(0))
@@ -123,10 +124,9 @@ def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw
             average_topics = sparse.csr_matrix(list(text["topics"]) + list(average_topics))
             _topic_distributions = sparse.csr_matrix(average_topics) if _topic_distributions is None else sparse.vstack([_topic_distributions, average_topics])
 
-            _ns = sparse.csr_matrix([1 / _n]) if _ns is None else sparse.vstack([_ns, sparse.csr_matrix([1 / _n])])
+            _ns = sparse.csr_matrix([1 / (_n+1)]) if _ns is None else sparse.vstack([_ns, sparse.csr_matrix([1 / (_n+1)])])
 
     labels = ["title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
-    print(data_X.shape)
     data_X = sparse.csr_matrix(data_X)
 
     labels = ["w"] + labels + vocabulary
@@ -142,20 +142,29 @@ def parallelized_matrix_creation(k, kwargs, window_range, back_window_range, raw
     for back_window in back_window_sizes:
         indexes = np.zeros(len(l), dtype="bool")
         for i in range(len(indexes)):
-            if int(l[i].split("_")[1]) == back_window:
+            if int(l[i].split("_")[-1]) == back_window:
                 indexes[i] = True
 
-        history_attrs = X[indexes, :]
+        history_attrs = X[:, indexes]
         labels = labels + l[indexes].tolist()
         print(history_attrs.shape)
         data_X = sparse.hstack([data_X, history_attrs])
 
-    print(labels)
+    print(data_X.shape, len(labels))
 
-    data_Y = get_Y_f(ids, margin, window)
+    data_X = data_X.tocsr()
+    data_Y = get_Y_f(ids, window, margin)
     _, score, precision, recall, _, classes = train_f(feature_selector, model, data_X, data_Y, "articles", dates, save=False, p=False, learn=True, test=False)
     result_string = "i: " + str(k) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n"
     result_string += "margin: " + str(margin) + ", window: " + str(window) + ", back_windows: " + str(back_window_sizes) + ", back_other: " + str(back_window_other) + "\n\n"
+    
+    f = open("/home/ubuntu/diploma/Proletarian 1.0/v2/results/parameter_search/data_parameters_" + "articles" + "_" + str(round(time.time()*1000)) + ".txt", "a")
+    f.write(result_string)
+    f.close()
+
+    print("FILE SAVED")
+    
+    return data_X, labels, score, max(classes.values()) / sum(classes.values())
 
 
     """# general attr
@@ -315,25 +324,26 @@ def randomized_data_params_search(**kwargs):
 
     data_X = data_X[:, ~to_remove_mask]
 
+    n_iter = 1
     pool = ThreadPool(1)
     # k, kwargs, window_range, back_window_range, raw_data, tfidf, vocabulary, ids, dates, data_X, get_Y_f, train_f, feature_selector, model
     results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(kwargs), repeat(window_range), repeat(back_window_range), repeat(raw_data), repeat(tfidf), repeat(vocabulary), repeat(ids), repeat(dates), repeat(data_X), repeat(get_Y_f), repeat(train_f), repeat(feature_selector), repeat(model)))
-    # results = pool.starmap(parallelized_matrix_creation, zip(list(range(n_iter)), repeat(window_range), repeat(margin_range), repeat(back_window_short_range), repeat(back_window_medium_range), repeat(back_window_long_range), repeat(back_window_range), repeat(type), repeat(ids), repeat(raw_data), repeat(data_X), repeat(train_f), repeat(get_dates_f), repeat(feature_selector), repeat(model), repeat(client), repeat(get_Y_f), repeat(date_key), repeat(currency_key), repeat(is_conversation), repeat(n_features), repeat(tfidf), repeat(kwargs), repeat([article_data, conversation_data, tweet_data]), repeat([article_dates, conversation_dates, tweet_dates]), repeat(articles), repeat(conversations), repeat(tweets)))
     pool.close()
     pool.join()
+    
+    final_X, final_labels = None, []
+    best_score = 0
+    for result in results:
+        print(result[2], result[3])
+        if result[2] - result[3] > best_score:
+            best_score = result[2] - result[3]
+            final_X = result[0]
+            final_labels = result[1]
+            
+    # pls.save_matrix_X(final_X, "articles")
+    # pls.save_labels(final_labels, "articles")
+    print(best_score)
 
-    """# general attr
-    labels = ["w", "title_sentiment", "reduced_text_sentiment", "title_polarity", "reduced_text_polarity", "curr_in_title"]
-    # averages
-    labels += ["distribution_a_1200", "polarity_a_1200", "sentiment_a_1200"] + ["distribution_t_1200", "polarity_t_1200", "sentiment_t_1200"] + ["distribution_c_1200", "polarity_c_1200", "sentiment_c_1200"] + ["price_1200", "volume_1200", "price_all_1200"]
-    labels += ["distribution_a_11100", "polarity_a_11100", "sentiment_a_11100"] + ["distribution_t_11100", "polarity_t_11100", "sentiment_t_11100"] + ["distribution_c_11100", "polarity_c_11100", "sentiment_c_11100"] + ["price_11100", "volume_11100", "price_all_11100"]
-    labels += ["distribution_a_22800", "polarity_a_22800", "sentiment_a_22800"] + ["distribution_t_22800", "polarity_t_22800", "sentiment_t_22800"] + ["distribution_c_22800", "polarity_c_22800", "sentiment_c_22800"] + ["price_22800", "volume_22800", "volume_all_22800"]
-    # tfidf
-    labels += vocabulary
-    # topics
-    labels += ["topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
-    labels += ["average_topic_" + str(i) for i in range(len(raw_data[0]["topics"]))]
-    pls.save_labels(labels, type)"""
 
     # f = open("results/data_params_search_results.txt", "a")
     # for result in results:

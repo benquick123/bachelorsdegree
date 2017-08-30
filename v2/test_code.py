@@ -161,7 +161,7 @@ def price_distribution(plot=True, **kwargs):
 def optimal_margin(plot=True, **kwargs):
     print("FIND OPTIMAL MARGIN")
     # also: how does majority class size affect classification accuracy - plot
-    n_iter = kwargs["n_iter"]
+    n_iter = 50
     margin_range = kwargs["margin_range"]
     train_f = kwargs["train_f"]
     feature_selector = kwargs["feature_selector"]
@@ -170,8 +170,9 @@ def optimal_margin(plot=True, **kwargs):
     raw_data = kwargs["raw_data"]
     ids = kwargs["IDs"]
     type = kwargs["type"]
-    window = kwargs["window"]
+    window = 7200
     get_dates_f = kwargs["dates_f"]
+    plot = False
 
     func = None
     if type == "articles":
@@ -189,24 +190,28 @@ def optimal_margin(plot=True, **kwargs):
     best_score = 0
     best_margin = 0
     scores = []
-    _margin = price_distribution(plot=False, **kwargs)
     f = open("results/majority_class_scores.txt", "a")
-    f.write(type + ", " + str(model)[:10] + "\n")
+    f.write(type + ", " + str(model) + "_" + str(window) + "\n")
+    f.close()
 
     while i < n_iter:
+        print("iteration", i)
         # margin = margin_range[0] + np.random.rand() * (margin_range[1] - margin_range[0])
-        margin = _margin + margin_range[0] + ((i + 1) / (n_iter + 1)) * (margin_range[1] - margin_range[0])
+        margin = margin_range[0] + ((i + 1) / (n_iter + 1)) * (margin_range[1] - margin_range[0])
         data_Y = func(ids, window, margin)
-        _, score, precision, recall, _, classes = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, save=False, learn=True, test=False)
+        _, score, precision, recall, _, classes = train_f(feature_selector=feature_selector, model=model, data_X=data_X, data_Y=data_Y, type=type, dates=dates, p=False, save=False, learn=True, test=False)
 
         # if score - max(classes.values()) / sum(classes.values()) > best_score:
         #     best_score = score - max(classes.values()) / sum(classes.values())
         #     best_margin = margin
-
+        
+        f = open("results/majority_class_scores.txt", "a")
         f.write(str(i) + " - margin: " + str(margin) + ", score: " + str(score) + ", precision: " + str(precision) + ", recall: " + str(recall) + ", classes: " + str(classes) + "\n")
-        scores.append((score - max(classes.values()) / sum(classes.values()), max(classes.values()) / sum(classes.values())))
+        f.close()
+        # scores.append((score - max(classes.values()) / sum(classes.values()), max(classes.values()) / sum(classes.values())))
         i += 1
 
+    f = open("results/majority_class_scores.txt", "a")
     f.write("\n")
     f.close()
     if plot:

@@ -103,11 +103,15 @@ def test_in_parallel(i, testing_indexes, data_X, data_Y, final_test_X, final_tes
 
     X = sparse.vstack([data_X, final_test_X[train_mask, :]])
     Y = np.concatenate((data_Y, final_test_Y[train_mask]))
-
-    sfm = copy.deepcopy(feature_selector)
-    sfm.fit(X, Y)
-    reduced_data_X = sfm.transform(data_X)
-    reduced_final_test_X = sfm.transform(final_test_X)
+  
+    if feature_selector is not None:
+        sfm = copy.deepcopy(feature_selector)
+        sfm.fit(X, Y)
+        reduced_data_X = sfm.transform(data_X)
+        reduced_final_test_X = sfm.transform(final_test_X)
+    else:
+        reduced_data_X = sparse.csr_matrix(data_X)
+        reduced_final_test_X = sparse.csr_matrix(final_test_X)
 
     if p:
         print("features:", data_X.shape[1], "->", reduced_data_X.shape[1])
@@ -121,10 +125,13 @@ def test_in_parallel(i, testing_indexes, data_X, data_Y, final_test_X, final_tes
 def train_in_parallel(i, testing_indexes, data_X, data_Y, feature_selector, model, p):
     train_mask = np.where(testing_indexes < i, True, False)
     test_mask = np.where(testing_indexes == i, True, False)
-
-    sfm = copy.deepcopy(feature_selector)
-    sfm.fit(data_X[train_mask, :], data_Y[train_mask])
-    reduced_data_X = sfm.transform(data_X)
+    
+    if feature_selector is not None:
+        sfm = copy.deepcopy(feature_selector)
+        sfm.fit(data_X[train_mask, :], data_Y[train_mask])
+        reduced_data_X = sfm.transform(data_X)
+    else:
+        reduced_data_X = sparse.csr_matrix(data_X)
 
     if p:
         print("features:", data_X.shape[1], "->", reduced_data_X.shape[1])
@@ -151,9 +158,8 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         testing_indexes = daily_split(data_X, dates, False)
         if type == "conversations":
             testing_indexes = np.where(testing_indexes >= 0, testing_indexes+1, -1)
-        print(Counter(testing_indexes))
 
-        pool = ThreadPool(1)
+        pool = ThreadPool()
         results = pool.starmap(train_in_parallel, zip(list(range(1, max(testing_indexes)+1)), itertools.repeat(testing_indexes), itertools.repeat(data_X), itertools.repeat(data_Y), itertools.repeat(feature_selector), itertools.repeat(model), itertools.repeat(p)))
         pool.close()
         pool.join()
@@ -184,13 +190,15 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             recalls.append(recall_score(data_Y[test_mask], pred_Y, average="weighted"))"""
 
         learning_Y = data_Y[np.where(testing_indexes >= 0, True, False)]
-        learn_score = list()
-        learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == -1)], np.array(pred_Y)[np.where(learning_Y == -1)]))
-        learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 0)], np.array(pred_Y)[np.where(learning_Y == 0)]))
-        learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 1)], np.array(pred_Y)[np.where(learning_Y == 1)]))
-        learn_score = accuracy_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y)
-        learn_precision = precision_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
-        learn_recall = recall_score(data_Y[np.where(testing_indexes >= 0, True, False)], pred_Y, average="weighted")
+        # learn_score = list()
+        # learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == -1)], np.array(pred_Y)[np.where(learning_Y == -1)]))
+        # learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 0)], np.array(pred_Y)[np.where(learning_Y == 0)]))
+        # learn_score.append(accuracy_score(learning_Y[np.where(learning_Y == 1)], np.array(pred_Y)[np.where(learning_Y == 1)]))
+        # print("CHANGE HERE")
+        
+        learn_score = accuracy_score(learning_Y, pred_Y)
+        learn_precision = precision_score(learning_Y, pred_Y, average="weighted")
+        learn_recall = recall_score(learning_Y, pred_Y, average="weighted")
 
         if p:
             print("classes:", dict(Counter(data_Y)))
@@ -201,7 +209,6 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
         classes = dict(Counter(final_test_Y))
         if p:
             print("\ntraining seperate training set")
-            print("classes:", classes)
 
         testing_indexes = daily_split(final_test_X, final_test_dates, True)
         pred_Y = []
@@ -236,6 +243,7 @@ def train(feature_selector, model, data_X, data_Y, type, dates, save=True, p=Tru
             X = sparse.vstack([reduced_data_X, reduced_final_test_X[train_mask]])
             model.fit(X, Y)
             pred_Y += model.predict(reduced_final_test_X[test_mask]).tolist()"""
+            
 
         test_score = accuracy_score(final_test_Y, pred_Y)
         test_precision = precision_score(final_test_Y, pred_Y, average="weighted")
@@ -321,21 +329,22 @@ def train_articles(window, margin, n=None, p=False, data=False, matrix=False, sa
             elif articles_Y is None:
                 exit()
 
-    threshold = 3.26
+    threshold = 1.0
     feature_selector = SelectFromModel(LinearSVC(), threshold=str(threshold) + "*mean")
     # feature_selector = SelectPercentile(mutual_info_classif, 20)
-    model = RandomForestClassifier(n_jobs=16)
+    feature_selector = None
+    model = LinearSVC()
 
     if len(functions) != 0:
         arguments = dict()
         arguments["n_iter"] = 200
         arguments["threshold_range"] = [0.0, 1.0]
-        arguments["margin_range"] = [0.0, 0.06]
+        arguments["margin_range"] = [0.0, 0.08]
         arguments["window_range"] = [300, 6*3600]
         arguments["back_window_short"] = [300, 3600]
         arguments["back_window_medium"] = [3900, 6*3600]
         arguments["back_window_long"] = [6*3600+300, 48*3600]
-        arguments["back_window_range"] = [300, 12*3600]
+        arguments["back_window_range"] = [300, 48*3600]
         arguments["back_window_ratio"] = [0.5, 5]
         arguments["train_f"] = train
         arguments["final_set_f"] = create_final_test_set
@@ -560,7 +569,8 @@ def __init__():
     # initial_load()
 
     functions = [parameter_search.randomized_data_params_search]
-    # functions = [best_back_windows.create_k_means]
+    functions = [best_back_windows.create_mutual_info]
+    # functions = [test_code.optimal_margin]
 
     window = 21000
     margin = 0.00967742793041
